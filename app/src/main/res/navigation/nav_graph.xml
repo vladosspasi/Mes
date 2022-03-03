@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav_graph"
+            app:startDestination="@id/MainmenuFragment">
+
+    <!--Экран главного меню-->
+    <fragment
+            android:id="@+id/MainmenuFragment"
+            android:name="com.github.vladosspasi.mes.MainMenuFragment"
+            android:label="MainMenu"
+            tools:layout="@layout/fragment_mainmenu">
+
+
+        <action
+                android:id="@+id/action_MainmenuFragment_to_AddDataFragment"
+                app:destination="@id/AddDataFragment"/>
+
+        <action
+                android:id="@+id/action_MainmenuFragment_to_ListFragment"
+                app:destination="@id/ListFragment"/>
+
+        <action
+                android:id="@+id/action_MainmenuFragment_to_SettingsFragment"
+                app:destination="@id/SettingsFragment"/>
+
+        <action
+                android:id="@+id/action_MainmenuFragment_to_ImpExpFragment"
+                app:destination="@id/ImpExpFragment"/>
+
+        <action
+                android:id="@+id/action_MainmenuFragment_to_InfoFragment"
+                app:destination="@id/InfoFragment"/>
+
+    </fragment>
+
+    <!--Экран добавления-->
+    <fragment
+            android:id="@+id/AddDataFragment"
+            android:name="com.github.vladosspasi.mes.AddDataFragment"
+            android:label="Add Fragment"
+            tools:layout="@layout/fragment_screen_add">
+
+        <action
+                android:id="@+id/action_AddDataFragment_to_MainmenuFragment"
+                app:destination="@id/MainmenuFragment"/>
+    </fragment>
+
+    <!--Экран просмотра-->
+    <fragment
+            android:id="@+id/ListFragment"
+            android:name="com.github.vladosspasi.mes.ListFragment"
+            android:label="List Fragment"
+            tools:layout="@layout/fragment_screen_list">
+
+        <action
+                android:id="@+id/action_ListFragment_to_MainmenuFragment"
+                app:destination="@id/MainmenuFragment"/>
+    </fragment>
+
+    <!--Экран настроек-->
+    <fragment
+            android:id="@+id/SettingsFragment"
+            android:name="com.github.vladosspasi.mes.SettingsFragment"
+            android:label="Settings Fragment"
+            tools:layout="@layout/fragment_screen_settings">
+
+        <action
+                android:id="@+id/action_SettingsFragment_to_MainmenuFragment"
+                app:destination="@id/MainmenuFragment"/>
+    </fragment>
+
+
+    <!--Экран импорта/экспорта-->
+    <fragment
+            android:id="@+id/ImpExpFragment"
+            android:name="com.github.vladosspasi.mes.ImpExpFragment"
+            android:label="ImpExp Fragment"
+            tools:layout="@layout/fragment_screen_impexp">
+
+        <action
+                android:id="@+id/action_ImpExpFragment_to_MainmenuFragment"
+                app:destination="@id/MainmenuFragment"/>
+    </fragment>
+
+    <!--Экран инфо-->
+    <fragment
+            android:id="@+id/InfoFragment"
+            android:name="com.github.vladosspasi.mes.InfoFragment"
+            android:label="Info Fragment"
+            tools:layout="@layout/fragment_screen_info">
+
+        <action
+                android:id="@+id/action_InfoFragment_to_MainmenuFragment"
+                app:destination="@id/MainmenuFragment"/>
+    </fragment>
+
+</navigation>

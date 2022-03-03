@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Mes</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+
+    <!--Главный экран-->
+    <string name="mainmenu_title">MES</string>
+    <string name="mainmenu_autor">Алябьев В.О., Кафедра ВМСС, НИУ "МЭИ", 2022 г.</string>
+
+    <string name="mainmenu_toAddScreen">Добавить данные</string>
+    <string name="mainmenu_toSettingsScreen">Настройки</string>
+    <string name="mainmenu_toListScreen">Просмотреть данные</string>
+    <string name="mainmenu_toImpExpScreen">Импорт/экспорт</string>
+
+
+
+
+
+</resources>
