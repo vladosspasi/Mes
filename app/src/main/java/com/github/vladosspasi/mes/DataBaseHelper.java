@@ -119,7 +119,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 FIELD_MES_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 FIELD_MES_NAME +" TEXT, " +
                 FIELD_MES_COMMENT +" TEXT, " +
-                FIELD_MES_DATE +" INTEGER, " +
+                FIELD_MES_DATE +" TEXT, " +
                 FIELD_MES_DEVICEID +" INTEGER, " +
                 FIELD_MES_VALUEID +" INTEGER, " +
                 "FOREIGN KEY("+FIELD_MES_VALUEID+") REFERENCES "+TABLE_VALUES_NAME +"("+FIELD_VALUES_ID+"), " +
@@ -127,7 +127,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 ");");
 
         //заполнение таблицы бд начальными значениями
-        InsertInitialValues();
+        InsertInitialValues(sqLiteDatabase);
     }
 
     //Действие при обновлении версии базы данных
@@ -152,8 +152,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
     //Начальное (тестовое) заполнение бд
-    public void InsertInitialValues(){
-        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+    public void InsertInitialValues(SQLiteDatabase sqLiteDatabase){
+        //SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         //Типы величин
         ContentValues valueType = new ContentValues();
         valueType.put(FIELD_VALUETYPES_ID,"1");
@@ -237,10 +237,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return output;
     }
 
-    public List<ContentValues> getMeasurementsList(){
+    public ArrayList<ContentValues> getMeasurementsList(){
         SQLiteDatabase db = getReadableDatabase();
         ContentValues mes = new ContentValues();
-        List<ContentValues> mesList = new ArrayList<ContentValues>();
+        ArrayList<ContentValues> mesList = new ArrayList<ContentValues>();
 
         //считывание базовой информации
         Cursor mesCursor = db.query(TABLE_MES_NAME,
@@ -256,16 +256,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             mes.clear();
             mes.put("id", mesCursor.getInt(0));
             mes.put("name", mesCursor.getString(1));
-            mes.put("comment", mesCursor.getInt(2));
-            mes.put("date", mesCursor.getInt(3));
+            mes.put("comment", mesCursor.getString(2));
+            mes.put("date", mesCursor.getString(3));
 
             //получение названия прибора из другой таблицы
             deviceCursor = db.rawQuery("SELECT "+FIELD_DEVICES_ID+", "+FIELD_DEVICES_NAME+" " +
                     "FROM "+TABLE_DEVICES_NAME+" " +
                     "WHERE "+FIELD_DEVICES_ID+"="+mesCursor.getInt(4)+";",null);
 
+            deviceCursor.moveToFirst();
             mes.put("device",deviceCursor.getString(1));
             mesList.add(mes);
+            mesCursor.moveToNext();
         }
         mesCursor.close();
         deviceCursor.close();
