@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    public String directory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,13 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
+
+
+
+        //directory = getActivity.getBaseContext().getFilesDir().toString();
+        //db = getBaseContext().openOrCreateDatabase("MesDB.db", MODE_PRIVATE, null);
+
 
         /*
         //Плавающая кнопка
