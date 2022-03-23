@@ -9,15 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
+import androidx.navigation.fragment.NavHostFragment;
 import com.github.vladosspasi.mes.databinding.FragmentScreenListBinding;
-
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
 
+//Фрагмент со списком всех измерений
 public class ListFragment extends Fragment {
 
     private FragmentScreenListBinding binding;
@@ -34,43 +30,37 @@ public class ListFragment extends Fragment {
 
     }
 
-    private static Logger log = Logger.getLogger(MainActivity.class.getName());
-
+    //Действия после создания
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        DataBaseHelper dbHelper = DataBaseHelper.getInstance(getContext());
-        ArrayList<ContentValues> mes = dbHelper.getMeasurementsList();
+        DataBaseHelper dbHelper = DataBaseHelper.getInstance(getContext()); //Подключение дб
+        ArrayList<ContentValues> mes = dbHelper.getMeasurementsList();      //Получение списка измерений
+        dbHelper.close();
 
         recView = getActivity().findViewById(R.id.recyclerView_ListScreen_allMeasurements);
         recView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
-        MeasurementsListAdapter measurementsListAdapter = new MeasurementsListAdapter();
+        MeasurementsListAdapter measurementsListAdapter = new MeasurementsListAdapter();    //Установка адаптера для списка
         measurementsListAdapter.setItems(mes);
         recView.setAdapter(measurementsListAdapter);
 
-        /*String[] data = new String[] { "one", "two", "three", "four" };
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, data);
-        setListAdapter(adapter);*/
+        binding.recyclerViewListScreenAllMeasurements.addOnItemTouchListener(       //Действие при нажатии элемента списка
+                new RecyclerItemClickListener(this.getContext(), recView ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        ContentValues selectedMes = mes.get(position);                  //Получение выбранного элемента из списка
+                        Bundle arg = new Bundle();                                     //Оболочка для передачи данных в другой фрагмент
+                        arg.putInt("MesData", selectedMes.getAsInteger("id"));          //Помещаем в оболочку id измерения
+                        NavHostFragment.findNavController(ListFragment.this)    //Переход на нажатое измерение (с аргументом)
+                                .navigate(R.id.action_ListFragment_to_ViewMesFragment, arg); //Для просмотра полной информации
+                    }
 
-
-        /*binding.testbutton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //String directory = getActivity().getBaseContext().getFilesDir().toString();
-                //Toast.makeText(getContext(), directory, Toast.LENGTH_LONG).show();
-
-                DataBaseHelper dbHelper = DataBaseHelper.getInstance(getContext());
-                //ContentValues output = dbHelper.testDatabase();
-
-
-            }
-        });*/
-
-
+                    @Override public void onLongItemClick(View view, int position) {
+                        //Длинное нажатие не обрабатывается
+                        //TODO Сделать диалог для удаления измерения через длинное нажатие на нем в списке
+                    }
+                })
+        );
 
     }
 

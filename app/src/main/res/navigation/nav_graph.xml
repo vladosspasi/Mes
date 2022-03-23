@@ -47,16 +47,24 @@
                 app:destination="@id/MainmenuFragment"/>
     </fragment>
 
-    <!--Экран просмотра-->
+    <!--Экран просмотра списка измерений-->
     <fragment
             android:id="@+id/ListFragment"
             android:name="com.github.vladosspasi.mes.ListFragment"
             android:label="List Fragment"
-            tools:layout="@layout/fragment_screen_list">
+    >
 
         <action
                 android:id="@+id/action_ListFragment_to_MainmenuFragment"
                 app:destination="@id/MainmenuFragment"/>
+
+        <action
+                android:id="@+id/action_ListFragment_to_ViewMesFragment"
+                app:destination="@id/ViewMesFragment"/>
+
+
+
+
     </fragment>
 
     <!--Экран настроек-->
@@ -95,5 +103,21 @@
                 android:id="@+id/action_InfoFragment_to_MainmenuFragment"
                 app:destination="@id/MainmenuFragment"/>
     </fragment>
+
+    <!--Экран просмотра измерения-->
+    <fragment
+            android:id="@+id/ViewMesFragment"
+            android:name="com.github.vladosspasi.mes.ViewMesFragment"
+            android:label="View Mes Fragment"
+            tools:layout="@layout/fragment_screen_viewmes">
+
+        <action
+                android:id="@+id/action_ViewMesFragment_to_ListFragment"
+                app:destination="@id/ListFragment"/>
+
+        <argument android:name="MesData" app:argType="integer"/>
+    </fragment>
+
+
 
 </navigation>
