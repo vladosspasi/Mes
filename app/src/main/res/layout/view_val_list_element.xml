@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content">
+
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView_valListElementView_valueTitle"
+            app:layout_constraintTop_toBottomOf="@+id/textView_valListElementView_scale"
+            android:layout_marginTop="8dp" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/divider5" android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView_valListElementView_unitTitle"
+            app:layout_constraintStart_toEndOf="@+id/divider7" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView_valListElementView_valueTitle"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_valListElementView_valueTitle"
+            android:layout_marginStart="8dp" android:layout_marginEnd="16dp"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView_valListElementView_errorTitle"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_valListElementView_valueTitle"
+            app:layout_constraintTop_toTopOf="@+id/textView_valListElementView_valueTitle"
+            app:layout_constraintStart_toEndOf="@+id/divider5" app:layout_constraintEnd_toStartOf="@+id/divider7"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView_valListElementView_scale"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintTop_toBottomOf="@+id/textView_valListElementView_id"/>
+    <View
+            android:id="@+id/divider5"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toTopOf="@+id/textView_valListElementView_valueTitle"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_valListElementView_value"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"/>
+    <View
+            android:id="@+id/divider7"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toTopOf="@+id/textView_valListElementView_valueTitle"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_valListElementView_value"
+            app:layout_constraintStart_toEndOf="@+id/divider5" app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView_valListElementView_value"
+            app:layout_constraintTop_toBottomOf="@+id/textView_valListElementView_valueTitle"
+            android:layout_marginTop="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp" app:layout_constraintEnd_toStartOf="@+id/divider5"
+            android:layout_marginEnd="8dp"
+    />
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView_valListElementView_error"
+            app:layout_constraintTop_toBottomOf="@+id/textView_valListElementView_errorTitle"
+            app:layout_constraintStart_toEndOf="@+id/divider5"
+            app:layout_constraintEnd_toStartOf="@+id/divider7" android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_valListElementView_value"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView_valListElementView_unit"
+            app:layout_constraintTop_toBottomOf="@+id/textView_valListElementView_unitTitle"
+            app:layout_constraintStart_toEndOf="@+id/divider7"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_valListElementView_value"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView_valListElementView_id"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="8dp" android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
+    <View
+            android:id="@+id/divider8"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView_valListElementView_value"
+            android:layout_marginTop="16dp" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.0"/>
+</android.support.constraint.ConstraintLayout>
