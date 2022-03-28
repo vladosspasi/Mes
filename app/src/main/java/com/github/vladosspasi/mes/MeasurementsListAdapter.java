@@ -57,7 +57,6 @@ public class MeasurementsListAdapter extends RecyclerView.Adapter<MeasurementsLi
         private TextView nameTextView;
         private TextView commentTextView;
         private TextView dateTextView;
-        private TextView deviceNameTextView;
 
         //Конструктор для поиска элементов лэйаута
         public MeasurementsListElementHolder(View itemView) {
@@ -65,7 +64,6 @@ public class MeasurementsListAdapter extends RecyclerView.Adapter<MeasurementsLi
             nameTextView = itemView.findViewById(R.id.textView_mesListElementView_name);
             commentTextView = itemView.findViewById(R.id.textView_mesListElementView_comment);
             dateTextView = itemView.findViewById(R.id.textView_mesListElementView_date);
-            deviceNameTextView = itemView.findViewById(R.id.textView_mesListElementView_device);
         }
 
         //Заполнение элементов вью данными
@@ -73,7 +71,6 @@ public class MeasurementsListAdapter extends RecyclerView.Adapter<MeasurementsLi
             nameTextView.setText(element.getAsString("name"));
             commentTextView.setText("Комментарий:\n"+ element.getAsString("comment"));
             dateTextView.setText("Дата снятия:\n"+ element.getAsString("date"));
-            deviceNameTextView.setText("Прибор: "+ element.getAsString("device"));
         }
 
     }

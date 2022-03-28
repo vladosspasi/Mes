@@ -1,6 +1,8 @@
 package com.github.vladosspasi.mes;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +14,10 @@ import android.support.v4.app.Fragment;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 import com.github.vladosspasi.mes.databinding.FragmentScreenListBinding;
 import com.github.vladosspasi.mes.databinding.FragmentScreenViewmesBinding;
 
@@ -23,6 +29,8 @@ public class ViewMesFragment extends Fragment {
 
     private FragmentScreenViewmesBinding binding;
     private RecyclerView recView;
+    private ArrayList<ContentValues> mesData;
+    Integer mesId;
 
     private static Logger log = Logger.getLogger(ViewMesFragment.class.getName());
 
@@ -42,19 +50,18 @@ public class ViewMesFragment extends Fragment {
 
         Bundle arg = this.getArguments();
         assert arg != null;
-        Integer mesId = arg.getInt("MesData");
+        mesId = arg.getInt("MesId");
+
 
         DataBaseHelper dbHelper = DataBaseHelper.getInstance(getContext()); //Подключение дб
-        ArrayList<ContentValues> mesData = dbHelper.getMeasurmentData(mesId);
+        mesData = dbHelper.getMeasurmentData(mesId);
+
         dbHelper.close();
         ContentValues mesInfo = mesData.get(0);
 
-        binding.textViewViewMesName.setText("Измерение \""+mesInfo.getAsString("name")+"\"");
-        binding.textViewViewMesComment.setText("Комментарий: "+mesInfo.getAsString("comment"));
-        binding.textViewViewMesDate.setText("Дата снятия: "+mesInfo.getAsString("date"));
-        binding.textViewViewMesDevicename.setText("Прибор: "+mesInfo.getAsString("deviceName"));
-        binding.textViewViewMesDevicecomment.setText("Комментарий к прибору: "+mesInfo.getAsString("deviceComment"));
-        binding.textViewViewMesDevicetype.setText("Тип прибора: "+mesInfo.getAsString("deviceType"));
+        binding.textViewViewMesName.setText("Измерение \"" + mesInfo.getAsString("name") + "\"");
+        binding.textViewViewMesComment.setText("Комментарий: " + mesInfo.getAsString("comment"));
+        binding.textViewViewMesDate.setText("Дата снятия: " + mesInfo.getAsString("date"));
         binding.textViewViewMesMestitle.setText("Снятые значения");
 
         mesData.remove(0);
@@ -65,12 +72,130 @@ public class ViewMesFragment extends Fragment {
         valuesListAdapter.setItems(mesData);
         recView.setAdapter(valuesListAdapter);
 
+        binding.resViewViewMesMesurements.addOnItemTouchListener(      //Действие при нажатии элемента списка
+                new RecyclerItemClickListener(this.getContext(), recView, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                        alertDialog.setTitle("Значение №" + Integer.toString(position + 1));
+                        alertDialog.setMessage("Выберите действие");
+
+                        alertDialog.setPositiveButton("Просмотреть прибор", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ContentValues value = mesData.get(0);
+
+                                Bundle arg = new Bundle();                                     //Оболочка для передачи данных в другой фрагмент
+                                arg.putInt("DeviceId", value.getAsInteger("device_id"));          //Помещаем в оболочку id прибора
+                                NavHostFragment.findNavController(ViewMesFragment.this)    //Переход на нажатое измерение (с аргументом)
+                                        .navigate(R.id.action_ViewMesFragment_to_ViewDeviceFragment, arg);
+
+                                dialogInterface.cancel();
+                            }
+                        });
+
+                        alertDialog.setNegativeButton("Удалить", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                AlertDialog.Builder areYouSureDialog = new AlertDialog.Builder(getContext());
+                                areYouSureDialog.setMessage("Вы уверены?");
+                                areYouSureDialog.setPositiveButton("Удалить", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                        deleteValueFromList(position);
+                                        dialogInterface.cancel();
+                                    }
+                                });
+
+                                areYouSureDialog.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.cancel();
+                                    }
+                                });
+                                areYouSureDialog.show();
+                                dialogInterface.cancel();
+                            }
+                        });
+
+                        alertDialog.setNeutralButton("Отмена", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+
+                        alertDialog.show();
+                    }
+                })
+        );
+
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    //Удалить величину из списка
+    private void deleteValueFromList(int i) {
+        DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(getContext());
+        log.info("КАКАЯ ИШКА: "+i);
+        ContentValues value = mesData.get(i);
+        int id = value.getAsInteger("id");
+        if (dataBaseHelper.deleteValueById(id)) {
+
+            mesData = dataBaseHelper.getMeasurmentData(mesId);
+
+            mesData.remove(0);
+
+            AlertDialog.Builder successDialog = new AlertDialog.Builder(getContext());
+            if (mesData.size()==0){
+                dataBaseHelper.deleteMesById(mesId);
+                successDialog.setMessage("Значение удалено. В данном измерении нет других значений. Вы будете возвращены на предыдущий экран.");
+                successDialog.setPositiveButton("Ок", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                        NavHostFragment.findNavController(ViewMesFragment.this).navigateUp();
+                        dataBaseHelper.close();
+                    }
+                });
+            }else{
+                recView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                ValuesListAdapter valuesListAdapter = new ValuesListAdapter();
+                valuesListAdapter.setItems(mesData);
+                recView.setAdapter(valuesListAdapter);
+                successDialog.setMessage("Значение удалено");
+                successDialog.setPositiveButton("Ок", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+            }
+            successDialog.show();
+
+        } else {
+            AlertDialog.Builder failDialog = new AlertDialog.Builder(getContext());
+            failDialog.setMessage("Не удалось удалить значение");
+            failDialog.setPositiveButton("Ок", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+                }
+            });
+        }
+        dataBaseHelper.close();
     }
 
 }

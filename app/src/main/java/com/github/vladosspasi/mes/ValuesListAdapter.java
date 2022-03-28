@@ -42,7 +42,7 @@ public class ValuesListAdapter extends RecyclerView.Adapter<ValuesListAdapter.Va
     //что-то нужное
     @Override
     public void onBindViewHolder(@NonNull ValuesListElementHolder valuesListElementHolder, int i) {
-        valuesListElementHolder.bind(elementsList.get(i));
+        valuesListElementHolder.bind(elementsList.get(i),i+1);
     }
 
     //Количество элементов в списке
@@ -63,6 +63,7 @@ public class ValuesListAdapter extends RecyclerView.Adapter<ValuesListAdapter.Va
         private TextView errorTextView;
         private TextView unitTextView;
         private TextView scaleNameTextView;
+        private TextView deviceNameTextView;
 
         //Конструктор для поиска элементов лэйаута
         public ValuesListElementHolder(View itemView) {
@@ -75,11 +76,12 @@ public class ValuesListAdapter extends RecyclerView.Adapter<ValuesListAdapter.Va
             errorTextView = itemView.findViewById(R.id.textView_valListElementView_error);
             unitTextView = itemView.findViewById(R.id.textView_valListElementView_unit);
             scaleNameTextView = itemView.findViewById(R.id.textView_valListElementView_scale);
+            deviceNameTextView = itemView.findViewById(R.id.textView_valListElementView_device);
         }
 
         //Заполнение элементов вью данными
-        public void bind(ContentValues element) {
-            idTextView.setText("Значение №"+element.getAsString("id"));
+        public void bind(ContentValues element, int i) {
+            idTextView.setText("Значение №"+i);
             valueTitleTextView.setText("Значение");
             errorTitleTextView.setText("Погр.");
             unitTitleTextView.setText("Ед. изм.");
@@ -87,6 +89,7 @@ public class ValuesListAdapter extends RecyclerView.Adapter<ValuesListAdapter.Va
             errorTextView.setText("+-"+element.getAsString("error"));
             unitTextView.setText(element.getAsString("unit"));
             scaleNameTextView.setText("Шкала: "+element.getAsString("scaleName"));
+            deviceNameTextView.setText("Прибор: "+element.getAsString("deviceName"));
         }
 
     }

@@ -114,8 +114,25 @@
         <action
                 android:id="@+id/action_ViewMesFragment_to_ListFragment"
                 app:destination="@id/ListFragment"/>
+        <action
+                android:id="@+id/action_ViewMesFragment_to_ViewDeviceFragment"
+                app:destination="@id/ViewDeviceFragment"/>
 
-        <argument android:name="MesData" app:argType="integer"/>
+        <argument android:name="MesId" app:argType="integer"/>
+    </fragment>
+
+    <!--Экран просмотра прибора-->
+    <fragment
+            android:id="@+id/ViewDeviceFragment"
+            android:name="com.github.vladosspasi.mes.ViewDeviceFragment"
+            android:label="View Device Fragment"
+            tools:layout="@layout/fragment_screen_viewdevice">
+
+        <action
+                android:id="@+id/action_ViewDeviceFragment_to_MesFragment"
+                app:destination="@id/ViewMesFragment"/>
+
+        <argument android:name="DeviceId" app:argType="integer"/>
     </fragment>
 
 
