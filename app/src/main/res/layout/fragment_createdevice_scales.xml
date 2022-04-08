@@ -138,11 +138,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content" android:id="@+id/spinner_addNewDeviceScales_type"
             android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="@+id/textbox_addNewDeviceScales_typeTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/textbox_addNewDeviceScales_typeTitle"
             app:layout_constraintTop_toTopOf="@+id/textbox_addNewDeviceScales_typeTitle" android:minHeight="48dp"
-            app:layout_constraintStart_toEndOf="@+id/textbox_addNewDeviceScales_typeTitle" android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/textbox_addNewDeviceScales_typeTitle"
+            android:layout_marginStart="16dp"
 
-    />
+            tools:ignore="SpeakableTextPresentCheck"/>
     <TextView
             android:text="от"
             android:layout_width="wrap_content"

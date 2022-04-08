@@ -68,9 +68,8 @@ public class AddingValueListAdapter extends RecyclerView.Adapter<AddingValueList
         public void bind(ContentValues element) {
             deviceNameTextView.setText(element.getAsString("deviceName"));
             scaleNameTextView.setText(element.getAsString("scaleName"));
-            unitTextView.setText(element.getAsString("unit"));
-            errorTextView.setText(element.getAsString("error"));
-            //valueEditText
+            unitTextView.setText(element.getAsString("scaleUnit"));
+            errorTextView.setText(element.getAsString("scaleError"));
         }
 
     }

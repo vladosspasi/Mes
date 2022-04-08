@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import androidx.navigation.fragment.NavHostFragment;
 import com.github.vladosspasi.mes.R;
 import com.github.vladosspasi.mes.databinding.FragmentAddingnewmesInfoBinding;
+import static com.github.vladosspasi.mes.DataBaseHelper.*;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,8 +47,8 @@ public class AddNewMesInfoFragment extends Fragment {
                 //TODO скрывать клавиатуру по нажатию на пустое место экрана
                 if (validateForm()) {
                     Bundle arg = new Bundle();
-                    arg.putString("mesName", String.valueOf(binding.editboxAddNewMesInfoName.getText()));
-                    arg.putString("mesComment", String.valueOf(binding.editboxAddNewMesInfoComment.getText()));
+                    arg.putString(FIELD_MES_NAME, String.valueOf(binding.editboxAddNewMesInfoName.getText()));
+                    arg.putString(FIELD_MES_COMMENT, String.valueOf(binding.editboxAddNewMesInfoComment.getText()));
 
                     NavHostFragment.findNavController(AddNewMesInfoFragment.this)
                             .navigate(R.id.action_AddNewMesInfoFragment_to_AddNewMesValuesFragment, arg);
