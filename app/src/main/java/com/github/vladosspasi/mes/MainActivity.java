@@ -1,18 +1,22 @@
 package com.github.vladosspasi.mes;
 
+import android.content.ContentValues;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import com.github.vladosspasi.mes.AddingNewMeasurement.AddNewDeviceInfoFragment;
+import com.github.vladosspasi.mes.AddingNewMeasurement.AddNewDeviceScalesFragment;
+import com.github.vladosspasi.mes.AddingNewMeasurement.AddNewMesInfoFragment;
+import com.github.vladosspasi.mes.AddingNewMeasurement.AddNewMesValuesFragment;
 import com.github.vladosspasi.mes.databinding.ActivityMainBinding;
 
-import android.view.Menu;
-import android.view.MenuItem;
+import static com.github.vladosspasi.mes.DataBaseHelper.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,22 +37,6 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-
-
-
-        //directory = getActivity.getBaseContext().getFilesDir().toString();
-        //db = getBaseContext().openOrCreateDatabase("MesDB.db", MODE_PRIVATE, null);
-
-
-        /*
-        //Плавающая кнопка
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
     }
 
     //Создание меню на трех точках
@@ -85,4 +73,5 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 }

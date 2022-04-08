@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+
+    <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text=""
+            android:hint="-Название измерения-"
+            android:ems="10"
+            android:id="@+id/editbox_addNewMesInfo_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textbox_addNewMesInfo_nameTitle"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="8dp"
+            android:minHeight="48dp" tools:ignore="SpeakableTextPresentCheck"/>
+    <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:gravity="start|top"
+            android:ems="10"
+            android:hint="-Комментарий/описание-"
+            android:id="@+id/editbox_addNewMesInfo_comment"
+            app:layout_constraintTop_toBottomOf="@+id/textbox_addNewMesInfo_commentTitle"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp" app:layout_constraintHorizontal_bias="0.0"
+            android:layout_marginTop="8dp" android:minHeight="48dp" tools:ignore="SpeakableTextPresentCheck"/>
+    <TextView
+            android:text="Введите название измерения:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textbox_addNewMesInfo_nameTitle"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
+            app:layout_constraintHorizontal_bias="0.0"/>
+    <TextView
+            android:text="Введите комментарий/описание:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textbox_addNewMesInfo_commentTitle"
+            app:layout_constraintTop_toBottomOf="@+id/editbox_addNewMesInfo_name"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp" android:layout_marginEnd="16dp" android:layout_marginTop="8dp"
+            app:layout_constraintHorizontal_bias="0.0"/>
+    <TextView
+            android:text="Информация как это заполнять с примерами"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textbox_addNewMesInfo_info"
+            app:layout_constraintTop_toBottomOf="@+id/editbox_addNewMesInfo_comment"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp" android:layout_marginTop="8dp" android:layout_marginEnd="16dp"
+            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintBottom_toTopOf="@+id/button_addNewMesInfo_toNextScreen"
+            app:layout_constraintVertical_bias="1.0" android:layout_marginBottom="16dp"/>
+    <Button
+            android:text="Далее"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/button_addNewMesInfo_toNextScreen"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp" app:layout_constraintHorizontal_bias="1.0"
+            android:layout_marginBottom="16dp"/>
+</android.support.constraint.ConstraintLayout>

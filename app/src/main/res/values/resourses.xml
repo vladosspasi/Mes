@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="types_array">
+        <item>Численный</item>
+        <item>Строковый</item>
+        <item>Булевый</item>
+        <item>Диапазон</item>
+    </string-array>
+</resources>

@@ -12,10 +12,9 @@
             android:label="MainMenu"
             tools:layout="@layout/fragment_mainmenu">
 
-
         <action
-                android:id="@+id/action_MainmenuFragment_to_AddDataFragment"
-                app:destination="@id/AddDataFragment"/>
+                android:id="@+id/action_MainmenuFragment_to_AddNewMesInfoFragment"
+                app:destination="@id/AddNewMesInfoFragment"/>
 
         <action
                 android:id="@+id/action_MainmenuFragment_to_ListFragment"
@@ -35,22 +34,102 @@
 
     </fragment>
 
-    <!--Экран добавления-->
+    <!--Экраны добавления-->
+
+    <!--Экран добавления измерения (инфо)-->
     <fragment
-            android:id="@+id/AddDataFragment"
-            android:name="com.github.vladosspasi.mes.AddDataFragment"
-            android:label="Add Fragment"
-            tools:layout="@layout/fragment_screen_add">
+            android:id="@+id/AddNewMesInfoFragment"
+            android:name="com.github.vladosspasi.mes.AddingNewMeasurement.AddNewMesInfoFragment"
+            android:label="Add Mes Info Fragment"
+    >
+        <action
+                android:id="@+id/action_AddNewMesInfoFragment_to_AddNewMesValuesFragment"
+                app:destination="@id/AddNewMesValuesFragment"/>
+
+    </fragment>
+
+    <!--Экран добавления измерения (величины)-->
+    <fragment
+            android:id="@+id/AddNewMesValuesFragment"
+            android:name="com.github.vladosspasi.mes.AddingNewMeasurement.AddNewMesValuesFragment"
+            android:label="Add Mes Values Fragment"
+    >
 
         <action
-                android:id="@+id/action_AddDataFragment_to_MainmenuFragment"
-                app:destination="@id/MainmenuFragment"/>
+                android:id="@+id/action_AddNewMesValuesFragment_to_AddNewMesSelectDeviceFragment"
+                app:destination="@id/AddNewMesSelectDeviceFragment"/>
+        <argument android:name="mesName" app:argType="string"/>
+        <argument android:name="mesComment" app:argType="string"/>
+        <argument android:name="ScalesIds" app:argType="java.util.ArrayList"/>
+    </fragment>
+
+    <!--Экран выбора прибора для добавления шкалы в измерение-->
+
+    <fragment
+            android:id="@+id/AddNewMesSelectDeviceFragment"
+            android:name="com.github.vladosspasi.mes.AddingNewMeasurement.SelectDeviceForAddingFragment"
+            android:label="Select Device for adding"
+    >
+
+    <action
+            android:id="@+id/action_AddNewMesSelectDeviceFragment_to_AddNewMesSelectScaleFragment"
+            app:destination="@id/AddNewMesSelectScaleFragment"/>
+
+        <action
+                android:id="@+id/action_AddNewMesSelectDeviceFragment_to_AddNewDeviceInfoFragment"
+                app:destination="@id/AddNewDeviceInfoFragment"/>
+        <argument android:name="ScalesIds" app:argType="java.util.ArrayList"/>
+
+
+    </fragment>
+
+    <!--Экран выбора шкалы прибора для добавления в измерение-->
+
+    <fragment
+            android:id="@+id/AddNewMesSelectScaleFragment"
+            android:name="com.github.vladosspasi.mes.AddingNewMeasurement.SelectScaleForAddingFragment"
+            android:label="Select Device for adding"
+    >
+
+        <action
+                android:id="@+id/action_AddNewMesSelectScaleFragment_to_AddNewValuesFragment"
+                app:destination="@id/AddNewMesValuesFragment"/>
+        <argument android:name="DeviceId" app:argType="integer"/>
+        <argument android:name="ScalesIds" app:argType="java.util.ArrayList"/>
+    </fragment>
+
+
+
+    <!--Экран добавления прибора (инфо)-->
+    <fragment
+            android:id="@+id/AddNewDeviceInfoFragment"
+            android:name="com.github.vladosspasi.mes.AddingNewMeasurement.AddNewDeviceInfoFragment"
+            android:label="Add Device Info Fragment"
+    >
+        <action
+                android:id="@+id/action_AddNewDeviceInfoFragment_to_AddNewDeviceScalesFragment"
+                app:destination="@id/AddNewDeviceScalesFragment"/>
+
+    </fragment>
+
+
+    <!--Экран добавления прибора (шкалы)-->
+    <fragment
+            android:id="@+id/AddNewDeviceScalesFragment"
+            android:name="com.github.vladosspasi.mes.AddingNewMeasurement.AddNewDeviceScalesFragment"
+            android:label="Add Device Scales Fragment"
+    >
+        <action
+                android:id="@+id/action_AddNewDeviceScalesFragment_to_AddNewMesValuesFragment"
+                app:destination="@id/AddNewMesValuesFragment"/>
+
     </fragment>
 
     <!--Экран просмотра списка измерений-->
+
     <fragment
             android:id="@+id/ListFragment"
-            android:name="com.github.vladosspasi.mes.ListFragment"
+            android:name="com.github.vladosspasi.mes.ViewingMesList.ListFragment"
             android:label="List Fragment"
     >
 
@@ -62,15 +141,12 @@
                 android:id="@+id/action_ListFragment_to_ViewMesFragment"
                 app:destination="@id/ViewMesFragment"/>
 
-
-
-
     </fragment>
 
     <!--Экран настроек-->
     <fragment
             android:id="@+id/SettingsFragment"
-            android:name="com.github.vladosspasi.mes.SettingsFragment"
+            android:name="com.github.vladosspasi.mes.Settings.SettingsFragment"
             android:label="Settings Fragment"
             tools:layout="@layout/fragment_screen_settings">
 
@@ -83,7 +159,7 @@
     <!--Экран импорта/экспорта-->
     <fragment
             android:id="@+id/ImpExpFragment"
-            android:name="com.github.vladosspasi.mes.ImpExpFragment"
+            android:name="com.github.vladosspasi.mes.ExportImport.ImpExpFragment"
             android:label="ImpExp Fragment"
             tools:layout="@layout/fragment_screen_impexp">
 
@@ -107,7 +183,7 @@
     <!--Экран просмотра измерения-->
     <fragment
             android:id="@+id/ViewMesFragment"
-            android:name="com.github.vladosspasi.mes.ViewMesFragment"
+            android:name="com.github.vladosspasi.mes.ViewingMesList.ViewMesFragment"
             android:label="View Mes Fragment"
             tools:layout="@layout/fragment_screen_viewmes">
 
@@ -124,7 +200,7 @@
     <!--Экран просмотра прибора-->
     <fragment
             android:id="@+id/ViewDeviceFragment"
-            android:name="com.github.vladosspasi.mes.ViewDeviceFragment"
+            android:name="com.github.vladosspasi.mes.ViewingMesList.ViewDeviceFragment"
             android:label="View Device Fragment"
             tools:layout="@layout/fragment_screen_viewdevice">
 

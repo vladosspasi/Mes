@@ -1,4 +1,4 @@
-package com.github.vladosspasi.mes;
+package com.github.vladosspasi.mes.Settings;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,11 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import com.github.vladosspasi.mes.databinding.FragmentScreenAddBinding;
+import com.github.vladosspasi.mes.databinding.FragmentScreenSettingsBinding;
 
-public class AddDataFragment extends Fragment {
+public class SettingsFragment extends Fragment {
 
-    private FragmentScreenAddBinding binding;
+    private FragmentScreenSettingsBinding binding;
 
     @Override
     public View onCreateView(
@@ -18,7 +18,7 @@ public class AddDataFragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        binding = FragmentScreenAddBinding.inflate(inflater, container, false);
+        binding = FragmentScreenSettingsBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
     }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+    <TextView
+            android:text="Введите информацию о измерительном приборе:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textbox_addNewDevice_title"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
+            app:layout_constraintHorizontal_bias="0.0"/>
+    <TextView
+            android:text="Название прибора"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textbox_addNewDevice_nameTitle"
+            app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDevice_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" android:layout_marginTop="16dp" app:layout_constraintHorizontal_bias="0.0"/>
+    <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text=""
+            android:ems="10"
+            android:id="@+id/editbox_addNewDevice_name"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDevice_nameTitle" android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp" app:layout_constraintHorizontal_bias="0.0"
+            android:layout_marginEnd="16dp" android:minHeight="48dp" tools:ignore="SpeakableTextPresentCheck"
+            android:hint="Лабораторный ампермерт 1"/>
+    <TextView
+            android:text="Комментарий к прибору:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textbox_addNewDevice_commentTitle"
+            app:layout_constraintTop_toBottomOf="@+id/editbox_addNewDevice_name"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp" android:layout_marginEnd="16dp" android:layout_marginTop="16dp"
+            app:layout_constraintHorizontal_bias="0.0"/>
+    <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:gravity="start|top"
+            android:ems="10"
+            android:id="@+id/editbox_addNewDevice_comment"
+            app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDevice_commentTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" android:layout_marginTop="8dp" app:layout_constraintHorizontal_bias="0.0"
+            tools:ignore="SpeakableTextPresentCheck" android:minHeight="48dp"
+            android:hint="Корпус А, лаборатория А-330, стенд 4"/>
+    <TextView
+            android:text="Введите тип прибора:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textbox_addNewDevice_typeTitle"
+            app:layout_constraintTop_toBottomOf="@+id/editbox_addNewDevice_comment"
+            android:layout_marginTop="16dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"/>
+    <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text=""
+            android:ems="10"
+            android:id="@+id/editbox_addNewDevice_type"
+            app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDevice_typeTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/button_addNewDevice_toNextScreen"
+            app:layout_constraintVertical_bias="0.0" android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" tools:ignore="SpeakableTextPresentCheck"
+            android:hint="Амперметр Aster AMP-991 400/5А"/>
+    <Button
+            android:text="Далее"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/button_addNewDevice_toNextScreen"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp" app:layout_constraintHorizontal_bias="1.0"
+            android:layout_marginEnd="16dp"/>
+</android.support.constraint.ConstraintLayout>

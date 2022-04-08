@@ -1,4 +1,4 @@
-package com.github.vladosspasi.mes;
+package com.github.vladosspasi.mes.ViewingMesList;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -11,18 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
-import com.github.vladosspasi.mes.databinding.FragmentScreenListBinding;
+import com.github.vladosspasi.mes.DataBaseHelper;
+import com.github.vladosspasi.mes.R;
+import com.github.vladosspasi.mes.RecyclerItemClickListener;
 import com.github.vladosspasi.mes.databinding.FragmentScreenViewmesBinding;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class ViewMesFragment extends Fragment {

@@ -11,6 +11,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.github.vladosspasi.mes.DataBaseHelper.*;
+import static com.github.vladosspasi.mes.DataBaseHelper.FIELD_SCALES_ERROR;
+
 public class ScalesListAdapter extends RecyclerView.Adapter<ScalesListAdapter.ScalesListElementHolder> {
 
 
@@ -54,7 +57,6 @@ public class ScalesListAdapter extends RecyclerView.Adapter<ScalesListAdapter.Sc
 
         //Все поля элемента списка с которыми происходит взаимодействие
         private TextView nameTextView;
-        private TextView commentTextView;
         private TextView typeTextView;
         private TextView minvalueTextView;
         private TextView maxvalueTextView;
@@ -64,7 +66,6 @@ public class ScalesListAdapter extends RecyclerView.Adapter<ScalesListAdapter.Sc
         public ScalesListElementHolder(View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.textView_scalesListElementView_name);
-            commentTextView = itemView.findViewById(R.id.textView_scalesListElementView_comment);
             typeTextView = itemView.findViewById(R.id.textView_scalesListElementView_type);
             minvalueTextView = itemView.findViewById(R.id.textView_scalesListElementView_minvalue);
             maxvalueTextView = itemView.findViewById(R.id.textView_scalesListElementView_maxvalue);
@@ -74,12 +75,11 @@ public class ScalesListAdapter extends RecyclerView.Adapter<ScalesListAdapter.Sc
         //Заполнение элементов вью данными
         public void bind(ContentValues element) {
 
-            nameTextView.setText("Название: " + element.getAsString("name"));
-            commentTextView.setText("Комментарий: " + element.getAsString("comment"));
-            typeTextView.setText("Тип данных: "+ element.getAsString("type"));
-            minvalueTextView.setText("Минимальное значение: " + element.getAsString("minvalue"));
-            maxvalueTextView.setText("Минимальное значение: " + element.getAsString("maxvalue"));
-            errorTextView.setText("Минимальное значение: " + element.getAsString("error"));
+            nameTextView.setText("Название: " + element.getAsString(FIELD_SCALES_NAME));
+            typeTextView.setText("Тип данных: "+ element.getAsString("valueType"));
+            minvalueTextView.setText("Минимальное значение: " + element.getAsString(FIELD_SCALES_MINVALUE));
+            maxvalueTextView.setText("Максимальное значение: " + element.getAsString(FIELD_SCALES_MAXVALUE));
+            errorTextView.setText("Погрешность: " + element.getAsString(FIELD_SCALES_ERROR));
         }
 
     }

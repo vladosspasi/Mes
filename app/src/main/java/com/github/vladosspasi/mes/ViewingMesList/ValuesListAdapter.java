@@ -1,4 +1,4 @@
-package com.github.vladosspasi.mes;
+package com.github.vladosspasi.mes.ViewingMesList;
 
 import android.content.ContentValues;
 import android.support.annotation.NonNull;
@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.github.vladosspasi.mes.R;
 
 import java.util.ArrayList;
 import java.util.List;

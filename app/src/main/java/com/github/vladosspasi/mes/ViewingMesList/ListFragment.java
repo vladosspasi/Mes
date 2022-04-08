@@ -1,4 +1,4 @@
-package com.github.vladosspasi.mes;
+package com.github.vladosspasi.mes.ViewingMesList;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import com.github.vladosspasi.mes.DataBaseHelper;
+import com.github.vladosspasi.mes.R;
+import com.github.vladosspasi.mes.RecyclerItemClickListener;
 import com.github.vladosspasi.mes.databinding.FragmentScreenListBinding;
 
 import java.util.ArrayList;
