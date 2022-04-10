@@ -60,9 +60,9 @@ public class SelectDeviceForAddingFragment extends Fragment {
                     public void onItemClick(View view, int position) {
                         int id = deviceList.get(position).getAsInteger("id");
                         Bundle arg = new Bundle();
-                        Bundle prevarg = getArguments();
+                        //Bundle prevarg = getArguments();
                         arg.putInt("DeviceId", id);
-                        arg.putParcelableArrayList("ScalesIds", prevarg.getParcelableArrayList("ScalesIds"));
+                        //arg.putParcelableArrayList("ScalesIds", prevarg.getParcelableArrayList("ScalesIds"));
                         NavHostFragment.findNavController(SelectDeviceForAddingFragment.this)
                                 .navigate(R.id.action_AddNewMesSelectDeviceFragment_to_AddNewMesSelectScaleFragment, arg);
                     }

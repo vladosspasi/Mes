@@ -1,11 +1,10 @@
 package com.github.vladosspasi.mes;
-
 import android.os.Bundle;
 import android.view.*;
-
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import com.github.vladosspasi.mes.AddingNewMeasurement.MeasurementGlobalInfo;
 import com.github.vladosspasi.mes.databinding.FragmentMainmenuBinding;
 
 public class MainMenuFragment extends Fragment{
@@ -83,6 +82,8 @@ public class MainMenuFragment extends Fragment{
                         .navigate(R.id.action_MainmenuFragment_to_ImpExpFragment);
             }
         });
+
+        MeasurementGlobalInfo.clearAll();
 
     }
 

@@ -11,11 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.navigation.fragment.NavHostFragment;
 import com.github.vladosspasi.mes.*;
-import com.github.vladosspasi.mes.databinding.FragmentSelectdeviceforaddingBinding;
 import com.github.vladosspasi.mes.databinding.FragmentSelectscaleforaddingBinding;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SelectScaleForAddingFragment extends Fragment {
 
@@ -56,13 +53,19 @@ public class SelectScaleForAddingFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, int position) {
                         int id = scalesList.get(position).getAsInteger("id");
-                        Bundle arg = getArguments();
 
-                        ArrayList<ParsInteger> scalesIds = arg.getParcelableArrayList("ScalesIds");
-                        scalesIds.add(new ParsInteger(id));
-                        arg.putParcelableArrayList("ScalesIds", scalesIds);
+
+
+
+                        ArrayList<Integer> scalesIds = MeasurementGlobalInfo.getScalesIds();
+                        scalesIds.add(id);
+                        MeasurementGlobalInfo.setScalesIds( scalesIds);
+                        //Bundle arg = getArguments();
+
+                       // ArrayList<ParsInteger> scalesIds = arg.getParcelableArrayList("ScalesIds");
+                        //arg.putParcelableArrayList("ScalesIds", scalesIds);
                         NavHostFragment.findNavController(SelectScaleForAddingFragment.this)
-                                .navigate(R.id.action_AddNewMesSelectScaleFragment_to_AddNewValuesFragment, arg);
+                                .navigate(R.id.action_AddNewMesSelectScaleFragment_to_AddNewValuesFragment/*, arg*/);
                     }
                     @Override
                     public void onLongItemClick(View view, int position) {

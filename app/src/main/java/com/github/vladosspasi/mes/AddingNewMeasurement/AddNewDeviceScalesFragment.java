@@ -79,6 +79,7 @@ public class AddNewDeviceScalesFragment extends Fragment {
                 R.array.types_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        //spinner.setSelection(1);
     }
 
     @Override
@@ -118,7 +119,7 @@ public class AddNewDeviceScalesFragment extends Fragment {
 
             DataBaseHelper dataBaseHelper = getInstance(getContext());
 
-            int typeId = (int) binding.spinnerAddNewDeviceScalesType.getSelectedItemPosition();
+            int typeId = (int) binding.spinnerAddNewDeviceScalesType.getSelectedItemPosition()+1;
             String type = dataBaseHelper.getValueTypeById(typeId+1);
             scale.put("valueType", type);
             scale.put(FIELD_SCALES_VALUETYPEID, typeId);

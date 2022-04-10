@@ -58,6 +58,11 @@
         <action
                 android:id="@+id/action_AddNewMesValuesFragment_to_AddNewMesSelectDeviceFragment"
                 app:destination="@id/AddNewMesSelectDeviceFragment"/>
+
+        <action
+                android:id="@+id/action_AddNewMesValuesFragment_to_MainMenuFragment"
+                app:destination="@id/MainmenuFragment"/>
+
         <argument android:name="mesName" app:argType="string"/>
         <argument android:name="mesComment" app:argType="string"/>
         <argument android:name="ScalesIds" app:argType="java.util.ArrayList"/>

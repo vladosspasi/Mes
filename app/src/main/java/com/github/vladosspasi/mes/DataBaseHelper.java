@@ -5,10 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Logger;
-
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -389,6 +390,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             scaleInfo.put("error", scalesCursor.getString(2));
             scaleInfo.put("minvalue", scalesCursor.getString(3));
             scaleInfo.put("maxvalue", scalesCursor.getString(4));
+
+            //TODO TYPE не считывается со спиннера при добавлении нового прибора
             scaleInfo.put("type", scalesCursor.getString(5));
 
             deviceData.add(scaleInfo);
@@ -446,6 +449,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void addDevice(ContentValues deviceInfo, ArrayList<ContentValues> scales) {
         SQLiteDatabase db = getReadableDatabase();
         Long deviceId = db.insert(TABLE_DEVICES_NAME, null, deviceInfo);
+
+        //Log.println(Log.DEBUG, "КОНТРОЛЬ" , "ID прибора: "+ deviceId);
+
         ContentValues scale;
 
         for (int i = 0; i < scales.size(); i++) {
@@ -453,6 +459,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             scale.remove("valueType");
             scale.put(FIELD_SCALES_DEVICEID, deviceId);
             db.insert(TABLE_SCALES_NAME, null, scale);
+            Log.println(Log.DEBUG, "КОНТРОЛЬ" , "ID шкалы "+ i +" : "+ deviceId);
         }
     }
 
@@ -460,6 +467,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ArrayList<ContentValues> scalesList = new ArrayList<>();
         ContentValues scale;
         SQLiteDatabase db = getReadableDatabase();
+
+        Log.println(Log.DEBUG, "КОНТРОЛЬ" , "ID полученный прибора: "+ deviceId);
 
         Cursor scalesCursor = db.rawQuery("SELECT " +
                 TABLE_SCALES_NAME + "." + FIELD_SCALES_ID + " , " +
@@ -478,13 +487,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         scalesCursor.moveToFirst();
         do {
             scale = new ContentValues();
-            scale.put("id", scalesCursor.getString(0));
+            scale.put("id", scalesCursor.getInt(0));
             scale.put("name", scalesCursor.getString(1));
             scale.put("unit", scalesCursor.getString(2));
             scale.put("error", scalesCursor.getString(3));
             scale.put("minvalue", scalesCursor.getString(4));
             scale.put("maxvalue", scalesCursor.getString(5));
-            scale.put("type", scalesCursor.getString(6));
+            scale.put("valueType", scalesCursor.getString(6));
+
+            Log.println(Log.DEBUG, "КОНТРОЛЬ:" , "ТИП ДАННЫХ СЧИТАННОЙ ШКАЛЫ:" + scale.getAsString("type"));
+
 
             scalesList.add(scale);
             scalesCursor.moveToNext();
@@ -532,12 +544,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return scaleInfo;
     }
 
-    public boolean addMeasurement(ContentValues mesInfo, ArrayList<ContentValues> scalesInfo, ArrayList<ContentValues> valuesInfo){
+    public boolean addMeasurement(ContentValues mesInfo, ArrayList<ContentValues> scalesInfo, ArrayList<String> valuesInfo){
+
+        //Log.println(Log.DEBUG, "КОНТРОЛЬ" , "Название измерения: "+ mesInfo.getAsString(FIELD_MES_NAME));
+        //Log.println(Log.DEBUG, "КОНТРОЛЬ" , "Комментарий измерения: "+ mesInfo.getAsString(FIELD_MES_NAME));
 
         SQLiteDatabase db = getWritableDatabase();
         Date date = new Date();
-        mesInfo.put(FIELD_MES_DATE, date.toString());
-        int mesId = (int)db.insert(TABLE_MES_NAME,null,mesInfo);
+        ContentValues measurementInfo = new ContentValues();
+        measurementInfo.put(FIELD_MES_DATE, date.toString());
+        measurementInfo.put(FIELD_MES_NAME, mesInfo.getAsString(FIELD_MES_NAME));
+        measurementInfo.put(FIELD_MES_COMMENT, mesInfo.getAsString(FIELD_MES_COMMENT));
+
+        int mesId = (int)db.insert(TABLE_MES_NAME,null, measurementInfo);
         ContentValues record = new ContentValues();
 
         for(int i = 0; i<valuesInfo.size();i++){
@@ -545,7 +564,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             record = new ContentValues();
             record.put(FIELD_VALUES_MESID,mesId);
             record.put(FIELD_VALUES_SCALEID, scaleId);
-            record.put(FIELD_VALUES_VALUE, valuesInfo.get(i).getAsString("value"));
+            record.put(FIELD_VALUES_VALUE, valuesInfo.get(i));
             db.insert(TABLE_VALUES_NAME,null,record);
         }
         return true;

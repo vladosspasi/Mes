@@ -2,12 +2,11 @@ package com.github.vladosspasi.mes.AddingNewMeasurement;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.BundleCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +21,6 @@ import java.util.regex.Pattern;
 public class AddNewMesInfoFragment extends Fragment {
 
     private FragmentAddingnewmesInfoBinding binding;
-    private ContentValues mesInfo;
-
 
     @Override
     public View onCreateView(
@@ -36,7 +33,6 @@ public class AddNewMesInfoFragment extends Fragment {
 
     }
 
-
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -46,12 +42,14 @@ public class AddNewMesInfoFragment extends Fragment {
 
                 //TODO скрывать клавиатуру по нажатию на пустое место экрана
                 if (validateForm()) {
-                    Bundle arg = new Bundle();
-                    arg.putString(FIELD_MES_NAME, String.valueOf(binding.editboxAddNewMesInfoName.getText()));
-                    arg.putString(FIELD_MES_COMMENT, String.valueOf(binding.editboxAddNewMesInfoComment.getText()));
+                    MeasurementGlobalInfo.setMesName(String.valueOf(binding.editboxAddNewMesInfoName.getText()));
+                    MeasurementGlobalInfo.setMesComment(String.valueOf(binding.editboxAddNewMesInfoComment.getText()));
+
+                    Log.println(Log.DEBUG, "КОНТРОЛЬ" , "Название измерения: "+ MeasurementGlobalInfo.getMesName());
+
 
                     NavHostFragment.findNavController(AddNewMesInfoFragment.this)
-                            .navigate(R.id.action_AddNewMesInfoFragment_to_AddNewMesValuesFragment, arg);
+                            .navigate(R.id.action_AddNewMesInfoFragment_to_AddNewMesValuesFragment);
                 }
             }
         });
@@ -64,6 +62,8 @@ public class AddNewMesInfoFragment extends Fragment {
     }
 
     private boolean validateForm() {
+
+       /*
         //Получение строк
         String name = String.valueOf(binding.editboxAddNewMesInfoName.getText());
         String comment = String.valueOf(binding.editboxAddNewMesInfoComment.getText());
@@ -130,7 +130,7 @@ public class AddNewMesInfoFragment extends Fragment {
             alert.show();
             return false;
         }
-
+*/
         return true;
     }
 }
