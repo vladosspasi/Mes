@@ -4,14 +4,14 @@
                                              android:layout_height="match_parent">
 
     <TextView
-            android:text="Список измеренных величин:"
+            android:text="@string/newMesValues_listLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content" android:id="@+id/textbox_addNewMesDevice_scalesTitle"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textbox_addNewMesDevice_title" android:layout_marginTop="16dp"
             android:layout_marginStart="16dp" android:layout_marginEnd="16dp" android:gravity="center"/>
     <TextView
-            android:text="Добавьте необходимые приборы и их шкалы, а затем внесите измеренные величины."
+            android:text="@string/newMesValues_helpText"
             android:layout_width="0dp"
             android:layout_height="wrap_content" android:id="@+id/textbox_addNewMesDevice_title"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
@@ -19,13 +19,14 @@
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
             app:layout_constraintHorizontal_bias="0.0"/>
     <Button
-            android:text="Добавить шкалу"
+            android:text="@string/newMesValues_button_add"
             android:layout_width="0dp"
             android:layout_height="wrap_content" android:id="@+id/button_addNewMesDevice_addvalue"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="16dp" android:layout_marginStart="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/button_addNewMesDevice_saveMes"
-            app:layout_constraintHorizontal_bias="1.0" android:layout_marginEnd="8dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="1.0" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/button_addNewMesDevice_selectTemplate"
+            android:layout_marginStart="8dp" android:layout_marginBottom="8dp"/>
     <android.support.v7.widget.RecyclerView
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -36,12 +37,19 @@
             app:layout_constraintBottom_toTopOf="@+id/button_addNewMesDevice_addvalue"
             android:layout_marginBottom="16dp" android:id="@+id/res_addNewMesDevice_values"/>
     <Button
-            android:text="Сохранить измерение"
+            android:text="@string/newMesValues_button_template"
             android:layout_width="0dp"
             android:layout_height="wrap_content" android:id="@+id/button_addNewMesDevice_saveMes"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/button_addNewMesDevice_addvalue"
-            android:layout_marginEnd="16dp" android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@+id/button_addNewMesDevice_addvalue"
-            app:layout_constraintTop_toTopOf="@+id/button_addNewMesDevice_addvalue"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
+    />
+    <Button
+            android:text="@string/newMesValues_button_save"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/button_addNewMesDevice_selectTemplate"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/button_addNewMesDevice_saveMes" android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp" android:layout_marginBottom="8dp"/>
 </android.support.constraint.ConstraintLayout>

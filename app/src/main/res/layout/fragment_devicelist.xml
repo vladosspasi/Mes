@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
+            android:id="@+id/recyclerView_devices_list"/>
+    <TextView
+            android:text="Список пуст. Вы пока еще не добавили ни одного прибора."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView_devices_noDevicesTitle"
+            app:layout_constraintTop_toTopOf="@+id/recyclerView_devices_list"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:gravity="center" android:visibility="invisible"/>
+    <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true" app:srcCompat="@android:drawable/ic_menu_add"
+            android:id="@+id/floatingActionButton_devices_add"
+            app:fabSize="normal" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp" android:layout_marginStart="16dp" android:layout_marginTop="16dp"
+            app:layout_constraintVertical_bias="1.0" app:layout_constraintHorizontal_bias="1.0"
+            tools:ignore="SpeakableTextPresentCheck"/>
+
+
+</android.support.constraint.ConstraintLayout>

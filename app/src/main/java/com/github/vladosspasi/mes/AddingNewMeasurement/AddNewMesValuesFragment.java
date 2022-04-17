@@ -2,13 +2,11 @@ package com.github.vladosspasi.mes.AddingNewMeasurement;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +16,7 @@ import com.github.vladosspasi.mes.DataBaseHelper;
 import com.github.vladosspasi.mes.R;
 import com.github.vladosspasi.mes.databinding.FragmentAddingnewmesScalesanddevicesBinding;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static com.github.vladosspasi.mes.DataBaseHelper.*;
 
@@ -31,7 +30,7 @@ public class AddNewMesValuesFragment extends Fragment {
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
+            @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
 
@@ -42,8 +41,6 @@ public class AddNewMesValuesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Log.println(Log.DEBUG, "КОНТРОЛЬ1" , "Название измерения: "+ MeasurementGlobalInfo.getMesName());
-
         mesInfo = new ContentValues();
         mesInfo.put(FIELD_MES_NAME, MeasurementGlobalInfo.getMesName());
         mesInfo.put(FIELD_MES_COMMENT, MeasurementGlobalInfo.getMesComment());
@@ -51,7 +48,7 @@ public class AddNewMesValuesFragment extends Fragment {
         scalesIds = MeasurementGlobalInfo.getScalesIds();
 
         AddingValueListAdapter adapter = new AddingValueListAdapter();
-        recyclerView = getActivity().findViewById(R.id.res_addNewMesDevice_values);
+        recyclerView = Objects.requireNonNull(getActivity()).findViewById(R.id.res_addNewMesDevice_values);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         if (scalesIds.size()==0) {
@@ -68,7 +65,6 @@ public class AddNewMesValuesFragment extends Fragment {
             ContentValues scaleInfo;
 
             for (Integer id : scalesIds) {
-                scaleInfo = new ContentValues();
                 scaleInfo = dataBaseHelper.getScaleById(id);
                 scalesInfo.add(scaleInfo);
             }
@@ -77,47 +73,27 @@ public class AddNewMesValuesFragment extends Fragment {
             recyclerView.setAdapter(adapter);
         }
 
-        binding.buttonAddNewMesDeviceAddvalue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addNewScaleToList();
-            }
-        });
+        binding.buttonAddNewMesDeviceAddvalue.setOnClickListener(view1 -> addNewScaleToList());
 
-        binding.buttonAddNewMesDeviceSaveMes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (validate()) {
+        binding.buttonAddNewMesDeviceSaveMes.setOnClickListener(view12 -> {
+            if (validate()) {
 
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-                    if(saveMesToDataBase()){
-                        alertDialog.setTitle("Готово!");
-                        alertDialog.setMessage("Измерение успешно добавлено в базу данных");
-
-                        MeasurementGlobalInfo.clearAll();
-                        NavHostFragment.findNavController(AddNewMesValuesFragment.this)
-                                .navigate(R.id.action_AddNewMesValuesFragment_to_MainMenuFragment);
-
-
-                    }else{
-                        alertDialog.setTitle("Ошибка!");
-                        alertDialog.setMessage("Возникла непредвиденная проблема.");
-
-                        MeasurementGlobalInfo.clearAll();
-                        NavHostFragment.findNavController(AddNewMesValuesFragment.this)
-                                .navigate(R.id.action_AddNewMesValuesFragment_to_MainMenuFragment);
-
-                    }
-
-                    alertDialog.setPositiveButton("Ок", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.cancel();
-                        }
-                    });
-                    alertDialog.show();
-
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                if(saveMesToDataBase()){
+                    alertDialog.setTitle("Готово!");
+                    alertDialog.setMessage("Измерение успешно добавлено в базу данных");
+                }else{
+                    alertDialog.setTitle("Ошибка!");
+                    alertDialog.setMessage("Возникла непредвиденная проблема.");
                 }
+
+                MeasurementGlobalInfo.clearAll();
+                NavHostFragment.findNavController(AddNewMesValuesFragment.this)
+                        .navigate(R.id.action_AddNewMesValuesFragment_to_MainMenuFragment);
+
+                alertDialog.setPositiveButton("Ок", (dialogInterface, i) -> dialogInterface.cancel());
+                alertDialog.show();
+
             }
         });
     }
@@ -145,15 +121,11 @@ public class AddNewMesValuesFragment extends Fragment {
 
         ArrayList<String> valuesList = new ArrayList<>();
 
-        ContentValues value;
-
         //Считывание введенных значений
         for(int i =0; i<scalesInfo.size(); i++){
-            value = new ContentValues();
             View view = recyclerView.getChildAt(i);
-            EditText editValue = (EditText) view.findViewById(R.id.editText_AddingValueListElementView_valueEnter);
+            EditText editValue = view.findViewById(R.id.editText_AddingValueListElementView_valueEnter);
             valuesList.add(editValue.getText().toString());
-            Log.println(Log.DEBUG, "КОНТРОЛЬ" , "Значение: "+ editValue.getText().toString());
         }
 
         DataBaseHelper dataBaseHelper = getInstance(getContext());

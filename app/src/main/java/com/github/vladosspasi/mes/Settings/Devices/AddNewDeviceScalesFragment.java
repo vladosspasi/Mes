@@ -1,4 +1,4 @@
-package com.github.vladosspasi.mes.AddingNewMeasurement;
+package com.github.vladosspasi.mes.Settings.Devices;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -101,13 +101,15 @@ public class AddNewDeviceScalesFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 NavHostFragment.findNavController(AddNewDeviceScalesFragment.this).
-                        navigate(R.id.action_AddNewDeviceScalesFragment_to_AddNewMesValuesFragment);
+                        navigate(R.id.action_AddNewDeviceScalesFragment_to_DevicesFragment);
             }
         });
         success.show();
 
         dataBaseHelper.close();
     }
+
+    //TODO тип прибора
 
     public void addScaleToList(){
         if (validateForm()){
@@ -121,7 +123,9 @@ public class AddNewDeviceScalesFragment extends Fragment {
 
             int typeId = (int) binding.spinnerAddNewDeviceScalesType.getSelectedItemPosition()+1;
             String type = dataBaseHelper.getValueTypeById(typeId+1);
-            scale.put("valueType", type);
+            //TODO тут хуета с типом данных
+
+            scale.put("type", type);
             scale.put(FIELD_SCALES_VALUETYPEID, typeId);
             scale.put(FIELD_SCALES_MINVALUE, String.valueOf(binding.editboxAddNewDeviceScalesFromvalue.getText()));
             scale.put(FIELD_SCALES_MAXVALUE, String.valueOf(binding.editboxAddNewDeviceScalesTovalue.getText()));

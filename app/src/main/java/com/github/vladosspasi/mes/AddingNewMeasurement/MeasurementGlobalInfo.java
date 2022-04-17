@@ -1,7 +1,5 @@
 package com.github.vladosspasi.mes.AddingNewMeasurement;
 
-import android.content.ContentValues;
-
 import java.util.ArrayList;
 
 public class MeasurementGlobalInfo {
@@ -9,7 +7,6 @@ public class MeasurementGlobalInfo {
     private static String mesName;
     private static String mesComment;
     private static ArrayList<Integer> scalesIds;
-    private static ArrayList<String> values;
 
     public static String getMesName() {
         return mesName;
@@ -37,20 +34,9 @@ public class MeasurementGlobalInfo {
         MeasurementGlobalInfo.scalesIds = scalesIds;
     }
 
-    public static ArrayList<String> getValues() {
-        if(values==null) values = new ArrayList<>();
-        return values;
-    }
-
-    public static void setValues(ArrayList<String> values) {
-        if(values==null) values = new ArrayList<>();
-        MeasurementGlobalInfo.values = values;
-    }
-
     public static void clearAll(){
-        mesName = new String();
-        mesComment = new String();
+        mesName = "";
+        mesComment = "";
         scalesIds = new ArrayList<>();
-        values = new ArrayList<>();
     }
 }

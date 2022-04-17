@@ -1,4 +1,4 @@
-package com.github.vladosspasi.mes.AddingNewMeasurement;
+package com.github.vladosspasi.mes.Settings.Devices;
 
 
 import android.os.Bundle;
@@ -10,11 +10,6 @@ import android.view.ViewGroup;
 import androidx.navigation.fragment.NavHostFragment;
 import com.github.vladosspasi.mes.R;
 import com.github.vladosspasi.mes.databinding.FragmentCreatedeviceInfoBinding;
-
-import static com.github.vladosspasi.mes.DataBaseHelper.*;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class AddNewDeviceInfoFragment extends Fragment {
 

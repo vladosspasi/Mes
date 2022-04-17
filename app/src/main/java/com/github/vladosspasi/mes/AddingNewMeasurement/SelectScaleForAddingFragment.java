@@ -13,17 +13,17 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.github.vladosspasi.mes.*;
 import com.github.vladosspasi.mes.databinding.FragmentSelectscaleforaddingBinding;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SelectScaleForAddingFragment extends Fragment {
 
     private FragmentSelectscaleforaddingBinding binding;
     private RecyclerView recyclerView;
     private ArrayList<ContentValues> scalesList;
-    private int deviceId;
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
+            @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
 
@@ -36,7 +36,7 @@ public class SelectScaleForAddingFragment extends Fragment {
 
         Bundle arg = this.getArguments();
         assert arg != null;
-        deviceId = arg.getInt("DeviceId");
+        int deviceId = arg.getInt("DeviceId");
 
         DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(getContext());
         scalesList = dataBaseHelper.getScalesByDeviceId(deviceId);
@@ -44,7 +44,7 @@ public class SelectScaleForAddingFragment extends Fragment {
         ScalesListAdapter scalesListAdapter = new ScalesListAdapter();
         scalesListAdapter.setItems(scalesList);
 
-        recyclerView = getActivity().findViewById(R.id.recView_SelectScale_scales);
+        recyclerView = Objects.requireNonNull(getActivity()).findViewById(R.id.recView_SelectScale_scales);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(scalesListAdapter);
 
@@ -54,16 +54,9 @@ public class SelectScaleForAddingFragment extends Fragment {
                     public void onItemClick(View view, int position) {
                         int id = scalesList.get(position).getAsInteger("id");
 
-
-
-
                         ArrayList<Integer> scalesIds = MeasurementGlobalInfo.getScalesIds();
                         scalesIds.add(id);
                         MeasurementGlobalInfo.setScalesIds( scalesIds);
-                        //Bundle arg = getArguments();
-
-                       // ArrayList<ParsInteger> scalesIds = arg.getParcelableArrayList("ScalesIds");
-                        //arg.putParcelableArrayList("ScalesIds", scalesIds);
                         NavHostFragment.findNavController(SelectScaleForAddingFragment.this)
                                 .navigate(R.id.action_AddNewMesSelectScaleFragment_to_AddNewValuesFragment/*, arg*/);
                     }

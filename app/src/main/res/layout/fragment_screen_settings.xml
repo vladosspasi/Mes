@@ -7,17 +7,11 @@
         xmlns:tools="http://schemas.android.com/tools"
         tools:context=".Settings.SettingsFragment"
 >
-
-    <TextView
-            android:id="@+id/textview_first"
+    <Button
+            android:text="Сохраненные приборы"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Settings Fragment"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-
-            app:layout_constraintHorizontal_bias="0.498" android:layout_marginTop="276dp"/>
-
-
+            android:layout_height="wrap_content" android:id="@+id/button_Settings_goToDevices"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp" android:layout_marginEnd="16dp" app:layout_constraintHorizontal_bias="0.0"/>
 </android.support.constraint.ConstraintLayout>

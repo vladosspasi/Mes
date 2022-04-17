@@ -74,7 +74,7 @@ public class ListFragment extends Fragment {
 
                             AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
                             dialog.setMessage("Выберите действие");
-                            dialog.setTitle("Измерение" + mes.get(position).getAsString("name"));
+                            dialog.setTitle("Измерение " + mes.get(position).getAsString("name"));
                             dialog.setNegativeButton("Удалить", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {

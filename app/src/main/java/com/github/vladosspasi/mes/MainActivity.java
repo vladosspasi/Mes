@@ -1,22 +1,12 @@
 package com.github.vladosspasi.mes;
 
-import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import com.github.vladosspasi.mes.AddingNewMeasurement.AddNewDeviceInfoFragment;
-import com.github.vladosspasi.mes.AddingNewMeasurement.AddNewDeviceScalesFragment;
-import com.github.vladosspasi.mes.AddingNewMeasurement.AddNewMesInfoFragment;
-import com.github.vladosspasi.mes.AddingNewMeasurement.AddNewMesValuesFragment;
 import com.github.vladosspasi.mes.databinding.ActivityMainBinding;
-
-import static com.github.vladosspasi.mes.DataBaseHelper.*;
 
 public class MainActivity extends AppCompatActivity {
 

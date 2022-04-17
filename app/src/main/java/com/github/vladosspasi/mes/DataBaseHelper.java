@@ -7,13 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Logger;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
-
-    private static Logger log = Logger.getLogger(DataBaseHelper.class.getName());
 
     //экземпляр объекта (синглтон)
     private static DataBaseHelper sInstance;
@@ -179,14 +177,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         scale.put(FIELD_SCALES_DEVICEID, deviceId);
         long scaleId = sqLiteDatabase.insert(TABLE_SCALES_NAME, null, scale);
 
-        //TODO дату надо поменять в нормальный формат
         Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E dd.MM.yyyy ',' HH:mm:ss");
 
         //измерение
         ContentValues mes = new ContentValues();
         mes.put(FIELD_MES_NAME, "тест 1");
         mes.put(FIELD_MES_COMMENT, "тестовое измерение для проверки");
-        mes.put(FIELD_MES_DATE, date.toString());
+        mes.put(FIELD_MES_DATE, simpleDateFormat.format(date));
         long mesId = sqLiteDatabase.insert(TABLE_MES_NAME, null, mes);
 
         //снятыe величины
@@ -390,8 +388,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             scaleInfo.put("error", scalesCursor.getString(2));
             scaleInfo.put("minvalue", scalesCursor.getString(3));
             scaleInfo.put("maxvalue", scalesCursor.getString(4));
-
-            //TODO TYPE не считывается со спиннера при добавлении нового прибора
             scaleInfo.put("type", scalesCursor.getString(5));
 
             deviceData.add(scaleInfo);
@@ -450,25 +446,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Long deviceId = db.insert(TABLE_DEVICES_NAME, null, deviceInfo);
 
-        //Log.println(Log.DEBUG, "КОНТРОЛЬ" , "ID прибора: "+ deviceId);
-
         ContentValues scale;
 
         for (int i = 0; i < scales.size(); i++) {
             scale = scales.get(i);
-            scale.remove("valueType");
+            scale.remove("type");
             scale.put(FIELD_SCALES_DEVICEID, deviceId);
             db.insert(TABLE_SCALES_NAME, null, scale);
-            Log.println(Log.DEBUG, "КОНТРОЛЬ" , "ID шкалы "+ i +" : "+ deviceId);
         }
     }
 
+    //Тут процедура аналогичная как для получения данных о приборе
     public ArrayList<ContentValues> getScalesByDeviceId(int deviceId) {
         ArrayList<ContentValues> scalesList = new ArrayList<>();
         ContentValues scale;
         SQLiteDatabase db = getReadableDatabase();
-
-        Log.println(Log.DEBUG, "КОНТРОЛЬ" , "ID полученный прибора: "+ deviceId);
 
         Cursor scalesCursor = db.rawQuery("SELECT " +
                 TABLE_SCALES_NAME + "." + FIELD_SCALES_ID + " , " +
@@ -493,10 +485,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             scale.put("error", scalesCursor.getString(3));
             scale.put("minvalue", scalesCursor.getString(4));
             scale.put("maxvalue", scalesCursor.getString(5));
-            scale.put("valueType", scalesCursor.getString(6));
-
-            Log.println(Log.DEBUG, "КОНТРОЛЬ:" , "ТИП ДАННЫХ СЧИТАННОЙ ШКАЛЫ:" + scale.getAsString("type"));
-
+            scale.put("type", scalesCursor.getString(6));
 
             scalesList.add(scale);
             scalesCursor.moveToNext();
@@ -546,13 +535,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public boolean addMeasurement(ContentValues mesInfo, ArrayList<ContentValues> scalesInfo, ArrayList<String> valuesInfo){
 
-        //Log.println(Log.DEBUG, "КОНТРОЛЬ" , "Название измерения: "+ mesInfo.getAsString(FIELD_MES_NAME));
-        //Log.println(Log.DEBUG, "КОНТРОЛЬ" , "Комментарий измерения: "+ mesInfo.getAsString(FIELD_MES_NAME));
-
         SQLiteDatabase db = getWritableDatabase();
         Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E dd.MM.yyyy ',' HH:mm:ss");
+
         ContentValues measurementInfo = new ContentValues();
-        measurementInfo.put(FIELD_MES_DATE, date.toString());
+        measurementInfo.put(FIELD_MES_DATE, simpleDateFormat.format(date));
         measurementInfo.put(FIELD_MES_NAME, mesInfo.getAsString(FIELD_MES_NAME));
         measurementInfo.put(FIELD_MES_COMMENT, mesInfo.getAsString(FIELD_MES_COMMENT));
 
@@ -571,4 +559,50 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         //TODO после добавления криво отображается
     }
+
+    public void deleteDeviceById(int id){
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT " +
+                TABLE_MES_NAME+"."+FIELD_MES_ID+ ", "+
+                TABLE_VALUES_NAME+"." +FIELD_VALUES_ID+", "+
+                TABLE_SCALES_NAME+"." +FIELD_SCALES_ID+", "+
+                TABLE_DEVICES_NAME+"." +FIELD_DEVICES_ID+" "+
+                "FROM " + TABLE_MES_NAME + " "+
+                "JOIN " + TABLE_VALUES_NAME +" "+
+                "ON " + TABLE_VALUES_NAME+"." +FIELD_VALUES_MESID + " = "+TABLE_MES_NAME+"."+FIELD_MES_ID+ " "+
+                "JOIN " + TABLE_SCALES_NAME +" "+
+                "ON " + TABLE_SCALES_NAME +"."+ FIELD_SCALES_ID+" = "+TABLE_VALUES_NAME+"."+FIELD_VALUES_SCALEID+ " "+
+                "JOIN " + TABLE_DEVICES_NAME +" "+
+                "ON " + TABLE_DEVICES_NAME +"."+ FIELD_DEVICES_ID+" = "+TABLE_SCALES_NAME+"."+FIELD_SCALES_DEVICEID+ " "+
+                "WHERE " + TABLE_DEVICES_NAME+"." +FIELD_DEVICES_ID+" =" +id+
+                ";",null,null);
+
+        cursor.moveToFirst();
+
+        ArrayList<Integer> mesIds = new ArrayList<>();
+        ArrayList<Integer> valuesIds = new ArrayList<>();
+        if(cursor.getCount()!=0){
+            do{
+                mesIds.add(cursor.getInt(0));
+                valuesIds.add(cursor.getInt(1));
+                cursor.moveToNext();
+            }while (!cursor.isAfterLast());
+
+            for (int i:valuesIds) {
+                db.delete(TABLE_VALUES_NAME, FIELD_VALUES_ID + "=" + i, null);
+            }
+            for (int i:mesIds) {
+                db.delete(TABLE_MES_NAME, FIELD_MES_ID + "=" + i, null);
+            }
+
+        }
+        cursor.close();
+        db.delete(TABLE_SCALES_NAME, FIELD_SCALES_DEVICEID + "=" + id, null);
+        db.delete(TABLE_DEVICES_NAME, FIELD_DEVICES_ID + "=" + id, null);
+        db.close();
+    }
+
+
 }

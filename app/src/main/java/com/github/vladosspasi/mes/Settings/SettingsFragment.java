@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+import com.github.vladosspasi.mes.AddingNewMeasurement.AddNewMesValuesFragment;
+import com.github.vladosspasi.mes.R;
 import com.github.vladosspasi.mes.databinding.FragmentScreenSettingsBinding;
 
 public class SettingsFragment extends Fragment {
@@ -25,6 +28,16 @@ public class SettingsFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        binding.buttonSettingsGoToDevices.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(SettingsFragment.this)
+                        .navigate(R.id.action_SettingsFragment_to_DevicesFragment);
+            }
+        });
+
+
     }
 
     @Override

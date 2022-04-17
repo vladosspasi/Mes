@@ -61,7 +61,9 @@
 
         <action
                 android:id="@+id/action_AddNewMesValuesFragment_to_MainMenuFragment"
-                app:destination="@id/MainmenuFragment"/>
+                app:destination="@id/MainmenuFragment"
+                app:popUpTo="@+id/MainmenuFragment"
+                app:popUpToInclusive="true"/>
 
         <argument android:name="mesName" app:argType="string"/>
         <argument android:name="mesComment" app:argType="string"/>
@@ -80,9 +82,6 @@
             android:id="@+id/action_AddNewMesSelectDeviceFragment_to_AddNewMesSelectScaleFragment"
             app:destination="@id/AddNewMesSelectScaleFragment"/>
 
-        <action
-                android:id="@+id/action_AddNewMesSelectDeviceFragment_to_AddNewDeviceInfoFragment"
-                app:destination="@id/AddNewDeviceInfoFragment"/>
         <argument android:name="ScalesIds" app:argType="java.util.ArrayList"/>
 
 
@@ -98,17 +97,20 @@
 
         <action
                 android:id="@+id/action_AddNewMesSelectScaleFragment_to_AddNewValuesFragment"
-                app:destination="@id/AddNewMesValuesFragment"/>
+                app:destination="@id/AddNewMesValuesFragment"
+                app:popUpTo="@+id/AddNewMesValuesFragment"
+                app:popUpToInclusive="true"
+
+        />
         <argument android:name="DeviceId" app:argType="integer"/>
         <argument android:name="ScalesIds" app:argType="java.util.ArrayList"/>
+
     </fragment>
-
-
 
     <!--Экран добавления прибора (инфо)-->
     <fragment
             android:id="@+id/AddNewDeviceInfoFragment"
-            android:name="com.github.vladosspasi.mes.AddingNewMeasurement.AddNewDeviceInfoFragment"
+            android:name="com.github.vladosspasi.mes.Settings.Devices.AddNewDeviceInfoFragment"
             android:label="Add Device Info Fragment"
     >
         <action
@@ -121,12 +123,12 @@
     <!--Экран добавления прибора (шкалы)-->
     <fragment
             android:id="@+id/AddNewDeviceScalesFragment"
-            android:name="com.github.vladosspasi.mes.AddingNewMeasurement.AddNewDeviceScalesFragment"
+            android:name="com.github.vladosspasi.mes.Settings.Devices.AddNewDeviceScalesFragment"
             android:label="Add Device Scales Fragment"
     >
         <action
-                android:id="@+id/action_AddNewDeviceScalesFragment_to_AddNewMesValuesFragment"
-                app:destination="@id/AddNewMesValuesFragment"/>
+                android:id="@+id/action_AddNewDeviceScalesFragment_to_DevicesFragment"
+                app:destination="@id/DevicesFragment"/>
 
     </fragment>
 
@@ -158,8 +160,28 @@
         <action
                 android:id="@+id/action_SettingsFragment_to_MainmenuFragment"
                 app:destination="@id/MainmenuFragment"/>
+
+        <action
+                android:id="@+id/action_SettingsFragment_to_DevicesFragment"
+                app:destination="@id/DevicesFragment"/>
     </fragment>
 
+    <!--Экран просмотра приборов-->
+    <fragment
+            android:id="@+id/DevicesFragment"
+            android:name="com.github.vladosspasi.mes.Settings.Devices.DevicesListFragment"
+            android:label="Devices Fragment"
+            tools:layout="@layout/fragment_devicelist">
+
+        <action
+                android:id="@+id/action_DevicesFragment_to_ViewDeviceFragment"
+                app:destination="@id/ViewDeviceFragment"/>
+
+        <action
+                android:id="@+id/action_DevicesFragment_to_AddNewDeviceInfoFragment"
+                app:destination="@id/AddNewDeviceInfoFragment"/>
+
+    </fragment>
 
     <!--Экран импорта/экспорта-->
     <fragment
@@ -178,12 +200,7 @@
             android:id="@+id/InfoFragment"
             android:name="com.github.vladosspasi.mes.InfoFragment"
             android:label="Info Fragment"
-            tools:layout="@layout/fragment_screen_info">
-
-        <action
-                android:id="@+id/action_InfoFragment_to_MainmenuFragment"
-                app:destination="@id/MainmenuFragment"/>
-    </fragment>
+            tools:layout="@layout/fragment_screen_info"/>
 
     <!--Экран просмотра измерения-->
     <fragment

@@ -1,17 +1,25 @@
 <resources>
+
+    <!--==============================================================-->
+    <!--Названия экранов и приложения-->
+    <!--==============================================================-->
+
     <string name="app_name">Mes</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="action_settings">Настройки</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!--==============================================================-->
+    <!--Общее-->
+    <!--==============================================================-->
 
+    <string name="OK">Ок</string>
+    <string name="Cancel">Отмена</string>
+    <string name="Delete">Удалить</string>
+    <string name="Next">Далее</string>
 
-    <!--Главный экран-->
+    <!--==============================================================-->
+    <!--Меню-->
+    <!--==============================================================-->
+
     <string name="mainmenu_title">MES</string>
     <string name="mainmenu_autor">Алябьев В.О., Кафедра ВМСС, НИУ "МЭИ", 2022 г.</string>
 
@@ -19,5 +27,54 @@
     <string name="mainmenu_toSettingsScreen">Настройки</string>
     <string name="mainmenu_toListScreen">Просмотреть данные</string>
     <string name="mainmenu_toImpExpScreen">Импорт/экспорт</string>
+
+
+
+    <!--==============================================================-->
+    <!--Часть добавления данных-->
+    <!--==============================================================-->
+
+    <!--Экран ввода основной информации о измерении-->
+    <string name="AddNewMes_label">Новое измерение</string>
+
+    <string name="newMesName_label">Введите название измерения:</string>
+    <string name="newMesName_hint">Измерение 1</string>
+    <string name="newMesComment_label">Введите комментарий для измерения:</string>
+    <string name="newMesComment_hint">Комментарий</string>
+    <string name="newMes_helpText">Введите такое название, чтобы вы могли отличить данное измерение от других.\nВ комментарий внесите дополнительную информацию о измерении. Это может быть принадлежность к какой-либо серии опытов, развернутое описание измерения и т.п.</string>
+
+    <!--Экран ввода шкал и значений измерения-->
+
+    <string name="newMesValues_helpText">Добавьте необходимые шкалы, либо используйте шаблон, затем внесите измеренные величины.</string>
+    <string name="newMesValues_listLabel_noValues">Вы пока что не добавили ни одной шкалы.</string>
+    <string name="newMesValues_listLabel">Измеренные величины:</string>
+    <string name="newMesValues_button_add">Добавить шкалу</string>
+    <string name="newMesValues_button_save">Выбрать шаблон</string>
+    <string name="newMesValues_button_template">Сохранить измерение</string>
+
+    <!--==============================================================-->
+    <!--Часть просмотра данных-->
+    <!--==============================================================-->
+
+
+
+
+    <!--==============================================================-->
+    <!--Часть настроек данных-->
+    <!--==============================================================-->
+
+
+
+
+
+    <!--==============================================================-->
+    <!--Часть импорта/экспорта данных-->
+    <!--==============================================================-->
+
+
+
+
+
+
 
 </resources>

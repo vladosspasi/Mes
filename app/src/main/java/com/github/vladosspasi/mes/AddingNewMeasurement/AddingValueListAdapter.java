@@ -1,12 +1,12 @@
 package com.github.vladosspasi.mes.AddingNewMeasurement;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 import android.content.ContentValues;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import com.github.vladosspasi.mes.R;
 
@@ -15,15 +15,11 @@ import java.util.List;
 
 public class AddingValueListAdapter extends RecyclerView.Adapter<AddingValueListAdapter.AddingValueListElementHolder> {
 
-    private List<ContentValues> elementsList = new ArrayList<>();
+    private final List<ContentValues> elementsList = new ArrayList<>();
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setItems(List<ContentValues> elems) {
         elementsList.addAll(elems);
-        notifyDataSetChanged();
-    }
-
-    public void clearItems() {
-        elementsList.clear();
         notifyDataSetChanged();
     }
 
@@ -45,14 +41,13 @@ public class AddingValueListAdapter extends RecyclerView.Adapter<AddingValueList
         return elementsList.size();
     }
 
-    class AddingValueListElementHolder extends RecyclerView.ViewHolder {
+    static class AddingValueListElementHolder extends RecyclerView.ViewHolder {
 
         //Все поля элемента списка с которыми происходит взаимодействие
-        private TextView deviceNameTextView;
-        private TextView scaleNameTextView;
-        private TextView unitTextView;
-        private TextView errorTextView;
-        private EditText valueEditText;
+        private final TextView deviceNameTextView;
+        private final TextView scaleNameTextView;
+        private final TextView unitTextView;
+        private final TextView errorTextView;
 
         //Конструктор для поиска элементов лэйаута
         public AddingValueListElementHolder(View itemView) {
@@ -61,7 +56,6 @@ public class AddingValueListAdapter extends RecyclerView.Adapter<AddingValueList
             scaleNameTextView = itemView.findViewById(R.id.textView_AddingValueListElementView_scaleName);
             unitTextView = itemView.findViewById(R.id.textView_AddingValueListElementView_unit);
             errorTextView = itemView.findViewById(R.id.textView_AddingValueListElementView_error);
-            valueEditText = itemView.findViewById(R.id.editText_AddingValueListElementView_valueEnter);
         }
 
         //Заполнение элементов вью данными

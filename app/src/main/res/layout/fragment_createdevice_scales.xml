@@ -1,191 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
                                              android:layout_height="match_parent">
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-            android:text="Диапазон значений:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_diapTitle"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintTop_toBottomOf="@+id/editbox_addNewDeviceScales_error"
-            android:layout_marginTop="8dp"/>
-    <TextView
-            android:text="Шкалы прибора:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_listtitle"
-            app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDeviceScales_title" android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="16dp" android:layout_marginTop="16dp"
-            android:gravity="center"/>
-    <android.support.v7.widget.RecyclerView
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDeviceScales_listtitle"
-            android:layout_marginTop="8dp"
-            android:id="@+id/rec_addNewDeviceScales_scalesList"/>
-    <TextView
-            android:text="Добавьте шкалы новому измерительному прибору."
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_title"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
-            app:layout_constraintHorizontal_bias="0.0"/>
-    <Button
-            android:text="Сохранить прибор"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/button_addNewDeviceScales_save"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="16dp" android:layout_marginBottom="8dp"/>
-    <Button
-            android:text="Добавить шкалу"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/button_addNewDeviceScales_addScale"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginBottom="8dp" android:layout_marginStart="16dp"
-    />
-    <TextView
-            android:text="Добавить новую шкалу:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_addTitle"
-            app:layout_constraintTop_toBottomOf="@+id/divider9" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp" android:layout_marginStart="16dp"/>
-    <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editbox_addNewDeviceScales_name"
-            app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDeviceScales_nameTitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
-            app:layout_constraintHorizontal_bias="0.0" android:minHeight="48dp" android:hint="Напряжение"
-            style="@style/Widget.AppCompat.EditText"/>
-    <TextView
-            android:text="Единица измерения:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_unitTitle"
-            app:layout_constraintTop_toBottomOf="@+id/editbox_addNewDeviceScales_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
-            app:layout_constraintHorizontal_bias="0.0" android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"/>
-    <View
-            android:id="@+id/divider9"
-            android:layout_width="0dp"
-            android:layout_height="3dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp" app:layout_constraintTop_toBottomOf="@+id/rec_addNewDeviceScales_scalesList"
-            android:layout_marginTop="8dp"/>
-    <TextView
-            android:text="Название шкалы:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_nameTitle"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDeviceScales_addTitle"
-            android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
-            app:layout_constraintHorizontal_bias="0.0"/>
-    <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editbox_addNewDeviceScales_unit"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDeviceScales_unitTitle"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
-            app:layout_constraintHorizontal_bias="0.0" android:minHeight="48dp" android:hint="В"/>
-    <TextView
-            android:text="Введите погрешность (без +-) в тех же единицах:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_errorTitle"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_addNewDeviceScales_type"
-            android:layout_marginTop="8dp"/>
-    <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editbox_addNewDeviceScales_error"
-            app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDeviceScales_errorTitle"
-            android:layout_marginTop="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"
-            android:minHeight="48dp" android:hint="0.1"/>
-    <TextView
-            android:text="Тип данных:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_typeTitle"
-            app:layout_constraintTop_toBottomOf="@+id/editbox_addNewDeviceScales_unit"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"/>
-    <Spinner
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" android:id="@+id/spinner_addNewDeviceScales_type"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/textbox_addNewDeviceScales_typeTitle"
-            app:layout_constraintTop_toTopOf="@+id/textbox_addNewDeviceScales_typeTitle" android:minHeight="48dp"
-            app:layout_constraintStart_toEndOf="@+id/textbox_addNewDeviceScales_typeTitle"
-            android:layout_marginStart="16dp"
+        <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="8dp" android:paddingVertical="8dp"
+            >
+                <TextView
+                        android:text="Добавьте шкалы новому измерительному прибору."
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_title"
+                        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0" android:gravity="center"
+                        android:layout_marginBottom="8dp" />
+                <TextView
+                        android:text="Шкалы прибора:"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_listtitle"
+                        app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDeviceScales_title"
+                        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                        android:gravity="center"
+                        android:layout_marginBottom="8dp"/>
+                <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="284dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDeviceScales_listtitle"
+                        android:id="@+id/rec_addNewDeviceScales_scalesList"
+                        android:layout_marginBottom="8dp">
+                </android.support.v7.widget.RecyclerView>
+                <View
+                        android:id="@+id/divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="?android:attr/listDivider"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
 
-            tools:ignore="SpeakableTextPresentCheck"/>
-    <TextView
-            android:text="от"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_fromLabel"
-            android:layout_marginTop="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="16dp"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintBottom_toBottomOf="@+id/editbox_addNewDeviceScales_fromvalue"
-            app:layout_constraintTop_toTopOf="@+id/editbox_addNewDeviceScales_fromvalue"/>
-    <TextView
-            android:text="до"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_toLabel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/textbox_addNewDeviceScales_fromLabel"
-            app:layout_constraintTop_toTopOf="@+id/textbox_addNewDeviceScales_fromLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.52" android:layout_marginBottom="8dp"/>
-    <EditText
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editbox_addNewDeviceScales_tovalue"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
-            app:layout_constraintTop_toTopOf="@+id/editbox_addNewDeviceScales_fromvalue"
-            app:layout_constraintBottom_toBottomOf="@+id/editbox_addNewDeviceScales_fromvalue"
-            app:layout_constraintStart_toEndOf="@+id/textbox_addNewDeviceScales_toLabel"
-            android:layout_marginStart="16dp" android:hint="10"/>
-    <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editbox_addNewDeviceScales_fromvalue"
-            app:layout_constraintStart_toEndOf="@+id/textbox_addNewDeviceScales_fromLabel"
-            app:layout_constraintEnd_toStartOf="@+id/textbox_addNewDeviceScales_toLabel"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp" android:minHeight="48dp" android:hint="0"
-            app:layout_constraintBottom_toTopOf="@+id/button_addNewDeviceScales_addScale"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDeviceScales_diapTitle"
-            android:layout_marginTop="8dp" app:layout_constraintVertical_bias="0.0"/>
+                        app:layout_constraintTop_toBottomOf="@+id/rec_addNewDeviceScales_scalesList"
+                        android:layout_marginBottom="8dp"
+                />
+                <TextView
+                        android:text="Добавить новую шкалу"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_addTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/divider9" app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:gravity="center"
+                        android:layout_marginBottom="8dp"/>
+                <TextView
+                        android:text="Название шкалы:"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_nameTitle"
+                        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+
+                        app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDeviceScales_addTitle"
+
+                        app:layout_constraintHorizontal_bias="0.0"
+                        android:layout_marginBottom="8dp"/>
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/editbox_addNewDeviceScales_name"
+                        app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDeviceScales_nameTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+
+                        app:layout_constraintHorizontal_bias="0.0" android:minHeight="48dp" android:hint="Напряжение"
+                        style="@style/Widget.AppCompat.EditText"
+                        android:layout_marginBottom="8dp"/>
+                <TextView
+                        android:text="Единица измерения:"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_unitTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/editbox_addNewDeviceScales_name"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        android:layout_marginBottom="8dp"
+                />
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/editbox_addNewDeviceScales_unit"
+                        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDeviceScales_unitTitle"
+                        app:layout_constraintHorizontal_bias="0.0" android:minHeight="48dp" android:hint="В"
+                        android:layout_marginBottom="8dp"/>
+                <TextView
+                        android:text="Тип данных:"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_typeTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/editbox_addNewDeviceScales_unit"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginBottom="8dp"
+                />
+                <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/spinner_addNewDeviceScales_type"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/textbox_addNewDeviceScales_typeTitle"
+                        app:layout_constraintTop_toTopOf="@+id/textbox_addNewDeviceScales_typeTitle"
+                        android:minHeight="48dp"
+                        app:layout_constraintStart_toEndOf="@+id/textbox_addNewDeviceScales_typeTitle"
+                        android:layout_marginBottom="8dp"
+
+                />
+                <TextView
+                        android:text="Введите погрешность (без +-) в тех же единицах:"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_errorTitle"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintTop_toBottomOf="@+id/spinner_addNewDeviceScales_type"
+                        android:layout_marginBottom="8dp"
+                />
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/editbox_addNewDeviceScales_fromvalue"
+                        app:layout_constraintStart_toEndOf="@+id/textbox_addNewDeviceScales_fromLabel"
+                        app:layout_constraintEnd_toStartOf="@+id/textbox_addNewDeviceScales_toLabel"
+                        android:minHeight="48dp" android:hint="0"
+                        app:layout_constraintBottom_toTopOf="@+id/button_addNewDeviceScales_addScale"
+
+                        app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDeviceScales_diapTitle"
+                        app:layout_constraintVertical_bias="0.0"
+                        android:layout_marginBottom="8dp"/>
+                <TextView
+                        android:text="Диапазон значений:"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_diapTitle"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintTop_toBottomOf="@+id/editbox_addNewDeviceScales_error"
+                        android:layout_marginBottom="8dp"
+                />
+                <TextView
+                        android:text="от"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_fromLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:layout_constraintBottom_toBottomOf="@+id/editbox_addNewDeviceScales_fromvalue"
+                        app:layout_constraintTop_toTopOf="@+id/editbox_addNewDeviceScales_fromvalue"
+                        android:layout_marginBottom="8dp"/>
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/editbox_addNewDeviceScales_error"
+                        app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDeviceScales_errorTitle"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"
+                        android:minHeight="48dp" android:hint="0.1"
+                        android:layout_marginBottom="8dp"/>
+                <TextView
+                        android:text="до"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_toLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/textbox_addNewDeviceScales_fromLabel"
+                        app:layout_constraintTop_toTopOf="@+id/textbox_addNewDeviceScales_fromLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintHorizontal_bias="0.52"
+                        android:layout_marginBottom="8dp"/>
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/editbox_addNewDeviceScales_tovalue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/editbox_addNewDeviceScales_fromvalue"
+                        app:layout_constraintBottom_toBottomOf="@+id/editbox_addNewDeviceScales_fromvalue"
+                        app:layout_constraintStart_toEndOf="@+id/textbox_addNewDeviceScales_toLabel"
+                        android:hint="10"
+                        android:layout_marginBottom="8dp"/>
+                <Button
+                        android:text="Добавить шкалу"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/button_addNewDeviceScales_addScale"
+                        app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginBottom="8dp"
+
+                />
+                <Button
+                        android:text="Сохранить прибор"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/button_addNewDeviceScales_save"
+                        app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginBottom="8dp"
+                />
+            </LinearLayout>
+        </ScrollView>
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

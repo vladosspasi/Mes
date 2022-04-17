@@ -8,7 +8,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:text=""
-            android:hint="-Название измерения-"
+            android:hint="@string/newMesName_hint"
             android:ems="10"
             android:id="@+id/editbox_addNewMesInfo_name"
             app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
             android:inputType="textMultiLine"
             android:gravity="start|top"
             android:ems="10"
-            android:hint="-Комментарий/описание-"
+            android:hint="@string/newMesComment_hint"
             android:id="@+id/editbox_addNewMesInfo_comment"
             app:layout_constraintTop_toBottomOf="@+id/textbox_addNewMesInfo_commentTitle"
             android:layout_marginEnd="16dp"
@@ -30,7 +30,7 @@
             android:layout_marginStart="16dp" app:layout_constraintHorizontal_bias="0.0"
             android:layout_marginTop="8dp" android:minHeight="48dp" tools:ignore="SpeakableTextPresentCheck"/>
     <TextView
-            android:text="Введите название измерения:"
+            android:text="@string/newMesName_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/textbox_addNewMesInfo_nameTitle"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
             android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
             app:layout_constraintHorizontal_bias="0.0"/>
     <TextView
-            android:text="Введите комментарий/описание:"
+            android:text="@string/newMesComment_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/textbox_addNewMesInfo_commentTitle"
             app:layout_constraintTop_toBottomOf="@+id/editbox_addNewMesInfo_name"
@@ -46,7 +46,7 @@
             android:layout_marginStart="16dp" android:layout_marginEnd="16dp" android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_bias="0.0"/>
     <TextView
-            android:text="Информация как это заполнять с примерами"
+            android:text="@string/newMes_helpText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/textbox_addNewMesInfo_info"
             app:layout_constraintTop_toBottomOf="@+id/editbox_addNewMesInfo_comment"
@@ -55,7 +55,7 @@
             app:layout_constraintHorizontal_bias="0.0" app:layout_constraintBottom_toTopOf="@+id/button_addNewMesInfo_toNextScreen"
             app:layout_constraintVertical_bias="1.0" android:layout_marginBottom="16dp"/>
     <Button
-            android:text="Далее"
+            android:text="@string/Next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/button_addNewMesInfo_toNextScreen"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"

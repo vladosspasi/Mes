@@ -17,6 +17,7 @@ import com.github.vladosspasi.mes.RecyclerItemClickListener;
 import com.github.vladosspasi.mes.databinding.FragmentSelectdeviceforaddingBinding;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SelectDeviceForAddingFragment extends Fragment {
 
@@ -26,7 +27,7 @@ public class SelectDeviceForAddingFragment extends Fragment {
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
+            @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
 
@@ -40,19 +41,11 @@ public class SelectDeviceForAddingFragment extends Fragment {
         DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(getContext());
         deviceList = dataBaseHelper.getDevices();
         dataBaseHelper.close();
-        recyclerView = getActivity().findViewById(R.id.recView_SelectDevice_devices);
+        recyclerView = Objects.requireNonNull(getActivity()).findViewById(R.id.recView_SelectDevice_devices);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         DevicesListAdapter devicesListAdapter = new DevicesListAdapter();
         devicesListAdapter.setItems(deviceList);
         recyclerView.setAdapter(devicesListAdapter);
-
-        binding.buttonSelectDeviceAddnewDevice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(SelectDeviceForAddingFragment.this)
-                        .navigate(R.id.action_AddNewMesSelectDeviceFragment_to_AddNewDeviceInfoFragment);
-            }
-        });
 
         binding.recViewSelectDeviceDevices.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
@@ -60,9 +53,7 @@ public class SelectDeviceForAddingFragment extends Fragment {
                     public void onItemClick(View view, int position) {
                         int id = deviceList.get(position).getAsInteger("id");
                         Bundle arg = new Bundle();
-                        //Bundle prevarg = getArguments();
                         arg.putInt("DeviceId", id);
-                        //arg.putParcelableArrayList("ScalesIds", prevarg.getParcelableArrayList("ScalesIds"));
                         NavHostFragment.findNavController(SelectDeviceForAddingFragment.this)
                                 .navigate(R.id.action_AddNewMesSelectDeviceFragment_to_AddNewMesSelectScaleFragment, arg);
                     }
