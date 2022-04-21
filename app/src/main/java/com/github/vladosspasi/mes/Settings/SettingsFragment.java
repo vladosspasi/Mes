@@ -37,6 +37,13 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        binding.buttonSettingsGoToTemplates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(SettingsFragment.this)
+                        .navigate(R.id.action_SettingsFragment_to_templatesListFragment);
+            }
+        });
 
     }
 

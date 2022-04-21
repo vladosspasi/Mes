@@ -1,4 +1,4 @@
-package com.github.vladosspasi.mes.AddingNewMeasurement;
+package com.github.vladosspasi.mes.Adapters;
 
 import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;

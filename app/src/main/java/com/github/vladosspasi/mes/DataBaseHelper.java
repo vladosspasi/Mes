@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import com.github.vladosspasi.mes.Settings.Templates.Template;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     //название дб
     private static final String DATABASE_NAME = "mesdb";
     //версия дб
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     //Константы-названия таблиц и полей
     //Таблица Измерений
@@ -61,7 +62,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_TEMPLATES_NAME = "templates";
     public static final String FIELD_TEMPLATES_NAME = "tempname";
     public static final String FIELD_TEMPLATES_COMMENT = "tempcomment";
-    public static final String FIELD_TEMPLATES_ID = "_d";
+    public static final String FIELD_TEMPLATES_ID = "_id";
 
     //Таблица шаблонов-шкал
     public static final String TABLE_TEMPSCALES_NAME = "tempscales";
@@ -385,7 +386,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 TABLE_DEVICES_NAME + "." + FIELD_DEVICES_COMMENT + " , " +
                 TABLE_DEVICES_NAME + "." + FIELD_DEVICES_TYPE + "  " +
                 "FROM " + TABLE_DEVICES_NAME + " " +
-                "WHERE " + FIELD_DEVICES_ID +"="+deviceId+""+
+                "WHERE " + FIELD_DEVICES_ID + "=" + deviceId + "" +
                 ";", null);
 
         deviceCursor.moveToFirst();
@@ -548,25 +549,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                         FIELD_SCALES_ERROR, FIELD_SCALES_MINVALUE, FIELD_SCALES_MAXVALUE, FIELD_SCALES_DEVICEID},
                 FIELD_SCALES_ID + " = " + id, null, null, null, null);
         cursor.moveToFirst();
-        scaleInfo.put("scaleId",cursor.getInt(0));
-        scaleInfo.put("scaleName",cursor.getString(1));
-        scaleInfo.put("scaleUnit",cursor.getString(2));
-        scaleInfo.put("scaleError",cursor.getString(3));
-        scaleInfo.put("scaleMin",cursor.getString(4));
-        scaleInfo.put("scaleMax",cursor.getString(5));
+        scaleInfo.put("scaleId", cursor.getInt(0));
+        scaleInfo.put("scaleName", cursor.getString(1));
+        scaleInfo.put("scaleUnit", cursor.getString(2));
+        scaleInfo.put("scaleError", cursor.getString(3));
+        scaleInfo.put("scaleMin", cursor.getString(4));
+        scaleInfo.put("scaleMax", cursor.getString(5));
 
         int deviceId = cursor.getInt(6);
         cursor = db.query(TABLE_DEVICES_NAME,
                 new String[]{FIELD_DEVICES_NAME},
                 FIELD_DEVICES_ID + " = " + deviceId, null, null, null, null);
         cursor.moveToFirst();
-        scaleInfo.put("deviceName",cursor.getString(0));
+        scaleInfo.put("deviceName", cursor.getString(0));
 
         cursor.close();
         return scaleInfo;
     }
 
-    public boolean addMeasurement(ContentValues mesInfo, ArrayList<ContentValues> scalesInfo, ArrayList<String> valuesInfo){
+    public boolean addMeasurement(ContentValues mesInfo, ArrayList<ContentValues> scalesInfo, ArrayList<String> valuesInfo) {
 
         SQLiteDatabase db = getWritableDatabase();
         Date date = new Date();
@@ -577,54 +578,54 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         measurementInfo.put(FIELD_MES_NAME, mesInfo.getAsString(FIELD_MES_NAME));
         measurementInfo.put(FIELD_MES_COMMENT, mesInfo.getAsString(FIELD_MES_COMMENT));
 
-        int mesId = (int)db.insert(TABLE_MES_NAME,null, measurementInfo);
+        int mesId = (int) db.insert(TABLE_MES_NAME, null, measurementInfo);
         ContentValues record = new ContentValues();
 
-        for(int i = 0; i<valuesInfo.size();i++){
+        for (int i = 0; i < valuesInfo.size(); i++) {
             int scaleId = scalesInfo.get(i).getAsInteger("scaleId");
             record = new ContentValues();
-            record.put(FIELD_VALUES_MESID,mesId);
+            record.put(FIELD_VALUES_MESID, mesId);
             record.put(FIELD_VALUES_SCALEID, scaleId);
             record.put(FIELD_VALUES_VALUE, valuesInfo.get(i));
-            db.insert(TABLE_VALUES_NAME,null,record);
+            db.insert(TABLE_VALUES_NAME, null, record);
         }
         return true;
     }
 
-    public void deleteDeviceById(int id){
+    public void deleteDeviceById(int id) {
 
         SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT " +
-                TABLE_MES_NAME+"."+FIELD_MES_ID+ ", "+
-                TABLE_VALUES_NAME+"." +FIELD_VALUES_ID+", "+
-                TABLE_SCALES_NAME+"." +FIELD_SCALES_ID+", "+
-                TABLE_DEVICES_NAME+"." +FIELD_DEVICES_ID+" "+
-                "FROM " + TABLE_MES_NAME + " "+
-                "JOIN " + TABLE_VALUES_NAME +" "+
-                "ON " + TABLE_VALUES_NAME+"." +FIELD_VALUES_MESID + " = "+TABLE_MES_NAME+"."+FIELD_MES_ID+ " "+
-                "JOIN " + TABLE_SCALES_NAME +" "+
-                "ON " + TABLE_SCALES_NAME +"."+ FIELD_SCALES_ID+" = "+TABLE_VALUES_NAME+"."+FIELD_VALUES_SCALEID+ " "+
-                "JOIN " + TABLE_DEVICES_NAME +" "+
-                "ON " + TABLE_DEVICES_NAME +"."+ FIELD_DEVICES_ID+" = "+TABLE_SCALES_NAME+"."+FIELD_SCALES_DEVICEID+ " "+
-                "WHERE " + TABLE_DEVICES_NAME+"." +FIELD_DEVICES_ID+" =" +id+
-                ";",null,null);
+                TABLE_MES_NAME + "." + FIELD_MES_ID + ", " +
+                TABLE_VALUES_NAME + "." + FIELD_VALUES_ID + ", " +
+                TABLE_SCALES_NAME + "." + FIELD_SCALES_ID + ", " +
+                TABLE_DEVICES_NAME + "." + FIELD_DEVICES_ID + " " +
+                "FROM " + TABLE_MES_NAME + " " +
+                "JOIN " + TABLE_VALUES_NAME + " " +
+                "ON " + TABLE_VALUES_NAME + "." + FIELD_VALUES_MESID + " = " + TABLE_MES_NAME + "." + FIELD_MES_ID + " " +
+                "JOIN " + TABLE_SCALES_NAME + " " +
+                "ON " + TABLE_SCALES_NAME + "." + FIELD_SCALES_ID + " = " + TABLE_VALUES_NAME + "." + FIELD_VALUES_SCALEID + " " +
+                "JOIN " + TABLE_DEVICES_NAME + " " +
+                "ON " + TABLE_DEVICES_NAME + "." + FIELD_DEVICES_ID + " = " + TABLE_SCALES_NAME + "." + FIELD_SCALES_DEVICEID + " " +
+                "WHERE " + TABLE_DEVICES_NAME + "." + FIELD_DEVICES_ID + " =" + id +
+                ";", null, null);
 
         cursor.moveToFirst();
 
         ArrayList<Integer> mesIds = new ArrayList<>();
         ArrayList<Integer> valuesIds = new ArrayList<>();
-        if(cursor.getCount()!=0){
-            do{
+        if (cursor.getCount() != 0) {
+            do {
                 mesIds.add(cursor.getInt(0));
                 valuesIds.add(cursor.getInt(1));
                 cursor.moveToNext();
-            }while (!cursor.isAfterLast());
+            } while (!cursor.isAfterLast());
 
-            for (int i:valuesIds) {
+            for (int i : valuesIds) {
                 db.delete(TABLE_VALUES_NAME, FIELD_VALUES_ID + "=" + i, null);
             }
-            for (int i:mesIds) {
+            for (int i : mesIds) {
                 db.delete(TABLE_MES_NAME, FIELD_MES_ID + "=" + i, null);
             }
 
@@ -635,24 +636,137 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void modifyDevice(int deviceId, ContentValues deviceData, ArrayList<ContentValues> scalesList){
+    public void modifyDevice(int deviceId, ContentValues deviceData, ArrayList<ContentValues> scalesList) {
 
         SQLiteDatabase db = getReadableDatabase();
 
-        db.update(TABLE_DEVICES_NAME, deviceData, FIELD_DEVICES_ID+" = "+deviceId, null);
+        db.update(TABLE_DEVICES_NAME, deviceData, FIELD_DEVICES_ID + " = " + deviceId, null);
 
-        for (ContentValues scale: scalesList) {
+        for (ContentValues scale : scalesList) {
             scale.remove(FIELD_VALUETYPES_NAME);
-            if (scale.getAsString(FIELD_SCALES_ID).equals("no")){
+            if (scale.getAsString(FIELD_SCALES_ID).equals("no")) {
                 scale.remove(FIELD_SCALES_ID);
-                scale.put(FIELD_SCALES_DEVICEID,deviceId);
-                db.insert(TABLE_SCALES_NAME,null, scale);
+                scale.put(FIELD_SCALES_DEVICEID, deviceId);
+                db.insert(TABLE_SCALES_NAME, null, scale);
 
-            }else{
-                db.update(TABLE_SCALES_NAME, scale, FIELD_SCALES_ID+" = "+scale.getAsInteger(FIELD_SCALES_ID), /*new String[]{FIELD_SCALES_ID}*/null);
+            } else {
+                db.update(TABLE_SCALES_NAME, scale, FIELD_SCALES_ID + " = " + scale.getAsInteger(FIELD_SCALES_ID), /*new String[]{FIELD_SCALES_ID}*/null);
             }
         }
 
+        db.close();
+    }
+
+    public void createTemplate(Template template) {
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        ContentValues templateInfo = new ContentValues();
+        templateInfo.put(FIELD_TEMPLATES_NAME, template.getName());
+        templateInfo.put(FIELD_TEMPLATES_COMMENT, template.getComment());
+
+        long templateId = db.insert(TABLE_TEMPLATES_NAME, null, templateInfo);
+
+        ArrayList<Integer> scalesIds = template.getScalesIds();
+        ContentValues tempScale;
+
+        for (Integer i : scalesIds) {
+            tempScale = new ContentValues();
+            tempScale.put(FIELD_TEMPSCALES_TEMPID, templateId);
+            tempScale.put(FIELD_TEMPSCALES_SCALEID, i);
+            db.insert(TABLE_TEMPSCALES_NAME, null, tempScale);
+        }
+
+        db.close();
+    }
+
+
+    public Template getTemplateById(int id) {
+        Template template = new Template();
+        ContentValues scale;
+        SQLiteDatabase db = getReadableDatabase();
+
+
+        Cursor cursor = db.query(TABLE_TEMPLATES_NAME,
+                new String[]{FIELD_TEMPLATES_ID, FIELD_TEMPLATES_NAME, FIELD_TEMPLATES_COMMENT},
+                FIELD_TEMPLATES_ID + "=" + id, null, null, null, null);
+
+        cursor.moveToFirst();
+        template.setName(cursor.getString(1));
+        template.setComment(cursor.getString(2));
+        cursor.close();
+
+        cursor = db.rawQuery("SELECT " +
+                        TABLE_SCALES_NAME + "." + FIELD_SCALES_NAME + ", " +
+                        TABLE_SCALES_NAME + "." + FIELD_SCALES_UNIT + ", " +
+                        TABLE_SCALES_NAME + "." + FIELD_SCALES_MINVALUE + ", " +
+                        TABLE_SCALES_NAME + "." + FIELD_SCALES_MAXVALUE + ", " +
+                        TABLE_SCALES_NAME + "." + FIELD_SCALES_ERROR + ", " +
+                        TABLE_SCALES_NAME + "." + FIELD_SCALES_VALUETYPEID + ", " +
+                        TABLE_VALUETYPES_NAME + "." + FIELD_VALUETYPES_NAME + " " +
+                        "FROM " + TABLE_SCALES_NAME+" "+
+                        "JOIN " + TABLE_VALUETYPES_NAME + " " +
+                        "ON " + TABLE_SCALES_NAME + "." + FIELD_SCALES_VALUETYPEID + " = " + TABLE_VALUETYPES_NAME + "." + FIELD_VALUETYPES_ID + " " +
+                        "JOIN " + TABLE_TEMPSCALES_NAME + " " +
+                        "ON " + TABLE_TEMPSCALES_NAME + "." + FIELD_TEMPSCALES_SCALEID + " = " + TABLE_SCALES_NAME + "." + FIELD_SCALES_ID + " " +
+                        "WHERE " + TABLE_TEMPSCALES_NAME + "." + FIELD_TEMPSCALES_TEMPID + " =" + id +
+                        "; "
+                , null, null);
+
+        cursor.moveToFirst();
+
+        while(!cursor.isAfterLast()){
+            scale = new ContentValues();
+            scale.put(FIELD_SCALES_NAME,cursor.getString(0));
+            scale.put(FIELD_SCALES_UNIT,cursor.getString(1));
+            scale.put(FIELD_SCALES_MINVALUE,cursor.getString(2));
+            scale.put(FIELD_SCALES_MAXVALUE,cursor.getString(3));
+            scale.put(FIELD_SCALES_ERROR,cursor.getString(4));
+            scale.put(FIELD_VALUETYPES_NAME,cursor.getString(6));
+
+            template.addToScalesList(scale);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        db.close();
+
+        return template;
+    }
+
+    public ArrayList<ContentValues> getTemplates() {
+        ArrayList<ContentValues> list = new ArrayList<>();
+        ContentValues template;
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(TABLE_TEMPLATES_NAME,
+                new String[]{FIELD_TEMPLATES_ID, FIELD_TEMPLATES_NAME, FIELD_TEMPLATES_COMMENT},
+                null, null, null, null, null);
+
+        cursor.moveToFirst();
+
+        if (cursor.getCount() == 0) {
+            template = new ContentValues();
+            template.put("no values", 0);
+        } else {
+            while (!cursor.isAfterLast()) {
+
+                template = new ContentValues();
+                template.put("id", cursor.getInt(0));
+                template.put("name", cursor.getString(1));
+                template.put("comment", cursor.getString(2));
+                list.add(template);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        db.close();
+        return list;
+    }
+
+    public void deleteTemplateById(int id) {
+        SQLiteDatabase db = getReadableDatabase();
+        db.delete(TABLE_TEMPSCALES_NAME, FIELD_TEMPSCALES_TEMPID + "=" + id, null);
+        db.delete(TABLE_TEMPLATES_NAME, FIELD_TEMPLATES_ID + "=" + id, null);
         db.close();
     }
 

@@ -7,9 +7,12 @@
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/fragment_addScreen.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/fragment_addingnewmes_info.xml" value="0.264" />
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/fragment_addingnewmes_scalesanddevices.xml" value="0.264" />
+        <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/fragment_addnewtemplate_info.xml" value="0.264" />
+        <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/fragment_addnewtemplate_scales.xml" value="0.264" />
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/fragment_createdevice_info.xml" value="0.4" />
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/fragment_createdevice_scales.xml" value="0.264" />
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/fragment_devicelist.xml" value="0.4959349593495935" />
+        <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/fragment_devices.xml" value="0.1671875" />
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/fragment_editdevice.xml" value="0.4" />
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/fragment_editscale.xml" value="0.264" />
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/fragment_first.xml" value="0.22826086956521738" />
@@ -26,12 +29,14 @@
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/fragment_selectscaleforadding.xml" value="0.4" />
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/fragment_settings.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/fragment_templates.xml" value="0.264" />
+        <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/fragment_viewtemplate.xml" value="0.264" />
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/test.xml" value="0.365" />
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/view_addingvaluetomes_list_element.xml" value="0.4" />
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/view_device_list_element.xml" value="0.3929236499068901" />
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/view_editdevice_scale_element.xml" value="0.4" />
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/view_mes_list_element.xml" value="0.536" />
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/view_scales_list_element.xml" value="0.4" />
+        <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/view_templates_list_element.xml" value="0.4" />
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/layout/view_val_list_element.xml" value="0.4" />
         <entry key="..\:/Users/vladislove/IdeaProjects/Mes/app/src/main/res/menu/menu_main.xml" value="0.26875" />
       </map>

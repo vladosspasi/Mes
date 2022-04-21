@@ -1,29 +1,24 @@
-package com.github.vladosspasi.mes.AddingNewMeasurement;
+package com.github.vladosspasi.mes.Settings.Templates;
 
 import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.navigation.fragment.NavHostFragment;
-import com.github.vladosspasi.mes.DataBaseHelper;
 import com.github.vladosspasi.mes.Adapters.DevicesListAdapter;
+import com.github.vladosspasi.mes.DataBaseHelper;
 import com.github.vladosspasi.mes.R;
 import com.github.vladosspasi.mes.RecyclerItemClickListener;
 import com.github.vladosspasi.mes.databinding.FragmentSelectdeviceforaddingBinding;
-
 import java.util.ArrayList;
-import java.util.Objects;
 
-public class SelectDeviceForAddingFragment extends Fragment {
+public class SelectDeviceForTemplate extends Fragment {
 
-    private FragmentSelectdeviceforaddingBinding binding;
-    private RecyclerView recyclerView;
-    private ArrayList<ContentValues> deviceList;
+    FragmentSelectdeviceforaddingBinding binding;
 
     @Override
     public View onCreateView(
@@ -38,31 +33,33 @@ public class SelectDeviceForAddingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ArrayList<ContentValues> deviceList;
+
         DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(getContext());
         deviceList = dataBaseHelper.getDevices();
         dataBaseHelper.close();
-        recyclerView = Objects.requireNonNull(getActivity()).findViewById(R.id.recView_SelectDevice_devices);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        binding.recViewSelectDeviceDevices.setLayoutManager(new LinearLayoutManager(getContext()));
         DevicesListAdapter devicesListAdapter = new DevicesListAdapter();
         devicesListAdapter.setItems(deviceList);
-        recyclerView.setAdapter(devicesListAdapter);
+        binding.recViewSelectDeviceDevices.setAdapter(devicesListAdapter);
 
         binding.recViewSelectDeviceDevices.addOnItemTouchListener(
-                new RecyclerItemClickListener(getContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(getContext(), binding.recViewSelectDeviceDevices, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
                         int id = deviceList.get(position).getAsInteger("id");
                         Bundle arg = new Bundle();
                         arg.putInt("DeviceId", id);
-                        NavHostFragment.findNavController(SelectDeviceForAddingFragment.this)
-                                .navigate(R.id.action_AddNewMesSelectDeviceFragment_to_AddNewMesSelectScaleFragment, arg);
+                        NavHostFragment.findNavController(SelectDeviceForTemplate.this)
+                                .navigate(R.id.action_selectDeviceForTemplate_to_selectScaleForTemplate, arg);
                     }
                     @Override
                     public void onLongItemClick(View view, int position) {
 
                     }
                 }){
-        });
+                });
     }
 
     @Override
@@ -70,4 +67,12 @@ public class SelectDeviceForAddingFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 }
+
+
+
+
+
+
+

@@ -9,9 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.github.vladosspasi.mes.DataBaseHelper;
-import com.github.vladosspasi.mes.R;
-import com.github.vladosspasi.mes.ScalesListAdapter;
+import com.github.vladosspasi.mes.Adapters.ScalesListAdapter;
 import com.github.vladosspasi.mes.databinding.FragmentScreenViewdeviceBinding;
 
 import java.util.ArrayList;

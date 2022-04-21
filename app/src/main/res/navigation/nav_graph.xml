@@ -166,6 +166,8 @@
         <action
                 android:id="@+id/action_SettingsFragment_to_DevicesFragment"
                 app:destination="@id/DevicesFragment"/>
+        <action android:id="@+id/action_SettingsFragment_to_templatesListFragment"
+                app:destination="@id/templatesListFragment"/>
     </fragment>
 
     <!--Экран просмотра приборов-->
@@ -173,7 +175,7 @@
             android:id="@+id/DevicesFragment"
             android:name="com.github.vladosspasi.mes.Settings.Devices.DevicesListFragment"
             android:label="Devices Fragment"
-            tools:layout="@layout/fragment_devicelist">
+            tools:layout="@layout/fragment_devices">
 
         <action
                 android:id="@+id/action_DevicesFragment_to_ViewDeviceFragment"
@@ -259,6 +261,47 @@
                 app:destination="@id/ViewMesFragment"/>
 
         <argument android:name="DeviceId" app:argType="integer"/>
+    </fragment>
+    <fragment android:id="@+id/templatesListFragment"
+              android:name="com.github.vladosspasi.mes.Settings.Templates.TemplatesListFragment"
+              android:label="TemplatesListFragment">
+        <action android:id="@+id/action_templatesListFragment_to_addNewTemplateInfo"
+                app:destination="@id/addNewTemplateInfo"/>
+        <action android:id="@+id/action_templatesListFragment_to_viewTemplateFragment"
+                app:destination="@id/viewTemplateFragment"/>
+    </fragment>
+    <fragment android:id="@+id/addNewTemplateInfo"
+              android:name="com.github.vladosspasi.mes.Settings.Templates.AddNewTemplateInfo"
+              android:label="AddNewTemplateInfo">
+        <action android:id="@+id/action_addNewTemplateInfo_to_addNewTemplateScales"
+                app:destination="@id/addNewTemplateScales"/>
+    </fragment>
+    <fragment android:id="@+id/addNewTemplateScales"
+              android:name="com.github.vladosspasi.mes.Settings.Templates.AddNewTemplateScales"
+              android:label="AddNewTemplateScales">
+        <action android:id="@+id/action_addNewTemplateScales_to_selectDeviceForTemplate"
+                app:destination="@id/selectDeviceForTemplate"/>
+        <action android:id="@+id/action_addNewTemplateScales_to_templatesListFragment"
+                app:destination="@id/templatesListFragment" app:popUpToInclusive="true"
+                app:popUpTo="@id/templatesListFragment"/>
+    </fragment>
+    <fragment android:id="@+id/selectDeviceForTemplate"
+              android:name="com.github.vladosspasi.mes.Settings.Templates.SelectDeviceForTemplate"
+              android:label="SelectDeviceForTemplate">
+        <action android:id="@+id/action_selectDeviceForTemplate_to_selectScaleForTemplate"
+                app:destination="@id/selectScaleForTemplate"/>
+    </fragment>
+    <fragment android:id="@+id/selectScaleForTemplate"
+              android:name="com.github.vladosspasi.mes.Settings.Templates.SelectScaleForTemplate"
+              android:label="SelectScaleForTemplate">
+        <action android:id="@+id/action_selectScaleForTemplate_to_addNewTemplateScales"
+                app:destination="@id/addNewTemplateScales" app:popUpToInclusive="true"
+                app:popUpTo="@id/addNewTemplateScales"/>
+        <argument android:name="DeviceId" app:argType="integer"/>
+    </fragment>
+    <fragment android:id="@+id/viewTemplateFragment" android:name="com.github.vladosspasi.mes.ViewTemplateFragment"
+              android:label="ViewTemplateFragment">
+        <argument android:name="TemplateId" app:argType="integer"/>
     </fragment>
 
 

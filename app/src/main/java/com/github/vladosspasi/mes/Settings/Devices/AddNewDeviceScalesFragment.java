@@ -16,7 +16,7 @@ import android.widget.Spinner;
 import androidx.navigation.fragment.NavHostFragment;
 import com.github.vladosspasi.mes.DataBaseHelper;
 import com.github.vladosspasi.mes.R;
-import com.github.vladosspasi.mes.ScalesListAdapter;
+import com.github.vladosspasi.mes.Adapters.ScalesListAdapter;
 import com.github.vladosspasi.mes.databinding.FragmentCreatedeviceScalesBinding;
 import static com.github.vladosspasi.mes.DataBaseHelper.*;
 

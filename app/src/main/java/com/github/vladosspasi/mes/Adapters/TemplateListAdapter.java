@@ -1,19 +1,17 @@
-package com.github.vladosspasi.mes;
+package com.github.vladosspasi.mes.Adapters;
 
 import android.content.ContentValues;
-import android.support.v7.widget.RecyclerView;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import com.github.vladosspasi.mes.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.ArrayList;
-
-public class DevicesListAdapter extends RecyclerView.Adapter<DevicesListAdapter.DevicesListElementHolder>{
+public class TemplateListAdapter extends RecyclerView.Adapter<TemplateListAdapter.TemplateListElementHolder>{
 
     private List<ContentValues> elementsList = new ArrayList<>();
 
@@ -32,16 +30,16 @@ public class DevicesListAdapter extends RecyclerView.Adapter<DevicesListAdapter.
     //что то нужное при создании элемента списка
     @NonNull
     @Override
-    public DevicesListAdapter.DevicesListElementHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public TemplateListAdapter.TemplateListElementHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.view_device_list_element, viewGroup, false);
-        return new DevicesListAdapter.DevicesListElementHolder(view);
+                .inflate(R.layout.view_templates_list_element, viewGroup, false);
+        return new TemplateListElementHolder(view);
     }
 
     //что-то нужное
     @Override
-    public void onBindViewHolder(@NonNull DevicesListAdapter.DevicesListElementHolder devicesListElementHolder, int i) {
-        devicesListElementHolder.bind(elementsList.get(i));
+    public void onBindViewHolder(@NonNull TemplateListAdapter.TemplateListElementHolder templateListElementHolder, int i) {
+        templateListElementHolder.bind(elementsList.get(i));
     }
 
     //Количество элементов в списке
@@ -51,27 +49,24 @@ public class DevicesListAdapter extends RecyclerView.Adapter<DevicesListAdapter.
     }
 
     //Холдер для элемента списка измерений
-    class DevicesListElementHolder extends RecyclerView.ViewHolder {
+    static class TemplateListElementHolder extends RecyclerView.ViewHolder {
 
         //Все поля элемента списка с которыми происходит взаимодействие
         private TextView nameTextView;
         private TextView commentTextView;
-        private TextView typeTextView;
 
         //Конструктор для поиска элементов лэйаута
-        public DevicesListElementHolder(View itemView) {
+        public TemplateListElementHolder(View itemView) {
             super(itemView);
-            nameTextView = itemView.findViewById(R.id.textView_DeviceListElementView_name);
-            commentTextView = itemView.findViewById(R.id.textView_DeviceListElementView_comment);
-            typeTextView = itemView.findViewById(R.id.textView_DeviceListElementView_type);
+            nameTextView = itemView.findViewById(R.id.textView_viewTemplateListElement_name);
+            commentTextView = itemView.findViewById(R.id.textView_viewTemplateListElement_comment);
         }
 
         //Заполнение элементов вью данными
         public void bind(ContentValues element) {
-            nameTextView.setText("Название прибора: " + element.getAsString("name"));
-            commentTextView.setText("Комментарий: " + element.getAsString("comment"));
-            typeTextView.setText("Тип прибора: "+ element.getAsString("type"));
+            nameTextView.setText("Название: " + element.getAsString("name"));
+            commentTextView.setText("Комментарий: "+ element.getAsString("comment"));
         }
-
     }
 }
+

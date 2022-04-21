@@ -14,16 +14,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.navigation.fragment.NavHostFragment;
 import com.github.vladosspasi.mes.DataBaseHelper;
-import com.github.vladosspasi.mes.DevicesListAdapter;
+import com.github.vladosspasi.mes.Adapters.DevicesListAdapter;
 import com.github.vladosspasi.mes.R;
 import com.github.vladosspasi.mes.RecyclerItemClickListener;
-import com.github.vladosspasi.mes.databinding.FragmentDevicelistBinding;
+import com.github.vladosspasi.mes.databinding.FragmentDevicesBinding;
 
 import java.util.ArrayList;
 
 public class DevicesListFragment extends Fragment {
 
-    private FragmentDevicelistBinding binding;
+    private FragmentDevicesBinding binding;
     private ArrayList<ContentValues> devicesList;
     private RecyclerView recyclerView;
 
@@ -33,7 +33,7 @@ public class DevicesListFragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        binding = FragmentDevicelistBinding.inflate(inflater, container, false);
+        binding = FragmentDevicesBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

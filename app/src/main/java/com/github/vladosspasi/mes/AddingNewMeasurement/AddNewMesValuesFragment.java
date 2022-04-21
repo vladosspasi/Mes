@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import androidx.navigation.fragment.NavHostFragment;
+import com.github.vladosspasi.mes.Adapters.AddingValueListAdapter;
 import com.github.vladosspasi.mes.DataBaseHelper;
 import com.github.vladosspasi.mes.R;
 import com.github.vladosspasi.mes.databinding.FragmentAddingnewmesScalesanddevicesBinding;
