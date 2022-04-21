@@ -15,6 +15,8 @@ import com.github.vladosspasi.mes.databinding.FragmentSelectscaleforaddingBindin
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static com.github.vladosspasi.mes.DataBaseHelper.*;
+
 public class SelectScaleForAddingFragment extends Fragment {
 
     private FragmentSelectscaleforaddingBinding binding;
@@ -52,7 +54,7 @@ public class SelectScaleForAddingFragment extends Fragment {
                 new RecyclerItemClickListener(getContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        int id = scalesList.get(position).getAsInteger("id");
+                        int id = scalesList.get(position).getAsInteger(FIELD_SCALES_ID);
 
                         ArrayList<Integer> scalesIds = MeasurementGlobalInfo.getScalesIds();
                         scalesIds.add(id);

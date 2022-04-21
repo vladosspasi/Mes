@@ -95,8 +95,13 @@ public class AddNewMesValuesFragment extends Fragment {
                 alertDialog.show();
 
             }
+
         });
     }
+
+
+
+
 
     @Override
     public void onDestroyView() {

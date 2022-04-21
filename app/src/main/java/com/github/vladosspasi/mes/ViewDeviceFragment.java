@@ -1,4 +1,4 @@
-package com.github.vladosspasi.mes.ViewingMesList;
+package com.github.vladosspasi.mes;
 
 import android.content.ContentValues;
 import android.os.Bundle;

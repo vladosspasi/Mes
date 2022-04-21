@@ -128,7 +128,9 @@
     >
         <action
                 android:id="@+id/action_AddNewDeviceScalesFragment_to_DevicesFragment"
-                app:destination="@id/DevicesFragment"/>
+                app:destination="@id/DevicesFragment"
+                app:popUpTo="@+id/DevicesFragment"
+                app:popUpToInclusive="true"/>
 
     </fragment>
 
@@ -180,7 +182,33 @@
         <action
                 android:id="@+id/action_DevicesFragment_to_AddNewDeviceInfoFragment"
                 app:destination="@id/AddNewDeviceInfoFragment"/>
+        <action
+                android:id="@+id/action_DevicesFragment_to_EditDeviceFragment"
+                app:destination="@id/EditDeviceFragment"/>
 
+    </fragment>
+
+    <!--Экран редактирования прибора-->
+    <fragment
+            android:id="@+id/EditDeviceFragment"
+            android:name="com.github.vladosspasi.mes.Settings.Devices.EditDeviceFragment"
+            android:label="Edit Device Fragment"
+            tools:layout="@layout/fragment_editdevice">
+        <argument android:name="DeviceId" app:argType="integer"/>
+        <action android:id="@+id/action_EditDeviceFragment_to_editScaleFragment"
+                app:destination="@id/editScaleFragment"/>
+    </fragment>
+
+    <!--Экран редактирования шкалы-->
+    <fragment android:id="@+id/editScaleFragment"
+              android:name="com.github.vladosspasi.mes.Settings.Devices.EditScaleFragment"
+              android:label="EditScaleFragment">
+        <argument android:name="ScalePos" app:argType="integer"/>
+        <action
+                android:id="@+id/action_EditScalesFragment_to_EditDeviceFragment"
+                app:destination="@id/EditDeviceFragment"
+                app:popUpTo="@id/EditDeviceFragment"
+                app:popUpToInclusive="true"/>
     </fragment>
 
     <!--Экран импорта/экспорта-->
@@ -222,7 +250,7 @@
     <!--Экран просмотра прибора-->
     <fragment
             android:id="@+id/ViewDeviceFragment"
-            android:name="com.github.vladosspasi.mes.ViewingMesList.ViewDeviceFragment"
+            android:name="com.github.vladosspasi.mes.ViewDeviceFragment"
             android:label="View Device Fragment"
             tools:layout="@layout/fragment_screen_viewdevice">
 
@@ -232,7 +260,6 @@
 
         <argument android:name="DeviceId" app:argType="integer"/>
     </fragment>
-
 
 
 </navigation>

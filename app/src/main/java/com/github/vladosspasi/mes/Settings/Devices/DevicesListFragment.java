@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,6 @@ import com.github.vladosspasi.mes.DataBaseHelper;
 import com.github.vladosspasi.mes.DevicesListAdapter;
 import com.github.vladosspasi.mes.R;
 import com.github.vladosspasi.mes.RecyclerItemClickListener;
-import com.github.vladosspasi.mes.ViewingMesList.MeasurementsListAdapter;
-import com.github.vladosspasi.mes.ViewingMesList.ViewMesFragment;
 import com.github.vladosspasi.mes.databinding.FragmentDevicelistBinding;
 
 import java.util.ArrayList;
@@ -70,7 +69,9 @@ public class DevicesListFragment extends Fragment {
                 new RecyclerItemClickListener(this.getContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
+
                         goToThisDevice(position);
+                        Log.println(Log.DEBUG, "ПЕРЕДАННЫЙ ПРИБОР", " №"+position+" в списке");
                     }
 
                     @Override
@@ -88,7 +89,6 @@ public class DevicesListFragment extends Fragment {
                                 areYouSureDialog.setPositiveButton("Удалить", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-
                                         deleteDeviceFromList(position);
                                         dialogInterface.cancel();
                                     }
@@ -117,7 +117,6 @@ public class DevicesListFragment extends Fragment {
                             public void onClick(DialogInterface dialogInterface, int i) {
 
                                 editDevice(position);
-
                                 dialogInterface.cancel();
                             }
                         });
@@ -149,14 +148,18 @@ public class DevicesListFragment extends Fragment {
     }
 
     public void editDevice(int pos){
-
-
+        int deviceId = devicesList.get(pos).getAsInteger("id");
+        Bundle arg = new Bundle();
+        arg.putInt("DeviceId", deviceId);
+        NavHostFragment.findNavController(DevicesListFragment.this)
+                .navigate(R.id.action_DevicesFragment_to_EditDeviceFragment, arg);
     }
 
     public void goToThisDevice(int pos){
         int deviceId = devicesList.get(pos).getAsInteger("id");
-        Bundle arg = new Bundle();                                     //Оболочка для передачи данных в другой фрагмент
-        arg.putInt("DeviceId", deviceId);          //Помещаем в оболочку id прибора
+        Log.println(Log.DEBUG, "ID ПРИБОРА", ""+deviceId);
+        Bundle arg = new Bundle();
+        arg.putInt("DeviceId", deviceId);
         NavHostFragment.findNavController(DevicesListFragment.this)
                 .navigate(R.id.action_DevicesFragment_to_ViewDeviceFragment, arg);
 

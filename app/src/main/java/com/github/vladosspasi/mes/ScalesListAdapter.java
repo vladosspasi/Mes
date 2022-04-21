@@ -61,6 +61,7 @@ public class ScalesListAdapter extends RecyclerView.Adapter<ScalesListAdapter.Sc
         private TextView minvalueTextView;
         private TextView maxvalueTextView;
         private TextView errorTextView;
+        private TextView unitTextView;
 
         //Конструктор для поиска элементов лэйаута
         public ScalesListElementHolder(View itemView) {
@@ -70,18 +71,23 @@ public class ScalesListAdapter extends RecyclerView.Adapter<ScalesListAdapter.Sc
             minvalueTextView = itemView.findViewById(R.id.textView_scalesListElementView_minvalue);
             maxvalueTextView = itemView.findViewById(R.id.textView_scalesListElementView_maxvalue);
             errorTextView = itemView.findViewById(R.id.textView_scalesListElementView_error);
+            unitTextView = itemView.findViewById(R.id.textView_scalesListElementView_unit);
         }
 
         //Заполнение элементов вью данными
         public void bind(ContentValues element) {
 
             nameTextView.setText("Название: " + element.getAsString(FIELD_SCALES_NAME));
-            typeTextView.setText("Тип данных: "+ element.getAsString("type"));
+            typeTextView.setText("Тип данных: "+ element.getAsString(FIELD_VALUETYPES_NAME));
             minvalueTextView.setText("Минимальное значение: " + element.getAsString(FIELD_SCALES_MINVALUE));
             maxvalueTextView.setText("Максимальное значение: " + element.getAsString(FIELD_SCALES_MAXVALUE));
             errorTextView.setText("Погрешность: " + element.getAsString(FIELD_SCALES_ERROR));
+            unitTextView.setText("Единица измерения: " + element.getAsString(FIELD_SCALES_UNIT));
         }
 
+
     }
+
+
 
 }

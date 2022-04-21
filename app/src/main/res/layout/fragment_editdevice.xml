@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+    <TextView
+            android:text="Внесите требуемые изменения в прибор."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView_editdevice_title" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp" android:layout_marginEnd="8dp" android:layout_marginStart="8dp"/>
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginStart="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView_editdevice_title" android:layout_marginTop="8dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <TextView
+                    android:text="Основная информация о приборе"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView_editdevice_infoTitle"
+                    android:layout_marginBottom="8dp" android:gravity="center"/>
+            <TextView
+                    android:text="Название:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView_editdevice_nameTitle"
+                    android:layout_marginBottom="8dp"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editText_editdevice_name" android:minHeight="48dp"
+                    android:layout_marginBottom="8dp" tools:ignore="SpeakableTextPresentCheck"/>
+            <TextView
+                    android:text="Комментарий:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView_editdevice_commentTitle"
+                    android:layout_marginBottom="8dp"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editText_editdevice_comment" android:minHeight="48dp"
+                    android:layout_marginBottom="8dp" tools:ignore="SpeakableTextPresentCheck"/>
+            <TextView
+                    android:text="Тип прибора:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView_editdevice_typeTitle"
+                    android:layout_marginBottom="8dp"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editText_editdevice_type" android:minHeight="48dp"
+                    android:layout_marginBottom="8dp" tools:ignore="SpeakableTextPresentCheck"/>
+            <View
+                    android:id="@+id/divider12"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="?android:attr/listDivider"
+                    android:layout_marginBottom="8dp"
+            />
+            <TextView
+                    android:text="Шкалы прибора:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView_editdevice_scalesTitle"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp"/>
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp" android:id="@+id/recview_editdevice_scales">
+            </android.support.v7.widget.RecyclerView>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_input_add"
+                    android:id="@+id/button_editdevice_addScale" android:cropToPadding="false" android:layout_gravity="center"
+                    tools:ignore="SpeakableTextPresentCheck" android:adjustViewBounds="false"
+                    android:layout_marginBottom="8dp"/>
+            <View
+                    android:id="@+id/divider13"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="?android:attr/listDivider"
+                    android:layout_marginBottom="8dp"
+            />
+            <Button
+                    android:text="Сохранить"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/button_editdevice_save"
+                    android:layout_marginBottom="8dp"/>
+            <Button
+                    android:text="Отмена"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/button_editdevice_cancel"
+                    android:layout_marginBottom="8dp"/>
+        </LinearLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

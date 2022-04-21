@@ -122,14 +122,15 @@ public class AddNewDeviceScalesFragment extends Fragment {
             DataBaseHelper dataBaseHelper = getInstance(getContext());
 
             int typeId = (int) binding.spinnerAddNewDeviceScalesType.getSelectedItemPosition()+1;
-            String type = dataBaseHelper.getValueTypeById(typeId+1);
-            //TODO тут хуета с типом данных
+            String type = dataBaseHelper.getValueTypeById(typeId);
 
             scale.put("type", type);
             scale.put(FIELD_SCALES_VALUETYPEID, typeId);
             scale.put(FIELD_SCALES_MINVALUE, String.valueOf(binding.editboxAddNewDeviceScalesFromvalue.getText()));
             scale.put(FIELD_SCALES_MAXVALUE, String.valueOf(binding.editboxAddNewDeviceScalesTovalue.getText()));
             scale.put(FIELD_SCALES_ERROR, String.valueOf(binding.editboxAddNewDeviceScalesError.getText()));
+
+            binding.textboxAddNewDeviceScalesListtitle.setText("Шкалы прибора:");
 
             scales.add(scale);
             scalesListAdapter = new ScalesListAdapter();
