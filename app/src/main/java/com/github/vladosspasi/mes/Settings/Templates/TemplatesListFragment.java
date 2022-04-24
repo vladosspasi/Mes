@@ -71,15 +71,8 @@ public class TemplatesListFragment extends Fragment {
                     @Override
                     public void onLongItemClick(View view, int position) {
                         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-                        alert.setTitle("Шаблон " + templates.get(position).getAsString(FIELD_TEMPLATES_NAME));
+                        alert.setTitle("Шаблон " + templates.get(position).getAsString("tempName"));
                         alert.setMessage("Выберите действие:");
-                        alert.setPositiveButton("Редактировать", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                editTemplate(position);
-                                dialogInterface.cancel();
-                            }
-                        });
                         alert.setNegativeButton("Удалить", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -140,18 +133,14 @@ public class TemplatesListFragment extends Fragment {
 
     public void goToTemplate(int pos) {
         Bundle arg = new Bundle();
-        arg.putInt("TemplateId", templates.get(pos).getAsInteger("id"));
+        arg.putInt("TemplateId", templates.get(pos).getAsInteger("tempId"));
         NavHostFragment.findNavController(TemplatesListFragment.this)
                 .navigate(R.id.action_templatesListFragment_to_viewTemplateFragment, arg);
     }
 
-    public void editTemplate(int pos) {
-
-    }
-
     public void deleteTemplate(int pos) {
 
-        int tempId = templates.get(pos).getAsInteger("id");
+        int tempId = templates.get(pos).getAsInteger("tempId");
 
         DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(getContext());
         dataBaseHelper.deleteTemplateById(tempId);

@@ -40,18 +40,18 @@ public class EditScaleFragment extends Fragment {
 
         ContentValues scaleInfo = GlobalDeviceInfo.getScaleAt(scalePosition);
 
-        binding.edittextEditScaleName.setText(scaleInfo.getAsString(FIELD_SCALES_NAME));
-        binding.edittextEditScaleError.setText(scaleInfo.getAsString(FIELD_SCALES_ERROR));
-        binding.edittextEditScaleUnit.setText(scaleInfo.getAsString(FIELD_SCALES_UNIT));
-        binding.edittextEditScaleMin.setText(scaleInfo.getAsString(FIELD_SCALES_MINVALUE));
-        binding.edittextEditScaleMax.setText(scaleInfo.getAsString(FIELD_SCALES_MAXVALUE));
+        binding.edittextEditScaleName.setText(scaleInfo.getAsString("scaleName"));
+        binding.edittextEditScaleError.setText(scaleInfo.getAsString("scaleError"));
+        binding.edittextEditScaleUnit.setText(scaleInfo.getAsString("scaleUnit"));
+        binding.edittextEditScaleMin.setText(scaleInfo.getAsString("scaleMin"));
+        binding.edittextEditScaleMax.setText(scaleInfo.getAsString("scaleMax"));
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.types_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerEditScaleType.setAdapter(adapter);
 
-        binding.spinnerEditScaleType.setSelection(scaleInfo.getAsInteger(FIELD_SCALES_VALUETYPEID) - 1);
+        binding.spinnerEditScaleType.setSelection(scaleInfo.getAsInteger("scaleTypeId") - 1);
 
         binding.buttonEditScaleSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,25 +73,24 @@ public class EditScaleFragment extends Fragment {
     private void saveChanges(int pos) {
 
         ArrayList<ContentValues> scalesList = GlobalDeviceInfo.getScales();
-        String scaleID = scalesList.get(pos).getAsString(FIELD_SCALES_ID);
+        String scaleID = scalesList.get(pos).getAsString("scaleId");
         ContentValues newScale = new ContentValues();
 
         int selectedType = binding.spinnerEditScaleType.getSelectedItemPosition();
-        Log.e("СПИННЕР ВЫБРАЛ:", "" + selectedType);
         DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(getContext());
         String type = dataBaseHelper.getValueTypeById(selectedType + 1);
         dataBaseHelper.close();
 
-        newScale.put(FIELD_SCALES_ID, scaleID);
-        newScale.put(FIELD_SCALES_NAME, binding.edittextEditScaleName.getText().toString());
-        newScale.put(FIELD_SCALES_UNIT, binding.edittextEditScaleUnit.getText().toString());
-        newScale.put(FIELD_SCALES_MAXVALUE, binding.edittextEditScaleMax.getText().toString());
-        newScale.put(FIELD_SCALES_MINVALUE, binding.edittextEditScaleMin.getText().toString());
-        newScale.put(FIELD_SCALES_ERROR, binding.edittextEditScaleError.getText().toString());
+        newScale.put("scaleId", scaleID);
+        newScale.put("scaleName", binding.edittextEditScaleName.getText().toString());
+        newScale.put("scaleUnit", binding.edittextEditScaleUnit.getText().toString());
+        newScale.put("scaleMax", binding.edittextEditScaleMax.getText().toString());
+        newScale.put("scaleMin", binding.edittextEditScaleMin.getText().toString());
+        newScale.put("scaleError", binding.edittextEditScaleError.getText().toString());
 
-        newScale.put(FIELD_SCALES_VALUETYPEID, selectedType + 1);
+        newScale.put("scaleTypeId", selectedType + 1);
 
-        newScale.put(FIELD_VALUETYPES_NAME, type);
+        newScale.put("valuetypeName", type);
 
         GlobalDeviceInfo.setScaleAt(pos, newScale);
 

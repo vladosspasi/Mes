@@ -67,22 +67,6 @@ public class MainMenuFragment extends Fragment{
             }
         });
 
-        binding.buttonMainmenuToExpImpScreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(MainMenuFragment.this)
-                        .navigate(R.id.action_MainmenuFragment_to_ImpExpFragment);
-            }
-        });
-
-        binding.buttonMainmenuToExpImpScreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(MainMenuFragment.this)
-                        .navigate(R.id.action_MainmenuFragment_to_ImpExpFragment);
-            }
-        });
-
         MeasurementGlobalInfo.clearAll();
 
     }

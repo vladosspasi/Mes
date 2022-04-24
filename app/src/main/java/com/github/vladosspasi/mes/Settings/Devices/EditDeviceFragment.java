@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,9 +63,9 @@ public class EditDeviceFragment extends Fragment {
         }
 
         //Инициализация полей информации прибора
-        binding.editTextEditdeviceName.setText(deviceData.getAsString("name"));
-        binding.editTextEditdeviceComment.setText(deviceData.getAsString("comment"));
-        binding.editTextEditdeviceType.setText(deviceData.getAsString("type"));
+        binding.editTextEditdeviceName.setText(deviceData.getAsString("deviceName"));
+        binding.editTextEditdeviceComment.setText(deviceData.getAsString("deviceComment"));
+        binding.editTextEditdeviceType.setText(deviceData.getAsString("deviceType"));
 
         //Инициализация списка шкал
         recyclerView = Objects.requireNonNull(getActivity()).findViewById(R.id.recview_editdevice_scales);
@@ -79,13 +80,13 @@ public class EditDeviceFragment extends Fragment {
             public void onClick(View view) {
 
                 ContentValues newScale = new ContentValues();
-                newScale.put(FIELD_SCALES_ID, "no");
-                newScale.put(FIELD_SCALES_NAME, "");
-                newScale.put(FIELD_SCALES_UNIT, "");
-                newScale.put(FIELD_SCALES_MAXVALUE, "");
-                newScale.put(FIELD_SCALES_MINVALUE, "");
-                newScale.put(FIELD_SCALES_ERROR, "");
-                newScale.put(FIELD_SCALES_VALUETYPEID, 1);
+                newScale.put("scaleId", "no");
+                newScale.put("scaleName", "");
+                newScale.put("scaleUnit", "");
+                newScale.put("scaleMax", "");
+                newScale.put("scaleMin", "");
+                newScale.put("scaleError", "");
+                newScale.put("valuetypeName", 1);
 
                 scalesList.add(newScale);
                 GlobalDeviceInfo.setScales(scalesList);
@@ -168,6 +169,20 @@ public class EditDeviceFragment extends Fragment {
 
     private void saveChangesToDataBase(int dId) {
 
+        Log.e("АЙДИ ПРИБОРА", ""+dId);
+        Log.e("НАЗВАНИЕ ПРИБОРА", ""+binding.editTextEditdeviceName.getText().toString());
+        Log.e("КОМЕНТ ПРИБОРА", ""+binding.editTextEditdeviceComment.getText().toString());
+        Log.e("ТИП ПРИБОРА", ""+binding.editTextEditdeviceType.getText().toString());
+        Log.e("-", "-------------------");
+
+        ContentValues scale = scalesList.get(0);
+        Log.e("АЙДИ ШКАЛЫ", ""+scale.getAsString("scaleId"));
+        Log.e("ИМЯ ШКАЛЫ", ""+scale.getAsString("scaleName"));
+        Log.e("АЙДИ ТИПА ШКАЛЫ", ""+scale.getAsString("scaleTypeId"));
+        Log.e("ПОГР ШКАЛЫ", ""+scale.getAsString("scaleError"));
+        Log.e("МАКС ШКАЛЫ", ""+scale.getAsString("scaleMax"));
+        Log.e("МИН ШКАЛЫ", ""+scale.getAsString("scaleMin"));
+        Log.e("АЙДИ ПРИБОРА ШКАЛЫ", ""+scale.getAsString("scaleDeviceId"));
 
         ContentValues newDeviceData = new ContentValues();
         newDeviceData.put(FIELD_DEVICES_NAME,binding.editTextEditdeviceName.getText().toString());

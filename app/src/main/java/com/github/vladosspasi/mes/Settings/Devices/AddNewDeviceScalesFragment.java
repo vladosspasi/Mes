@@ -79,7 +79,7 @@ public class AddNewDeviceScalesFragment extends Fragment {
                 R.array.types_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        //spinner.setSelection(1);
+
     }
 
     @Override
@@ -116,19 +116,22 @@ public class AddNewDeviceScalesFragment extends Fragment {
 
             ContentValues scale = new ContentValues();
 
-            scale.put(FIELD_SCALES_NAME, String.valueOf(binding.editboxAddNewDeviceScalesName.getText()));
-            scale.put(FIELD_SCALES_UNIT, String.valueOf(binding.editboxAddNewDeviceScalesUnit.getText()));
+            scale.put("scaleName", String.valueOf(binding.editboxAddNewDeviceScalesName.getText()));
+            scale.put("scaleUnit", String.valueOf(binding.editboxAddNewDeviceScalesUnit.getText()));
 
             DataBaseHelper dataBaseHelper = getInstance(getContext());
 
             int typeId = (int) binding.spinnerAddNewDeviceScalesType.getSelectedItemPosition()+1;
             String type = dataBaseHelper.getValueTypeById(typeId);
 
-            scale.put("type", type);
-            scale.put(FIELD_SCALES_VALUETYPEID, typeId);
-            scale.put(FIELD_SCALES_MINVALUE, String.valueOf(binding.editboxAddNewDeviceScalesFromvalue.getText()));
-            scale.put(FIELD_SCALES_MAXVALUE, String.valueOf(binding.editboxAddNewDeviceScalesTovalue.getText()));
-            scale.put(FIELD_SCALES_ERROR, String.valueOf(binding.editboxAddNewDeviceScalesError.getText()));
+            dataBaseHelper.close();
+
+            scale.put("valuetypeId", typeId);
+            scale.put("valuetypeName", type);
+            scale.put("valueTypeId", typeId);
+            scale.put("scaleMin", String.valueOf(binding.editboxAddNewDeviceScalesFromvalue.getText()));
+            scale.put("scaleMax", String.valueOf(binding.editboxAddNewDeviceScalesTovalue.getText()));
+            scale.put("scaleError", String.valueOf(binding.editboxAddNewDeviceScalesError.getText()));
 
             binding.textboxAddNewDeviceScalesListtitle.setText("Шкалы прибора:");
 

@@ -25,10 +25,6 @@
                 app:destination="@id/SettingsFragment"/>
 
         <action
-                android:id="@+id/action_MainmenuFragment_to_ImpExpFragment"
-                app:destination="@id/ImpExpFragment"/>
-
-        <action
                 android:id="@+id/action_MainmenuFragment_to_InfoFragment"
                 app:destination="@id/InfoFragment"/>
 
@@ -216,16 +212,6 @@
     </fragment>
 
     <!--Экран импорта/экспорта-->
-    <fragment
-            android:id="@+id/ImpExpFragment"
-            android:name="com.github.vladosspasi.mes.ExportImport.ImpExpFragment"
-            android:label="ImpExp Fragment"
-            tools:layout="@layout/fragment_screen_impexp">
-
-        <action
-                android:id="@+id/action_ImpExpFragment_to_MainmenuFragment"
-                app:destination="@id/MainmenuFragment"/>
-    </fragment>
 
     <!--Экран инфо-->
     <fragment

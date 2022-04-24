@@ -113,6 +113,7 @@ public class AddNewTemplateScales extends Fragment {
         DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(getContext());
         dataBaseHelper.createTemplate(GlobalTemplateInfo.getTemplate());
         dataBaseHelper.close();
+        GlobalTemplateInfo.clear();
 
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
         alert.setMessage("Шаблон успешно добавлен.");

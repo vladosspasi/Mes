@@ -69,9 +69,7 @@ public class DevicesListFragment extends Fragment {
                 new RecyclerItemClickListener(this.getContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-
                         goToThisDevice(position);
-                        Log.println(Log.DEBUG, "ПЕРЕДАННЫЙ ПРИБОР", " №"+position+" в списке");
                     }
 
                     @Override
@@ -79,7 +77,7 @@ public class DevicesListFragment extends Fragment {
 
                         AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
                         dialog.setMessage("Выберите действие");
-                        dialog.setTitle("Прибор " + devicesList.get(position).getAsString("name"));
+                        dialog.setTitle("Прибор " + devicesList.get(position).getAsString("deviceName"));
                         dialog.setNegativeButton("Удалить", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -115,7 +113,6 @@ public class DevicesListFragment extends Fragment {
                         dialog.setPositiveButton("Редактировать", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-
                                 editDevice(position);
                                 dialogInterface.cancel();
                             }
@@ -127,7 +124,7 @@ public class DevicesListFragment extends Fragment {
 
     private void deleteDeviceFromList(int i){
 
-        int deviceId = devicesList.get(i).getAsInteger("id");
+        int deviceId = devicesList.get(i).getAsInteger("deviceId");
 
         DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(getContext());
         dataBaseHelper.deleteDeviceById(deviceId);
@@ -148,7 +145,7 @@ public class DevicesListFragment extends Fragment {
     }
 
     public void editDevice(int pos){
-        int deviceId = devicesList.get(pos).getAsInteger("id");
+        int deviceId = devicesList.get(pos).getAsInteger("deviceId");
         Bundle arg = new Bundle();
         arg.putInt("DeviceId", deviceId);
         NavHostFragment.findNavController(DevicesListFragment.this)

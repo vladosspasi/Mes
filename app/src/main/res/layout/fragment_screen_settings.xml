@@ -11,15 +11,77 @@
             android:text="Сохраненные приборы"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/button_Settings_goToDevices"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp" android:layout_marginEnd="16dp" app:layout_constraintHorizontal_bias="0.0"/>
+            android:layout_marginEnd="16dp" app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"/>
     <Button
             android:text="Сохраненные шаблоны"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/button_Settings_goToTemplates"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_Settings_goToDevices" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView_settings_devicesTitle"
             android:layout_marginStart="16dp" app:layout_constraintHorizontal_bias="0.0"
+            android:layout_marginEnd="16dp" android:layout_marginTop="24dp"/>
+    <TextView
+            android:text="Нажмите для добавления, изменения, удаления и просмотра измерительных приборов."
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/textView_settings_devicesTitle"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/button_Settings_goToDevices" android:layout_marginTop="8dp"/>
+    <TextView
+            android:text="Нажмите для добавления, удаления и просмотра шаблонов измерений."
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/textView_setting_templatesTitle"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp" android:layout_marginStart="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/button_Settings_goToTemplates" android:layout_marginTop="8dp"/>
+    <Button
+            android:text="Импорт базы данных"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/button_settings_import"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_setting_templatesTitle"
+            app:layout_constraintHorizontal_bias="0.0" android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" android:layout_marginTop="24dp"/>
+    <Button
+            android:text="Экспорт базы данных"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/button_settings_export"
+            app:layout_constraintTop_toBottomOf="@+id/textView_settings_importTitle" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="24dp"
+            android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
+            app:layout_constraintHorizontal_bias="0.0"/>
+    <Button
+            android:text="Очистить все данные"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/button_settings_clearDB"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
+            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintTop_toBottomOf="@+id/textView_settings_exportTitle"
+            android:layout_marginTop="24dp"/>
+    <TextView
+            android:text="Нажмите, чтобы импортировать файл базы данных с устройства в приложение."
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/textView_settings_importTitle"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_settings_import" android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" android:layout_marginTop="8dp" app:layout_constraintHorizontal_bias="0.0"/>
+    <TextView
+            android:text="Нажмите, чтобы экспортировать файл базы данных из приложения на устройство."
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/textView_settings_exportTitle"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_settings_export" android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp" android:layout_marginStart="16dp"
+            app:layout_constraintHorizontal_bias="0.0"/>
+    <TextView
+            android:text="Нажмите, чтобы очистить базу данных приложения. ВНИМАНИЕ! Все сохраненные данные после выполнения этой операции будут удалены!"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/textView_settings_clearTitle"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_settings_clearDB" android:layout_marginTop="8dp"
+            app:layout_constraintHorizontal_bias="0.0" android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"/>
 </android.support.constraint.ConstraintLayout>

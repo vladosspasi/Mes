@@ -147,12 +147,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     //Действие при обновлении версии базы данных
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_MES_NAME + ";");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_VALUES_NAME + ";");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_DEVICES_NAME + ";");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_SCALES_NAME + ";");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_VALUETYPES_NAME + ";");
-        onCreate(sqLiteDatabase);
     }
 
     //получение экземпляра - необходимо для безопасного обращения к бд только 1 экземпляром хелпера
@@ -161,6 +155,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             sInstance = new DataBaseHelper(context.getApplicationContext());
         }
         return sInstance;
+    }
+
+    //Удалить все данные из дб
+    public void eraseAllData(){
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.delete(TABLE_VALUES_NAME, null, null);
+        db.delete(TABLE_MES_NAME, null, null);
+        db.delete(TABLE_TEMPSCALES_NAME, null, null);
+        db.delete(TABLE_TEMPLATES_NAME, null, null);
+        db.delete(TABLE_SCALES_NAME, null, null);
+        db.delete(TABLE_VALUETYPES_NAME, null, null);
+        db.delete(TABLE_DEVICES_NAME, null, null);
+
+        db.close();
     }
 
 
@@ -462,11 +471,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         ContentValues scale;
 
+        Log.e("РАЗМЕР МАССИВА СТРОК", ""+scales.size());
+
+
         for (int i = 0; i < scales.size(); i++) {
             scale = scales.get(i);
-            scale.remove("type");
-            scale.put(FIELD_SCALES_DEVICEID, deviceId);
-            db.insert(TABLE_SCALES_NAME, null, scale);
+            scale.remove("valuetypeName");
+
+            ContentValues scaleFormated = new ContentValues();
+            scaleFormated.put(FIELD_SCALES_NAME,scale.getAsString("scaleName"));
+            scaleFormated.put(FIELD_SCALES_UNIT,scale.getAsString("scaleUnit"));
+            scaleFormated.put(FIELD_SCALES_ERROR,scale.getAsString("scaleError"));
+            scaleFormated.put(FIELD_SCALES_MINVALUE,scale.getAsString("scaleMin"));
+            scaleFormated.put(FIELD_SCALES_MAXVALUE,scale.getAsString("scaleMax"));
+            scaleFormated.put(FIELD_SCALES_DEVICEID,deviceId);
+            scaleFormated.put(FIELD_SCALES_VALUETYPEID,scale.getAsString("valuetypeId"));
+            db.insert(TABLE_SCALES_NAME, null, scaleFormated);
         }
     }
 
@@ -628,14 +648,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_DEVICES_NAME, deviceData, FIELD_DEVICES_ID + " = " + deviceId, null);
 
         for (ContentValues scale : scalesList) {
-            scale.remove(FIELD_VALUETYPES_NAME);
-            if (scale.getAsString(FIELD_SCALES_ID).equals("no")) {
-                scale.remove(FIELD_SCALES_ID);
-                scale.put(FIELD_SCALES_DEVICEID, deviceId);
-                db.insert(TABLE_SCALES_NAME, null, scale);
 
+            ContentValues scaleFormated = new ContentValues();
+            scaleFormated.put(FIELD_SCALES_ID,scale.getAsString("scaleId"));
+            scaleFormated.put(FIELD_SCALES_NAME,scale.getAsString("scaleName"));
+            scaleFormated.put(FIELD_SCALES_UNIT,scale.getAsString("scaleUnit"));
+            scaleFormated.put(FIELD_SCALES_ERROR,scale.getAsString("scaleError"));
+            scaleFormated.put(FIELD_SCALES_MINVALUE,scale.getAsString("scaleMin"));
+            scaleFormated.put(FIELD_SCALES_MAXVALUE,scale.getAsString("scaleMax"));
+            scaleFormated.put(FIELD_SCALES_DEVICEID,deviceId);
+            scaleFormated.put(FIELD_SCALES_VALUETYPEID,scale.getAsString("scaleTypeId"));
+
+            if (scaleFormated.getAsString(FIELD_SCALES_ID).equals("no")) {
+                scaleFormated.remove(FIELD_SCALES_ID);
+                db.insert(TABLE_SCALES_NAME, null, scaleFormated);
             } else {
-                db.update(TABLE_SCALES_NAME, scale, FIELD_SCALES_ID + " = " + scale.getAsInteger(FIELD_SCALES_ID), /*new String[]{FIELD_SCALES_ID}*/null);
+                db.update(TABLE_SCALES_NAME, scaleFormated, FIELD_SCALES_ID + " = " + scaleFormated.getAsInteger(FIELD_SCALES_ID), null);
             }
         }
 
