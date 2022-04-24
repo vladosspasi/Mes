@@ -51,7 +51,7 @@ public class SelectDeviceForAddingFragment extends Fragment {
                 new RecyclerItemClickListener(getContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        int id = deviceList.get(position).getAsInteger("id");
+                        int id = deviceList.get(position).getAsInteger("deviceId");
                         Bundle arg = new Bundle();
                         arg.putInt("DeviceId", id);
                         NavHostFragment.findNavController(SelectDeviceForAddingFragment.this)

@@ -242,26 +242,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.insert(TABLE_VALUES_NAME, null, value4);
     }
 
-    //Процедура тестирования - получение тестовых данных из базы данных
-    public ContentValues testDatabase() {
-        SQLiteDatabase db = getReadableDatabase();
-        ContentValues output = new ContentValues();
-
-        Cursor cursor = db.query(TABLE_MES_NAME,
-                new String[]{FIELD_MES_ID, FIELD_MES_NAME, FIELD_MES_COMMENT, FIELD_MES_DATE, FIELD_MES_VALUEID},
-                null, null, null, null, null);
-        cursor.moveToFirst();
-
-        output.put(FIELD_MES_ID, cursor.getInt(0));
-        output.put(FIELD_MES_NAME, cursor.getString(1));
-        output.put(FIELD_MES_COMMENT, cursor.getString(2));
-        output.put(FIELD_MES_DATE, cursor.getString(3));
-        output.put(FIELD_MES_VALUEID, cursor.getInt(4));
-        db.close();
-        cursor.close();
-        return output;
-    }
-
     public ArrayList<ContentValues> getMeasurementsList() {
         SQLiteDatabase db = getReadableDatabase();
         ContentValues mes = new ContentValues();
@@ -285,10 +265,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         mesCursor.moveToFirst();
         do {
             mes = new ContentValues();
-            mes.put("id", mesCursor.getInt(0));
-            mes.put("name", mesCursor.getString(1));
-            mes.put("comment", mesCursor.getString(2));
-            mes.put("date", mesCursor.getString(3));
+            mes.put("mesId", mesCursor.getInt(0));
+            mes.put("mesName", mesCursor.getString(1));
+            mes.put("mesComment", mesCursor.getString(2));
+            mes.put("mesDate", mesCursor.getString(3));
             mesList.add(mes);
             mesCursor.moveToNext();
 
@@ -310,9 +290,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         mesCursor.moveToFirst();
         mesInfo.clear();
-        mesInfo.put("name", mesCursor.getString(1)); //нет данных
-        mesInfo.put("comment", mesCursor.getString(2));
-        mesInfo.put("date", mesCursor.getString(3));
+        mesInfo.put("mesName", mesCursor.getString(1)); //нет данных
+        mesInfo.put("mesComment", mesCursor.getString(2));
+        mesInfo.put("mesDate", mesCursor.getString(3));
         mesCursor.close();
         mesData.add(mesInfo);
 
@@ -347,12 +327,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         do {
             val = new ContentValues();
 
-            val.put("id", valsCursor.getInt(0));
+            val.put("valueId", valsCursor.getInt(0));
             val.put("value", valsCursor.getString(1));
-            val.put("error", valsCursor.getDouble(2));
+            val.put("scaleError", valsCursor.getDouble(2));
             val.put("scaleName", valsCursor.getString(3));
-            val.put("unit", valsCursor.getString(4));
-            val.put("device_id", valsCursor.getString(5));
+            val.put("scaleUnit", valsCursor.getString(4));
+            val.put("deviceId", valsCursor.getString(5));
             val.put("deviceName", valsCursor.getString(6));
             mesData.add(val);
             valsCursor.moveToNext();
@@ -390,9 +370,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 ";", null);
 
         deviceCursor.moveToFirst();
-        deviceInfo.put("name", deviceCursor.getString(0));
-        deviceInfo.put("comment", deviceCursor.getString(1));
-        deviceInfo.put("type", deviceCursor.getString(2));
+        deviceInfo.put("deviceName", deviceCursor.getString(0));
+        deviceInfo.put("deviceComment", deviceCursor.getString(1));
+        deviceInfo.put("deviceType", deviceCursor.getString(2));
         deviceData.add(deviceInfo);
         deviceCursor.close();
 
@@ -415,14 +395,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         do {
             scaleInfo = new ContentValues();
 
-            scaleInfo.put(FIELD_SCALES_NAME, scalesCursor.getString(0));
-            scaleInfo.put(FIELD_SCALES_UNIT, scalesCursor.getString(1));
-            scaleInfo.put(FIELD_SCALES_ERROR, scalesCursor.getString(2));
-            scaleInfo.put(FIELD_SCALES_MINVALUE, scalesCursor.getString(3));
-            scaleInfo.put(FIELD_SCALES_MAXVALUE, scalesCursor.getString(4));
-            scaleInfo.put(FIELD_VALUETYPES_NAME, scalesCursor.getString(5));
-            scaleInfo.put(FIELD_SCALES_VALUETYPEID, scalesCursor.getString(6));
-            scaleInfo.put(FIELD_SCALES_ID, scalesCursor.getString(7));
+            scaleInfo.put("scaleName", scalesCursor.getString(0));
+            scaleInfo.put("scaleUnit", scalesCursor.getString(1));
+            scaleInfo.put("scaleError", scalesCursor.getString(2));
+            scaleInfo.put("scaleMin", scalesCursor.getString(3));
+            scaleInfo.put("scaleMax", scalesCursor.getString(4));
+            scaleInfo.put("valuetypeName", scalesCursor.getString(5));
+            scaleInfo.put("scaleTypeId", scalesCursor.getString(6));
+            scaleInfo.put("scaleId", scalesCursor.getString(7));
 
             deviceData.add(scaleInfo);
             scalesCursor.moveToNext();
@@ -460,10 +440,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         do {
             deviceInfo = new ContentValues();
-            deviceInfo.put("id", devicesCursor.getString(0));
-            deviceInfo.put("name", devicesCursor.getString(1));
-            deviceInfo.put("comment", devicesCursor.getString(2));
-            deviceInfo.put("type", devicesCursor.getString(3));
+            deviceInfo.put("deviceId", devicesCursor.getString(0));
+            deviceInfo.put("deviceName", devicesCursor.getString(1));
+            deviceInfo.put("deviceComment", devicesCursor.getString(2));
+            deviceInfo.put("deviceType", devicesCursor.getString(3));
 
             deviceList.add(deviceInfo);
             devicesCursor.moveToNext();
@@ -503,24 +483,28 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 TABLE_SCALES_NAME + "." + FIELD_SCALES_ERROR + " , " +
                 TABLE_SCALES_NAME + "." + FIELD_SCALES_MINVALUE + " , " +
                 TABLE_SCALES_NAME + "." + FIELD_SCALES_MAXVALUE + " , " +
-                TABLE_VALUETYPES_NAME + "." + FIELD_VALUETYPES_NAME + " " +
+                TABLE_VALUETYPES_NAME + "." + FIELD_VALUETYPES_NAME + ", " +
+                TABLE_DEVICES_NAME+ "." + FIELD_DEVICES_NAME + " " +
                 "FROM " + TABLE_SCALES_NAME + " " +
                 "JOIN " + TABLE_VALUETYPES_NAME + " " +
                 "ON " + TABLE_VALUETYPES_NAME + "." + FIELD_VALUETYPES_ID + " = " + TABLE_SCALES_NAME + "." + FIELD_SCALES_VALUETYPEID + " " +
+                "JOIN " + TABLE_DEVICES_NAME + " " +
+                "ON " + TABLE_DEVICES_NAME + "." + FIELD_DEVICES_ID + " = " + TABLE_SCALES_NAME + "." + FIELD_SCALES_DEVICEID + " " +
                 "WHERE " + TABLE_SCALES_NAME + "." + FIELD_SCALES_DEVICEID + " = " + deviceId +
                 ";", null);
 
         scalesCursor.moveToFirst();
         do {
             scale = new ContentValues();
-            scale.put(FIELD_SCALES_ID, scalesCursor.getInt(0));
-            scale.put(FIELD_SCALES_NAME, scalesCursor.getString(1));
-            scale.put(FIELD_SCALES_UNIT, scalesCursor.getString(2));
-            scale.put(FIELD_SCALES_ERROR, scalesCursor.getString(3));
-            scale.put(FIELD_SCALES_MINVALUE, scalesCursor.getString(4));
-            scale.put(FIELD_SCALES_MAXVALUE, scalesCursor.getString(5));
-            scale.put(FIELD_VALUETYPES_NAME, scalesCursor.getString(6));
-
+            scale.put("scaleId", scalesCursor.getInt(0));
+            scale.put("scaleName", scalesCursor.getString(1));
+            scale.put("scaleUnit", scalesCursor.getString(2));
+            scale.put("scaleError", scalesCursor.getString(3));
+            scale.put("scaleMin", scalesCursor.getString(4));
+            scale.put("scaleMax", scalesCursor.getString(5));
+            scale.put("valuetypeName", scalesCursor.getString(6));
+            scale.put("deviceId", deviceId);
+            scale.put("deviceName", scalesCursor.getString(7));
             scalesList.add(scale);
             scalesCursor.moveToNext();
         } while (!scalesCursor.isAfterLast());
@@ -562,6 +546,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 FIELD_DEVICES_ID + " = " + deviceId, null, null, null, null);
         cursor.moveToFirst();
         scaleInfo.put("deviceName", cursor.getString(0));
+        scaleInfo.put("deviceId", deviceId);
 
         cursor.close();
         return scaleInfo;
@@ -703,12 +688,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                         TABLE_SCALES_NAME + "." + FIELD_SCALES_MAXVALUE + ", " +
                         TABLE_SCALES_NAME + "." + FIELD_SCALES_ERROR + ", " +
                         TABLE_SCALES_NAME + "." + FIELD_SCALES_VALUETYPEID + ", " +
-                        TABLE_VALUETYPES_NAME + "." + FIELD_VALUETYPES_NAME + " " +
+                        TABLE_VALUETYPES_NAME + "." + FIELD_VALUETYPES_NAME + ", " +
+                        TABLE_DEVICES_NAME+ "." + FIELD_DEVICES_NAME + ", " +
+                        TABLE_SCALES_NAME + "." + FIELD_SCALES_ID + " " +
                         "FROM " + TABLE_SCALES_NAME+" "+
                         "JOIN " + TABLE_VALUETYPES_NAME + " " +
                         "ON " + TABLE_SCALES_NAME + "." + FIELD_SCALES_VALUETYPEID + " = " + TABLE_VALUETYPES_NAME + "." + FIELD_VALUETYPES_ID + " " +
                         "JOIN " + TABLE_TEMPSCALES_NAME + " " +
                         "ON " + TABLE_TEMPSCALES_NAME + "." + FIELD_TEMPSCALES_SCALEID + " = " + TABLE_SCALES_NAME + "." + FIELD_SCALES_ID + " " +
+                        "JOIN " + TABLE_DEVICES_NAME + " " +
+                        "ON " + TABLE_DEVICES_NAME + "." + FIELD_DEVICES_ID + " = " + TABLE_SCALES_NAME + "." + FIELD_SCALES_DEVICEID + " " +
                         "WHERE " + TABLE_TEMPSCALES_NAME + "." + FIELD_TEMPSCALES_TEMPID + " =" + id +
                         "; "
                 , null, null);
@@ -717,12 +706,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         while(!cursor.isAfterLast()){
             scale = new ContentValues();
-            scale.put(FIELD_SCALES_NAME,cursor.getString(0));
-            scale.put(FIELD_SCALES_UNIT,cursor.getString(1));
-            scale.put(FIELD_SCALES_MINVALUE,cursor.getString(2));
-            scale.put(FIELD_SCALES_MAXVALUE,cursor.getString(3));
-            scale.put(FIELD_SCALES_ERROR,cursor.getString(4));
-            scale.put(FIELD_VALUETYPES_NAME,cursor.getString(6));
+            scale.put("scaleName",cursor.getString(0));
+            scale.put("scaleUnit",cursor.getString(1));
+            scale.put("scaleMin",cursor.getString(2));
+            scale.put("scaleMax",cursor.getString(3));
+            scale.put("scaleError",cursor.getString(4));
+            scale.put("valuetypeName",cursor.getString(6));
+            scale.put("deviceName",cursor.getString(7));
+            scale.put("scaleId",cursor.getString(8));
 
             template.addToScalesList(scale);
             cursor.moveToNext();
@@ -751,9 +742,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             while (!cursor.isAfterLast()) {
 
                 template = new ContentValues();
-                template.put("id", cursor.getInt(0));
-                template.put("name", cursor.getString(1));
-                template.put("comment", cursor.getString(2));
+                template.put("tempId", cursor.getInt(0));
+                template.put("tempName", cursor.getString(1));
+                template.put("tempComment", cursor.getString(2));
                 list.add(template);
                 cursor.moveToNext();
             }

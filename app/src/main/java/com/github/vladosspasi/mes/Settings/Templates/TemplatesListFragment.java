@@ -159,15 +159,13 @@ public class TemplatesListFragment extends Fragment {
 
         if (templates.size() == 0) {
             binding.textViewTemplatesTitle.setText("Сейчас у вас нет шаблонов.");
-        } else {
-            TemplateListAdapter adapter = new TemplateListAdapter();
-            adapter.setItems(templates);
-            binding.recviewTemplatesList.setAdapter(adapter);
         }
 
+        TemplateListAdapter adapter = new TemplateListAdapter();
+        adapter.setItems(templates);
+        binding.recviewTemplatesList.setAdapter(adapter);
+
         dataBaseHelper.close();
-
     }
-
 
 }

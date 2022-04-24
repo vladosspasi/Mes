@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,13 +56,10 @@ public class SelectScaleForAddingFragment extends Fragment {
                 new RecyclerItemClickListener(getContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        int id = scalesList.get(position).getAsInteger(FIELD_SCALES_ID);
 
-                        ArrayList<Integer> scalesIds = MeasurementGlobalInfo.getScalesIds();
-                        scalesIds.add(id);
-                        MeasurementGlobalInfo.setScalesIds( scalesIds);
+                        MeasurementGlobalInfo.addToScalesList(scalesList.get(position));
                         NavHostFragment.findNavController(SelectScaleForAddingFragment.this)
-                                .navigate(R.id.action_AddNewMesSelectScaleFragment_to_AddNewValuesFragment/*, arg*/);
+                                .navigate(R.id.action_AddNewMesSelectScaleFragment_to_AddNewValuesFragment);
                     }
                     @Override
                     public void onLongItemClick(View view, int position) {

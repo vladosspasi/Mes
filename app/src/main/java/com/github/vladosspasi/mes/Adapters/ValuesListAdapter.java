@@ -1,4 +1,4 @@
-package com.github.vladosspasi.mes.ViewingMesList;
+package com.github.vladosspasi.mes.Adapters;
 
 import android.content.ContentValues;
 import android.support.annotation.NonNull;
@@ -76,8 +76,8 @@ public class ValuesListAdapter extends RecyclerView.Adapter<ValuesListAdapter.Va
             valueTextView = itemView.findViewById(R.id.textView_valListElementView_value);
             errorTextView = itemView.findViewById(R.id.textView_valListElementView_error);
             unitTextView = itemView.findViewById(R.id.textView_valListElementView_unit);
-            scaleNameTextView = itemView.findViewById(R.id.textView_valListElementView_scale);
-            deviceNameTextView = itemView.findViewById(R.id.textView_valListElementView_device);
+            scaleNameTextView = itemView.findViewById(R.id.textView_valListElementView_scaleTitle);
+            deviceNameTextView = itemView.findViewById(R.id.textView_valListElementView_deviceTitle);
         }
 
         //Заполнение элементов вью данными
@@ -87,8 +87,8 @@ public class ValuesListAdapter extends RecyclerView.Adapter<ValuesListAdapter.Va
             errorTitleTextView.setText("Погр.");
             unitTitleTextView.setText("Ед. изм.");
             valueTextView.setText(element.getAsString("value"));
-            errorTextView.setText("+-"+element.getAsString("error"));
-            unitTextView.setText(element.getAsString("unit"));
+            errorTextView.setText("+-"+element.getAsString("scaleError"));
+            unitTextView.setText(element.getAsString("scaleUnit"));
             scaleNameTextView.setText("Шкала: "+element.getAsString("scaleName"));
             deviceNameTextView.setText("Прибор: "+element.getAsString("deviceName"));
         }

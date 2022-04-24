@@ -78,12 +78,12 @@ public class ScalesListAdapter extends RecyclerView.Adapter<ScalesListAdapter.Sc
         //Заполнение элементов вью данными
         public void bind(ContentValues element) {
 
-            nameTextView.setText("Название: " + element.getAsString(FIELD_SCALES_NAME));
-            typeTextView.setText("Тип данных: "+ element.getAsString(FIELD_VALUETYPES_NAME));
-            minvalueTextView.setText("Минимальное значение: " + element.getAsString(FIELD_SCALES_MINVALUE));
-            maxvalueTextView.setText("Максимальное значение: " + element.getAsString(FIELD_SCALES_MAXVALUE));
-            errorTextView.setText("Погрешность: " + element.getAsString(FIELD_SCALES_ERROR));
-            unitTextView.setText("Единица измерения: " + element.getAsString(FIELD_SCALES_UNIT));
+            nameTextView.setText("Название: " + element.getAsString("scaleName"));
+            typeTextView.setText("Тип данных: "+ element.getAsString("valuetypeName"));
+            minvalueTextView.setText("Минимальное значение: " + element.getAsString("scaleMin"));
+            maxvalueTextView.setText("Максимальное значение: " + element.getAsString("scaleMax"));
+            errorTextView.setText("Погрешность: " + element.getAsString("scaleError"));
+            unitTextView.setText("Единица измерения: " + element.getAsString("scaleUnit"));
         }
 
 

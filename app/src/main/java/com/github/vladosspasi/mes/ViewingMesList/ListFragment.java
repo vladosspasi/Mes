@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import com.github.vladosspasi.mes.Adapters.MeasurementsListAdapter;
 import com.github.vladosspasi.mes.DataBaseHelper;
 import com.github.vladosspasi.mes.R;
 import com.github.vladosspasi.mes.RecyclerItemClickListener;
@@ -45,7 +46,7 @@ public class ListFragment extends Fragment {
         mes = dbHelper.getMeasurementsList();      //Получение списка измерений
         dbHelper.close();
 
-        if (mes.get(0).containsKey("empty") || mes.get(0).getAsString("name") == null) {
+        if (mes.get(0).containsKey("empty") || mes.get(0).getAsString("mesName") == null) {
             binding.recyclerViewListScreenTitle.setText("В базе данных нет измерений. Вернитесь назад и добавьте новое измерение.");
             binding.recyclerViewListScreenAllMeasurements.setVisibility(View.INVISIBLE);
         } else {
@@ -64,7 +65,7 @@ public class ListFragment extends Fragment {
                         public void onItemClick(View view, int position) {
                             ContentValues selectedMes = mes.get(position);                  //Получение выбранного элемента из списка
                             Bundle arg = new Bundle();                                     //Оболочка для передачи данных в другой фрагмент
-                            arg.putInt("MesId", selectedMes.getAsInteger("id"));          //Помещаем в оболочку id измерения
+                            arg.putInt("MesId", selectedMes.getAsInteger("mesId"));          //Помещаем в оболочку id измерения
                             NavHostFragment.findNavController(ListFragment.this)    //Переход на нажатое измерение (с аргументом)
                                     .navigate(R.id.action_ListFragment_to_ViewMesFragment, arg); //Для просмотра полной информации
                         }
@@ -121,9 +122,8 @@ public class ListFragment extends Fragment {
         binding = null;
     }
 
-
     private void deleteMeasurementFromList(int i) {
-        int mesId = mes.get(i).getAsInteger("id");
+        int mesId = mes.get(i).getAsInteger("mesId");
 
         DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(getContext());
         dataBaseHelper.deleteMesById(mesId);
@@ -131,7 +131,7 @@ public class ListFragment extends Fragment {
         mes = dataBaseHelper.getMeasurementsList();
         dataBaseHelper.close();
 
-        if (mes.get(0).containsKey("empty") || mes.get(0).getAsString("name") == null) {
+        if (mes.get(0).containsKey("empty") || mes.get(0).getAsString("mesName") == null) {
             binding.recyclerViewListScreenTitle.setText("В базе данных нет измерений. Вернитесь назад и добавьте новое измерение.");
             binding.recyclerViewListScreenAllMeasurements.setVisibility(View.INVISIBLE);
         } else {

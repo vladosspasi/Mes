@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.github.vladosspasi.mes.Adapters.AddingValueListAdapter;
 import com.github.vladosspasi.mes.DataBaseHelper;
 import com.github.vladosspasi.mes.R;
+import com.github.vladosspasi.mes.Settings.Templates.Template;
 import com.github.vladosspasi.mes.databinding.FragmentAddingnewmesScalesanddevicesBinding;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -25,9 +27,8 @@ public class AddNewMesValuesFragment extends Fragment {
 
     private FragmentAddingnewmesScalesanddevicesBinding binding;
     private ContentValues mesInfo;
-    private ArrayList<ContentValues> scalesInfo;
+    private ArrayList<ContentValues> scalesList;
     private RecyclerView recyclerView;
-    private ArrayList<Integer> scalesIds;
 
     @Override
     public View onCreateView(
@@ -46,33 +47,39 @@ public class AddNewMesValuesFragment extends Fragment {
         mesInfo.put(FIELD_MES_NAME, MeasurementGlobalInfo.getMesName());
         mesInfo.put(FIELD_MES_COMMENT, MeasurementGlobalInfo.getMesComment());
 
-        scalesIds = MeasurementGlobalInfo.getScalesIds();
-
         AddingValueListAdapter adapter = new AddingValueListAdapter();
         recyclerView = Objects.requireNonNull(getActivity()).findViewById(R.id.res_addNewMesDevice_values);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        if (scalesIds.size()==0) {
+        int tempId = MeasurementGlobalInfo.getTemplateId();
+        if(tempId!=-1){
+            DataBaseHelper dataBaseHelper = getInstance(getContext());
+            Template temp = dataBaseHelper.getTemplateById(tempId);
+            dataBaseHelper.close();
+
+            ArrayList<ContentValues> sList = temp.getScalesList();
+
+            for(int i =0; i<sList.size();i++){
+                MeasurementGlobalInfo.addToScalesList(sList.get(i));
+            }
+            MeasurementGlobalInfo.setTemplateId(-1);
+        }
+
+        scalesList = MeasurementGlobalInfo.getScalesList();
+
+        if (scalesList.size()==0) {
             recyclerView.setVisibility(RecyclerView.INVISIBLE);
             binding.textboxAddNewMesDeviceScalesTitle.setText("" +
-                    "Вы пока что не добавили данные. Нажмите кнопку \"Добавить шкалу\" ниже."
-            );
-        } else {
+                    "Вы пока что не добавили данные. Нажмите кнопку \"Добавить шкалу\" ниже.");
+        }
+        else{
             binding.textboxAddNewMesDeviceScalesTitle.setText("Список величин:");
             recyclerView.setVisibility(RecyclerView.VISIBLE);
-
-            scalesInfo = new ArrayList<>();
-            DataBaseHelper dataBaseHelper = getInstance(getContext());
-            ContentValues scaleInfo;
-
-            for (Integer id : scalesIds) {
-                scaleInfo = dataBaseHelper.getScaleById(id);
-                scalesInfo.add(scaleInfo);
-            }
-            dataBaseHelper.close();
-            adapter.setItems(scalesInfo);
+            adapter.setItems(scalesList);
             recyclerView.setAdapter(adapter);
         }
+
+
 
         binding.buttonAddNewMesDeviceAddvalue.setOnClickListener(view1 -> addNewScaleToList());
 
@@ -98,11 +105,15 @@ public class AddNewMesValuesFragment extends Fragment {
             }
 
         });
+
+        binding.buttonAddNewMesDeviceSelectTemplate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectTemplate();
+            }
+        });
+
     }
-
-
-
-
 
     @Override
     public void onDestroyView() {
@@ -112,11 +123,16 @@ public class AddNewMesValuesFragment extends Fragment {
 
     private void addNewScaleToList() {
         //Переход к экрану со списком приборов
-        MeasurementGlobalInfo.setScalesIds(scalesIds);
+        MeasurementGlobalInfo.setScalesList(scalesList);
         NavHostFragment.findNavController(AddNewMesValuesFragment.this)
                 .navigate(R.id.action_AddNewMesValuesFragment_to_AddNewMesSelectDeviceFragment);
-
     }
+
+    public void selectTemplate(){
+        NavHostFragment.findNavController(AddNewMesValuesFragment.this)
+                .navigate(R.id.action_AddNewMesValuesFragment_to_selectTemplateFragment);
+    }
+
 
     private boolean validate() {
         //TODO
@@ -128,16 +144,17 @@ public class AddNewMesValuesFragment extends Fragment {
         ArrayList<String> valuesList = new ArrayList<>();
 
         //Считывание введенных значений
-        for(int i =0; i<scalesInfo.size(); i++){
+        for(int i =0; i<scalesList.size(); i++){
             View view = recyclerView.getChildAt(i);
             EditText editValue = view.findViewById(R.id.editText_AddingValueListElementView_valueEnter);
             valuesList.add(editValue.getText().toString());
         }
 
         DataBaseHelper dataBaseHelper = getInstance(getContext());
-        boolean operationSuccess = dataBaseHelper.addMeasurement(mesInfo,scalesInfo,valuesList);
+        boolean operationSuccess = dataBaseHelper.addMeasurement(mesInfo,scalesList,valuesList);
         dataBaseHelper.close();
 
         return operationSuccess;
     }
+
 }

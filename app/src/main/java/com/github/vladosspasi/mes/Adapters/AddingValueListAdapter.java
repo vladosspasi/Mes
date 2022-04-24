@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 import android.content.ContentValues;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,6 @@ public class AddingValueListAdapter extends RecyclerView.Adapter<AddingValueList
         private final TextView scaleNameTextView;
         private final TextView unitTextView;
         private final TextView errorTextView;
-        private final ImageButton delete;
 
         //Конструктор для поиска элементов лэйаута
         public AddingValueListElementHolder(View itemView) {
@@ -58,11 +58,12 @@ public class AddingValueListAdapter extends RecyclerView.Adapter<AddingValueList
             scaleNameTextView = itemView.findViewById(R.id.textView_AddingValueListElementView_scaleName);
             unitTextView = itemView.findViewById(R.id.textView_AddingValueListElementView_unit);
             errorTextView = itemView.findViewById(R.id.textView_AddingValueListElementView_error);
-            delete = itemView.findViewById(R.id.button_AddingValueListElementView_delete);
         }
 
         //Заполнение элементов вью данными
         public void bind(ContentValues element) {
+            Log.e("ШКАЛА", "вот: "+element.getAsString("scaleId")+" "+element.getAsString("scaleName")+" "+element.getAsString("deviceName"));
+
             deviceNameTextView.setText(element.getAsString("deviceName"));
             scaleNameTextView.setText(element.getAsString("scaleName"));
             unitTextView.setText(element.getAsString("scaleUnit"));
@@ -71,7 +72,7 @@ public class AddingValueListAdapter extends RecyclerView.Adapter<AddingValueList
         }
     }
 
-    //TODO удаление элемента из списка по нажатию на крестик в элементе
+    //TODO удаление элемента из списка
 
     public void removeAt(int position){
         elementsList.remove(position);

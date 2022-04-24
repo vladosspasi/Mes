@@ -67,9 +67,9 @@ public class DevicesListAdapter extends RecyclerView.Adapter<DevicesListAdapter.
 
         //Заполнение элементов вью данными
         public void bind(ContentValues element) {
-            nameTextView.setText("Название прибора: " + element.getAsString("name"));
-            commentTextView.setText("Комментарий: " + element.getAsString("comment"));
-            typeTextView.setText("Тип прибора: "+ element.getAsString("type"));
+            nameTextView.setText("Название прибора: " + element.getAsString("deviceName"));
+            commentTextView.setText("Комментарий: " + element.getAsString("deviceComment"));
+            typeTextView.setText("Тип прибора: "+ element.getAsString("deviceType"));
         }
 
     }

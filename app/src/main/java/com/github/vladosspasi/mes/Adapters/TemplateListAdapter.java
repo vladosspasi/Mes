@@ -64,8 +64,8 @@ public class TemplateListAdapter extends RecyclerView.Adapter<TemplateListAdapte
 
         //Заполнение элементов вью данными
         public void bind(ContentValues element) {
-            nameTextView.setText("Название: " + element.getAsString("name"));
-            commentTextView.setText("Комментарий: "+ element.getAsString("comment"));
+            nameTextView.setText("Название: " + element.getAsString("tempName"));
+            commentTextView.setText("Комментарий: "+ element.getAsString("tempComment"));
         }
     }
 }

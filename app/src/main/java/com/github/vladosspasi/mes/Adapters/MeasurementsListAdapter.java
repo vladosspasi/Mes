@@ -1,4 +1,4 @@
-package com.github.vladosspasi.mes.ViewingMesList;
+package com.github.vladosspasi.mes.Adapters;
 
 import android.content.ContentValues;
 import android.support.annotation.NonNull;
@@ -69,9 +69,9 @@ public class MeasurementsListAdapter extends RecyclerView.Adapter<MeasurementsLi
 
         //Заполнение элементов вью данными
         public void bind(ContentValues element) {
-            nameTextView.setText(element.getAsString("name"));
-            commentTextView.setText("Комментарий:\n"+ element.getAsString("comment"));
-            dateTextView.setText("Дата снятия:\n"+ element.getAsString("date"));
+            nameTextView.setText(element.getAsString("mesName"));
+            commentTextView.setText("Комментарий:\n"+ element.getAsString("mesComment"));
+            dateTextView.setText("Дата снятия:\n"+ element.getAsString("mesDate"));
         }
 
     }

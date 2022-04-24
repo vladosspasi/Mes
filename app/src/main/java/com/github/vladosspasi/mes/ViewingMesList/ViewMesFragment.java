@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import com.github.vladosspasi.mes.Adapters.ValuesListAdapter;
 import com.github.vladosspasi.mes.DataBaseHelper;
 import com.github.vladosspasi.mes.R;
 import com.github.vladosspasi.mes.RecyclerItemClickListener;
@@ -54,9 +55,9 @@ public class ViewMesFragment extends Fragment {
         dbHelper.close();
         ContentValues mesInfo = mesData.get(0);
 
-        binding.textViewViewMesName.setText("Измерение \"" + mesInfo.getAsString("name") + "\"");
-        binding.textViewViewMesComment.setText("Комментарий: " + mesInfo.getAsString("comment"));
-        binding.textViewViewMesDate.setText("Дата снятия: " + mesInfo.getAsString("date"));
+        binding.textViewViewMesName.setText("Измерение \"" + mesInfo.getAsString("mesName") + "\"");
+        binding.textViewViewMesComment.setText("Комментарий: " + mesInfo.getAsString("mesComment"));
+        binding.textViewViewMesDate.setText("Дата снятия: " + mesInfo.getAsString("mesDate"));
         binding.textViewViewMesMestitle.setText("Снятые значения");
 
         mesData.remove(0);
@@ -87,7 +88,7 @@ public class ViewMesFragment extends Fragment {
                                 ContentValues value = mesData.get(0);
 
                                 Bundle arg = new Bundle();                                     //Оболочка для передачи данных в другой фрагмент
-                                arg.putInt("DeviceId", value.getAsInteger("device_id"));          //Помещаем в оболочку id прибора
+                                arg.putInt("DeviceId", value.getAsInteger("deviceId"));          //Помещаем в оболочку id прибора
                                 NavHostFragment.findNavController(ViewMesFragment.this)    //Переход на нажатое измерение (с аргументом)
                                         .navigate(R.id.action_ViewMesFragment_to_ViewDeviceFragment, arg);
 
@@ -146,7 +147,7 @@ public class ViewMesFragment extends Fragment {
         DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(getContext());
         log.info("КАКАЯ ИШКА: "+i);
         ContentValues value = mesData.get(i);
-        int id = value.getAsInteger("id");
+        int id = value.getAsInteger("valueId");
         if (dataBaseHelper.deleteValueById(id)) {
 
             mesData = dataBaseHelper.getMeasurmentData(mesId);

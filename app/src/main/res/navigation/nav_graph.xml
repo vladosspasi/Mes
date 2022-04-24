@@ -68,6 +68,8 @@
         <argument android:name="mesName" app:argType="string"/>
         <argument android:name="mesComment" app:argType="string"/>
         <argument android:name="ScalesIds" app:argType="java.util.ArrayList"/>
+        <action android:id="@+id/action_AddNewMesValuesFragment_to_selectTemplateFragment"
+                app:destination="@id/selectTemplateFragment"/>
     </fragment>
 
     <!--Экран выбора прибора для добавления шкалы в измерение-->
@@ -303,6 +305,9 @@
               android:label="ViewTemplateFragment">
         <argument android:name="TemplateId" app:argType="integer"/>
     </fragment>
+    <fragment android:id="@+id/selectTemplateFragment"
+              android:name="com.github.vladosspasi.mes.AddingNewMeasurement.SelectTemplateFragment"
+              android:label="SelectTemplateFragment"/>
 
 
 </navigation>

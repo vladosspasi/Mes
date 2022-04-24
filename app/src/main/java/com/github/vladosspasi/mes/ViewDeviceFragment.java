@@ -48,9 +48,9 @@ public class ViewDeviceFragment extends Fragment {
         deviceData.remove(0);
 
         binding.textViewViewDeviceTitle.setText("Информация о приборе");
-        binding.textViewViewDeviceName.setText("Название: " + deviceInfo.getAsString("name"));
-        binding.textViewViewDeviceType.setText("Тип: " + deviceInfo.getAsString("type"));
-        binding.textViewViewDeviceComment.setText("Комментарий: " + deviceInfo.getAsString("comment"));
+        binding.textViewViewDeviceName.setText("Название: " + deviceInfo.getAsString("deviceName"));
+        binding.textViewViewDeviceType.setText("Тип: " + deviceInfo.getAsString("deviceType"));
+        binding.textViewViewDeviceComment.setText("Комментарий: " + deviceInfo.getAsString("deviceComment"));
         binding.textViewViewDeviceScalesTitle.setText("Шкалы прибора:");
 
         recView = getActivity().findViewById(R.id.resView_ViewDevice_scalesList);

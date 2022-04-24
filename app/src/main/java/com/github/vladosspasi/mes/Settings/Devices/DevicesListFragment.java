@@ -156,7 +156,7 @@ public class DevicesListFragment extends Fragment {
     }
 
     public void goToThisDevice(int pos){
-        int deviceId = devicesList.get(pos).getAsInteger("id");
+        int deviceId = devicesList.get(pos).getAsInteger("deviceId");
         Log.println(Log.DEBUG, "ID ПРИБОРА", ""+deviceId);
         Bundle arg = new Bundle();
         arg.putInt("DeviceId", deviceId);

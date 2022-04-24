@@ -1,12 +1,23 @@
 package com.github.vladosspasi.mes.AddingNewMeasurement;
 
+import android.content.ContentValues;
+
 import java.util.ArrayList;
 
 public class MeasurementGlobalInfo {
 
     private static String mesName;
     private static String mesComment;
-    private static ArrayList<Integer> scalesIds;
+    private static ArrayList<ContentValues> scalesList;
+    private static int templateId = -1;
+
+    public static int getTemplateId() {
+        return templateId;
+    }
+
+    public static void setTemplateId(int templateId) {
+        MeasurementGlobalInfo.templateId = templateId;
+    }
 
     public static String getMesName() {
         return mesName;
@@ -24,19 +35,22 @@ public class MeasurementGlobalInfo {
         MeasurementGlobalInfo.mesComment = mesComment;
     }
 
-    public static ArrayList<Integer> getScalesIds() {
-        if(scalesIds==null) scalesIds = new ArrayList<>();
-        return scalesIds;
+    public static ArrayList<ContentValues> getScalesList() {
+        return scalesList;
     }
 
-    public static void setScalesIds(ArrayList<Integer> scalesIds) {
-        if(scalesIds==null) scalesIds = new ArrayList<>();
-        MeasurementGlobalInfo.scalesIds = scalesIds;
+    public static void setScalesList(ArrayList<ContentValues> scalesList) {
+        MeasurementGlobalInfo.scalesList = scalesList;
+    }
+
+    public static void addToScalesList(ContentValues newScale){
+        scalesList.add(newScale);
     }
 
     public static void clearAll(){
         mesName = "";
         mesComment = "";
-        scalesIds = new ArrayList<>();
+        scalesList = new ArrayList<>();
+        templateId = -1;
     }
 }
