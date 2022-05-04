@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class ViewDeviceFragment extends Fragment {
         Bundle arg = this.getArguments();
         assert arg != null;
         deviceId = arg.getInt("DeviceId");
+        Log.e("АЙДИ ПРИБОРА", ""+deviceId);
         ArrayList<ContentValues> deviceData = new ArrayList<>();
 
         DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(getContext());

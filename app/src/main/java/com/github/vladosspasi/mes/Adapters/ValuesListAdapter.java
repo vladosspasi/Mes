@@ -8,30 +8,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.github.vladosspasi.mes.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
-
-//Адаптер для списка величин
+/**
+ * Класс-адаптер списка величин измерения.
+ */
 public class ValuesListAdapter extends RecyclerView.Adapter<ValuesListAdapter.ValuesListElementHolder>{
-
-    //лист, хранящий список элементов
+    //Массив объектов списка
     private List<ContentValues> elementsList = new ArrayList<>();
 
-    //Добавление элементов в список
+    //Получение списка извне
     public void setItems(List<ContentValues> elems) {
         elementsList.addAll(elems);
         notifyDataSetChanged();
     }
 
-    //очистка списка
+    //Очистка списка
     public void clearItems() {
         elementsList.clear();
         notifyDataSetChanged();
     }
 
-    //что то нужное при создании элемента списка
+    //Установка xml-разметки отдельного элемента списка
     @NonNull
     @Override
     public ValuesListElementHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -40,19 +39,19 @@ public class ValuesListAdapter extends RecyclerView.Adapter<ValuesListAdapter.Va
         return new ValuesListElementHolder(view);
     }
 
-    //что-то нужное
+    //Привязывание элементов к разметке
     @Override
     public void onBindViewHolder(@NonNull ValuesListElementHolder valuesListElementHolder, int i) {
         valuesListElementHolder.bind(elementsList.get(i),i+1);
     }
 
-    //Количество элементов в списке
+    //Получение числа элементов списка
     @Override
     public int getItemCount() {
         return elementsList.size();
     }
 
-    //Холдер для элемента списка измерений
+    //Класс-холдер для элементов списка
     class ValuesListElementHolder extends RecyclerView.ViewHolder {
 
         //Все поля элемента списка с которыми происходит взаимодействие
@@ -92,6 +91,5 @@ public class ValuesListAdapter extends RecyclerView.Adapter<ValuesListAdapter.Va
             scaleNameTextView.setText("Шкала: "+element.getAsString("scaleName"));
             deviceNameTextView.setText("Прибор: "+element.getAsString("deviceName"));
         }
-
     }
 }

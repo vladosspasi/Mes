@@ -8,29 +8,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.github.vladosspasi.mes.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
-//Адаптер для списка измерений
+/**
+ * Класс-адаптер списка измерений.
+ */
 public class MeasurementsListAdapter extends RecyclerView.Adapter<MeasurementsListAdapter.MeasurementsListElementHolder> {
 
-    //лист, хранящий список элементов
+    //Массив объектов списка
     private List<ContentValues> elementsList = new ArrayList<>();
 
-    //Добавление элементов в список
+    //Получение списка извне
     public void setItems(List<ContentValues> elems) {
         elementsList.addAll(elems);
         notifyDataSetChanged();
     }
 
-    //очистка списка
+    //Очистка списка
     public void clearItems() {
         elementsList.clear();
         notifyDataSetChanged();
     }
 
-    //что то нужное при создании элемента списка
+    //Установка xml-разметки отдельного элемента списка
     @NonNull
     @Override
     public MeasurementsListElementHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -39,19 +40,19 @@ public class MeasurementsListAdapter extends RecyclerView.Adapter<MeasurementsLi
         return new MeasurementsListElementHolder(view);
     }
 
-    //что-то нужное
+    //Привязывание элементов к разметке
     @Override
     public void onBindViewHolder(@NonNull MeasurementsListElementHolder measurementsListElementHolder, int i) {
         measurementsListElementHolder.bind(elementsList.get(i));
     }
 
-    //Количество элементов в списке
+    //Получение числа элементов списка
     @Override
     public int getItemCount() {
         return elementsList.size();
     }
 
-    //Холдер для элемента списка измерений
+    //Класс-холдер для элементов списка
     class MeasurementsListElementHolder extends RecyclerView.ViewHolder {
 
         //Все поля элемента списка с которыми происходит взаимодействие

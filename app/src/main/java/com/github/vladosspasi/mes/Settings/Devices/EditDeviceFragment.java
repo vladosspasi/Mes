@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,35 +21,38 @@ import static com.github.vladosspasi.mes.DataBaseHelper.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Фрагмент изменения данных прибора
+ */
 public class EditDeviceFragment extends Fragment {
 
-    private FragmentEditdeviceBinding binding;
-    private RecyclerView recyclerView;
-    private ArrayList<ContentValues> scalesList;
-    private ContentValues deviceData;
-    private ScalesListAdapter adapter;
+    private FragmentEditdeviceBinding binding; //объект связка
+    private RecyclerView recyclerView; //объект списка
+    private ArrayList<ContentValues> scalesList; //список шкал
+    private ScalesListAdapter adapter; //Адаптер списка шкал
 
+    //Инициализация фрагмента
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-
         binding = FragmentEditdeviceBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
-
+    //Инициализация объектов фрагмента
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Получение айди прибора от предыдущего фрагмента
         Bundle bundle = getArguments();
         assert bundle != null;
         int deviceId = bundle.getInt("DeviceId");
 
         //Получение данных прибора
-        deviceData = GlobalDeviceInfo.getDeviceData();
-        if (deviceData==null||deviceData.size()==0){
+        ContentValues deviceData = GlobalDeviceInfo.getDeviceData();//получение сохраненных данных
+        if (deviceData ==null|| deviceData.size()==0){//Если их нет, то получить из бд и сохранить
             DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(getContext());
             scalesList = dataBaseHelper.getDeviceInfo(deviceId);
             dataBaseHelper.close();
@@ -74,11 +76,11 @@ public class EditDeviceFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        //Добавление новой шкалы в список
+        //Дейстиве на кнопку "добавить шкалу" - Добавление новой шкалы в список
         binding.buttonEditdeviceAddScale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //Установить начальные данные
                 ContentValues newScale = new ContentValues();
                 newScale.put("scaleId", "no");
                 newScale.put("scaleName", "");
@@ -87,7 +89,7 @@ public class EditDeviceFragment extends Fragment {
                 newScale.put("scaleMin", "");
                 newScale.put("scaleError", "");
                 newScale.put("valuetypeName", 1);
-
+                //Добавить и обновить список
                 scalesList.add(newScale);
                 GlobalDeviceInfo.setScales(scalesList);
                 adapter.clearItems();
@@ -98,16 +100,17 @@ public class EditDeviceFragment extends Fragment {
             }
         });
 
-        //Выход
+        //Действие на нажатие кнопки "Отмена"
         binding.buttonEditdeviceCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(EditDeviceFragment.this).
-                        navigateUp();
+                        navigateUp(); //Вернуться назад
             }
+            //TODO убрать за ненадобностью, если работает <-
         });
 
-        //Сохранить изменения
+        //Действие на нажатие кнопки "Сохранить"
         binding.buttonEditdeviceSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,26 +128,29 @@ public class EditDeviceFragment extends Fragment {
             }
         });
 
-        //Нажатие на элемент списка
+        //Действие на нажатие на элемент списка
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(this.getContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                    //короткое нажатие
                     @Override
                     public void onItemClick(View view, int position) {
                         Bundle arg = new Bundle();
                         arg.putInt("ScalePos", position);
                         NavHostFragment.findNavController(EditDeviceFragment.this)
                                 .navigate(R.id.action_EditDeviceFragment_to_editScaleFragment, arg);
+                        //переход к выбранной шкале для ее редактирования
                     }
 
+                    //Длинное нажатие
                     @Override
                     public void onLongItemClick(View view, int position) {
-
+                        //Создание диалога
                         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
                         alert.setMessage("Убрать шкалу из прибора?");
                         alert.setPositiveButton("Да", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                removeScaleFromDevice(position);
+                                removeScaleFromDevice(position); //удаление шкалы из прибора
                                 dialogInterface.cancel();
                             }
                         });
@@ -157,45 +163,32 @@ public class EditDeviceFragment extends Fragment {
                         alert.show();
                     }
                 }));
-
     }
 
+    //Уничтожение фрагмента при его закрытии
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
 
-
+    //Процедура сохранения изменений в базу данных
     private void saveChangesToDataBase(int dId) {
-
-        Log.e("АЙДИ ПРИБОРА", ""+dId);
-        Log.e("НАЗВАНИЕ ПРИБОРА", ""+binding.editTextEditdeviceName.getText().toString());
-        Log.e("КОМЕНТ ПРИБОРА", ""+binding.editTextEditdeviceComment.getText().toString());
-        Log.e("ТИП ПРИБОРА", ""+binding.editTextEditdeviceType.getText().toString());
-        Log.e("-", "-------------------");
-
-        ContentValues scale = scalesList.get(0);
-        Log.e("АЙДИ ШКАЛЫ", ""+scale.getAsString("scaleId"));
-        Log.e("ИМЯ ШКАЛЫ", ""+scale.getAsString("scaleName"));
-        Log.e("АЙДИ ТИПА ШКАЛЫ", ""+scale.getAsString("scaleTypeId"));
-        Log.e("ПОГР ШКАЛЫ", ""+scale.getAsString("scaleError"));
-        Log.e("МАКС ШКАЛЫ", ""+scale.getAsString("scaleMax"));
-        Log.e("МИН ШКАЛЫ", ""+scale.getAsString("scaleMin"));
-        Log.e("АЙДИ ПРИБОРА ШКАЛЫ", ""+scale.getAsString("scaleDeviceId"));
-
+        //Считывание полей и помещение в контейнер
         ContentValues newDeviceData = new ContentValues();
         newDeviceData.put(FIELD_DEVICES_NAME,binding.editTextEditdeviceName.getText().toString());
         newDeviceData.put(FIELD_DEVICES_COMMENT,binding.editTextEditdeviceComment.getText().toString());
         newDeviceData.put(FIELD_DEVICES_TYPE,binding.editTextEditdeviceType.getText().toString());
 
-        DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(getContext());
-        dataBaseHelper.modifyDevice(dId, newDeviceData, scalesList);
+        DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(getContext());//открытие класса для работы с бд
+        dataBaseHelper.modifyDevice(dId, newDeviceData, scalesList);//Сохранение изменений в бд
         dataBaseHelper.close();
-        GlobalDeviceInfo.clear();
+        GlobalDeviceInfo.clear(); //очистка сохраненных данных о приборе
     }
 
+    //Процедура удаления прибора из устройства
     public void removeScaleFromDevice(int pos){
+        //Удалить из списка и обновить
         scalesList.remove(pos);
         GlobalDeviceInfo.setScales(scalesList);
         adapter.clearItems();

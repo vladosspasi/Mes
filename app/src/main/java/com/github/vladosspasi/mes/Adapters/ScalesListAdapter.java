@@ -8,31 +8,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.github.vladosspasi.mes.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.vladosspasi.mes.DataBaseHelper.*;
-import static com.github.vladosspasi.mes.DataBaseHelper.FIELD_SCALES_ERROR;
-
+/**
+ * Класс-адаптер списка шкал.
+ */
 public class ScalesListAdapter extends RecyclerView.Adapter<ScalesListAdapter.ScalesListElementHolder> {
-
-
+    //Массив объектов списка
     private List<ContentValues> elementsList = new ArrayList<>();
 
-    //Добавление элементов в список
+    //Получение списка извне
     public void setItems(List<ContentValues> elems) {
         elementsList.addAll(elems);
         notifyDataSetChanged();
     }
 
-    //очистка списка
+    //Очистка списка
     public void clearItems() {
         elementsList.clear();
         notifyDataSetChanged();
     }
 
-    //что то нужное при создании элемента списка
+    //Установка xml-разметки отдельного элемента списка
     @NonNull
     @Override
     public ScalesListAdapter.ScalesListElementHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -41,22 +39,22 @@ public class ScalesListAdapter extends RecyclerView.Adapter<ScalesListAdapter.Sc
         return new ScalesListAdapter.ScalesListElementHolder(view);
     }
 
-    //что-то нужное
+    //Привязывание элементов к разметке
     @Override
     public void onBindViewHolder(@NonNull ScalesListAdapter.ScalesListElementHolder scalesListElementHolder, int i) {
         scalesListElementHolder.bind(elementsList.get(i));
     }
 
-    //Количество элементов в списке
+    //Получение числа элементов списка
     @Override
     public int getItemCount() {
         return elementsList.size();
     }
 
-    //Холдер для элемента списка измерений
+    //Класс-холдер для элементов списка
     class ScalesListElementHolder extends RecyclerView.ViewHolder {
 
-        //Все поля элемента списка с которыми происходит взаимодействие
+        //Все объекты элемента списка с которыми происходит взаимодействие
         private TextView nameTextView;
         private TextView typeTextView;
         private TextView minvalueTextView;
@@ -77,7 +75,6 @@ public class ScalesListAdapter extends RecyclerView.Adapter<ScalesListAdapter.Sc
 
         //Заполнение элементов вью данными
         public void bind(ContentValues element) {
-
             nameTextView.setText("Название: " + element.getAsString("scaleName"));
             typeTextView.setText("Тип данных: "+ element.getAsString("valuetypeName"));
             minvalueTextView.setText("Минимальное значение: " + element.getAsString("scaleMin"));

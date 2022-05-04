@@ -4,27 +4,29 @@ import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 import android.content.ContentValues;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import com.github.vladosspasi.mes.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс-адаптер списка ввода значений показаний при создании нового измерения.
+ */
 public class AddingValueListAdapter extends RecyclerView.Adapter<AddingValueListAdapter.AddingValueListElementHolder> {
+    //Массив объектов списка
+    private List<ContentValues> elementsList = new ArrayList<>();
 
-    private final List<ContentValues> elementsList = new ArrayList<>();
-
+    //Получение списка извне
     @SuppressLint("NotifyDataSetChanged")
     public void setItems(List<ContentValues> elems) {
         elementsList.addAll(elems);
         notifyDataSetChanged();
     }
 
+    //Установка xml-разметки отдельного элемента списка
     @NonNull
     @Override
     public AddingValueListElementHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -33,19 +35,21 @@ public class AddingValueListAdapter extends RecyclerView.Adapter<AddingValueList
         return new AddingValueListElementHolder(view);
     }
 
+    //Привязывание элементов к разметке
     @Override
     public void onBindViewHolder(@NonNull AddingValueListElementHolder addingValueListElementHolder, int i) {
         addingValueListElementHolder.bind(elementsList.get(i));
     }
 
+    //Получение числа элементов списка
     @Override
     public int getItemCount() {
         return elementsList.size();
     }
 
+    //Класс-холдер для элементов списка
     static class AddingValueListElementHolder extends RecyclerView.ViewHolder {
-
-        //Все поля элемента списка с которыми происходит взаимодействие
+        //Все объекты элемента списка с которыми происходит взаимодействие
         private final TextView deviceNameTextView;
         private final TextView scaleNameTextView;
         private final TextView unitTextView;
@@ -60,22 +64,12 @@ public class AddingValueListAdapter extends RecyclerView.Adapter<AddingValueList
             errorTextView = itemView.findViewById(R.id.textView_AddingValueListElementView_error);
         }
 
-        //Заполнение элементов вью данными
+        //Заполнение объектов данными
         public void bind(ContentValues element) {
-            Log.e("ШКАЛА", "вот: "+element.getAsString("scaleId")+" "+element.getAsString("scaleName")+" "+element.getAsString("deviceName"));
-
             deviceNameTextView.setText(element.getAsString("deviceName"));
             scaleNameTextView.setText(element.getAsString("scaleName"));
             unitTextView.setText(element.getAsString("scaleUnit"));
             errorTextView.setText(element.getAsString("scaleError"));
-
         }
-    }
-
-    //TODO удаление элемента из списка
-
-    public void removeAt(int position){
-        elementsList.remove(position);
-        notifyItemRemoved(position);
     }
 }

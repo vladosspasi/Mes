@@ -11,23 +11,26 @@ import com.github.vladosspasi.mes.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс-адаптер списка шаблонов.
+ */
 public class TemplateListAdapter extends RecyclerView.Adapter<TemplateListAdapter.TemplateListElementHolder>{
-
+    //Массив объектов списка
     private List<ContentValues> elementsList = new ArrayList<>();
 
-    //Добавление элементов в список
+    //Получение списка извне
     public void setItems(List<ContentValues> elems) {
         elementsList.addAll(elems);
         notifyDataSetChanged();
     }
 
-    //очистка списка
+    //Очистка списка
     public void clearItems() {
         elementsList.clear();
         notifyDataSetChanged();
     }
 
-    //что то нужное при создании элемента списка
+    //Установка xml-разметки отдельного элемента списка
     @NonNull
     @Override
     public TemplateListAdapter.TemplateListElementHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -36,21 +39,20 @@ public class TemplateListAdapter extends RecyclerView.Adapter<TemplateListAdapte
         return new TemplateListElementHolder(view);
     }
 
-    //что-то нужное
+    //Привязывание элементов к разметке
     @Override
     public void onBindViewHolder(@NonNull TemplateListAdapter.TemplateListElementHolder templateListElementHolder, int i) {
         templateListElementHolder.bind(elementsList.get(i));
     }
 
-    //Количество элементов в списке
+    //Получение числа элементов списка
     @Override
     public int getItemCount() {
         return elementsList.size();
     }
 
-    //Холдер для элемента списка измерений
+    //Класс-холдер для элементов списка
     static class TemplateListElementHolder extends RecyclerView.ViewHolder {
-
         //Все поля элемента списка с которыми происходит взаимодействие
         private TextView nameTextView;
         private TextView commentTextView;
