@@ -3,7 +3,7 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.github.vladosspasi.mes.MainActivity">
     <item android:id="@+id/action_info"
-          android:title="Инфо"
+          android:title="Помощь"
           android:orderInCategory="100"
           app:showAsAction="never"/>
 </menu>

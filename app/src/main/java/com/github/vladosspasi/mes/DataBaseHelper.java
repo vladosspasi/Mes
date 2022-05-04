@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import com.github.vladosspasi.mes.Settings.Templates.Template;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,8 +30,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String FIELD_MES_ID = "_id";
     public static final String FIELD_MES_NAME = "name";
     public static final String FIELD_MES_COMMENT = "comment";
-    //public static final String FIELD_MES_DEVICEID = "deviceId";
-    public static final String FIELD_MES_VALUEID = "valueId";
     public static final String FIELD_MES_DATE = "date";
     //Таблица приборов
     public static final String TABLE_DEVICES_NAME = "devices";
@@ -158,7 +159,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     //Удалить все данные из дб
-    public void eraseAllData(){
+    public void eraseAllData() {
         SQLiteDatabase db = getWritableDatabase();
 
         db.delete(TABLE_VALUES_NAME, null, null);
@@ -471,21 +472,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         ContentValues scale;
 
-        Log.e("РАЗМЕР МАССИВА СТРОК", ""+scales.size());
-
-
         for (int i = 0; i < scales.size(); i++) {
             scale = scales.get(i);
             scale.remove("valuetypeName");
 
             ContentValues scaleFormated = new ContentValues();
-            scaleFormated.put(FIELD_SCALES_NAME,scale.getAsString("scaleName"));
-            scaleFormated.put(FIELD_SCALES_UNIT,scale.getAsString("scaleUnit"));
-            scaleFormated.put(FIELD_SCALES_ERROR,scale.getAsString("scaleError"));
-            scaleFormated.put(FIELD_SCALES_MINVALUE,scale.getAsString("scaleMin"));
-            scaleFormated.put(FIELD_SCALES_MAXVALUE,scale.getAsString("scaleMax"));
-            scaleFormated.put(FIELD_SCALES_DEVICEID,deviceId);
-            scaleFormated.put(FIELD_SCALES_VALUETYPEID,scale.getAsString("valuetypeId"));
+            scaleFormated.put(FIELD_SCALES_NAME, scale.getAsString("scaleName"));
+            scaleFormated.put(FIELD_SCALES_UNIT, scale.getAsString("scaleUnit"));
+            scaleFormated.put(FIELD_SCALES_ERROR, scale.getAsString("scaleError"));
+            scaleFormated.put(FIELD_SCALES_MINVALUE, scale.getAsString("scaleMin"));
+            scaleFormated.put(FIELD_SCALES_MAXVALUE, scale.getAsString("scaleMax"));
+            scaleFormated.put(FIELD_SCALES_DEVICEID, deviceId);
+            scaleFormated.put(FIELD_SCALES_VALUETYPEID, scale.getAsString("valuetypeId"));
             db.insert(TABLE_SCALES_NAME, null, scaleFormated);
         }
     }
@@ -504,7 +502,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 TABLE_SCALES_NAME + "." + FIELD_SCALES_MINVALUE + " , " +
                 TABLE_SCALES_NAME + "." + FIELD_SCALES_MAXVALUE + " , " +
                 TABLE_VALUETYPES_NAME + "." + FIELD_VALUETYPES_NAME + ", " +
-                TABLE_DEVICES_NAME+ "." + FIELD_DEVICES_NAME + " " +
+                TABLE_DEVICES_NAME + "." + FIELD_DEVICES_NAME + " " +
                 "FROM " + TABLE_SCALES_NAME + " " +
                 "JOIN " + TABLE_VALUETYPES_NAME + " " +
                 "ON " + TABLE_VALUETYPES_NAME + "." + FIELD_VALUETYPES_ID + " = " + TABLE_SCALES_NAME + "." + FIELD_SCALES_VALUETYPEID + " " +
@@ -650,14 +648,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         for (ContentValues scale : scalesList) {
 
             ContentValues scaleFormated = new ContentValues();
-            scaleFormated.put(FIELD_SCALES_ID,scale.getAsString("scaleId"));
-            scaleFormated.put(FIELD_SCALES_NAME,scale.getAsString("scaleName"));
-            scaleFormated.put(FIELD_SCALES_UNIT,scale.getAsString("scaleUnit"));
-            scaleFormated.put(FIELD_SCALES_ERROR,scale.getAsString("scaleError"));
-            scaleFormated.put(FIELD_SCALES_MINVALUE,scale.getAsString("scaleMin"));
-            scaleFormated.put(FIELD_SCALES_MAXVALUE,scale.getAsString("scaleMax"));
-            scaleFormated.put(FIELD_SCALES_DEVICEID,deviceId);
-            scaleFormated.put(FIELD_SCALES_VALUETYPEID,scale.getAsString("scaleTypeId"));
+            scaleFormated.put(FIELD_SCALES_ID, scale.getAsString("scaleId"));
+            scaleFormated.put(FIELD_SCALES_NAME, scale.getAsString("scaleName"));
+            scaleFormated.put(FIELD_SCALES_UNIT, scale.getAsString("scaleUnit"));
+            scaleFormated.put(FIELD_SCALES_ERROR, scale.getAsString("scaleError"));
+            scaleFormated.put(FIELD_SCALES_MINVALUE, scale.getAsString("scaleMin"));
+            scaleFormated.put(FIELD_SCALES_MAXVALUE, scale.getAsString("scaleMax"));
+            scaleFormated.put(FIELD_SCALES_DEVICEID, deviceId);
+            scaleFormated.put(FIELD_SCALES_VALUETYPEID, scale.getAsString("scaleTypeId"));
 
             if (scaleFormated.getAsString(FIELD_SCALES_ID).equals("no")) {
                 scaleFormated.remove(FIELD_SCALES_ID);
@@ -717,9 +715,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                         TABLE_SCALES_NAME + "." + FIELD_SCALES_ERROR + ", " +
                         TABLE_SCALES_NAME + "." + FIELD_SCALES_VALUETYPEID + ", " +
                         TABLE_VALUETYPES_NAME + "." + FIELD_VALUETYPES_NAME + ", " +
-                        TABLE_DEVICES_NAME+ "." + FIELD_DEVICES_NAME + ", " +
+                        TABLE_DEVICES_NAME + "." + FIELD_DEVICES_NAME + ", " +
                         TABLE_SCALES_NAME + "." + FIELD_SCALES_ID + " " +
-                        "FROM " + TABLE_SCALES_NAME+" "+
+                        "FROM " + TABLE_SCALES_NAME + " " +
                         "JOIN " + TABLE_VALUETYPES_NAME + " " +
                         "ON " + TABLE_SCALES_NAME + "." + FIELD_SCALES_VALUETYPEID + " = " + TABLE_VALUETYPES_NAME + "." + FIELD_VALUETYPES_ID + " " +
                         "JOIN " + TABLE_TEMPSCALES_NAME + " " +
@@ -732,16 +730,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         cursor.moveToFirst();
 
-        while(!cursor.isAfterLast()){
+        while (!cursor.isAfterLast()) {
             scale = new ContentValues();
-            scale.put("scaleName",cursor.getString(0));
-            scale.put("scaleUnit",cursor.getString(1));
-            scale.put("scaleMin",cursor.getString(2));
-            scale.put("scaleMax",cursor.getString(3));
-            scale.put("scaleError",cursor.getString(4));
-            scale.put("valuetypeName",cursor.getString(6));
-            scale.put("deviceName",cursor.getString(7));
-            scale.put("scaleId",cursor.getString(8));
+            scale.put("scaleName", cursor.getString(0));
+            scale.put("scaleUnit", cursor.getString(1));
+            scale.put("scaleMin", cursor.getString(2));
+            scale.put("scaleMax", cursor.getString(3));
+            scale.put("scaleError", cursor.getString(4));
+            scale.put("valuetypeName", cursor.getString(6));
+            scale.put("deviceName", cursor.getString(7));
+            scale.put("scaleId", cursor.getString(8));
 
             template.addToScalesList(scale);
             cursor.moveToNext();
@@ -789,5 +787,326 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    //ПРОЦЕДУРА ДЛЯ ЭКСПОРТА в JSON
 
+    public JSONObject getDbInJSON() {
+        SQLiteDatabase db = getReadableDatabase();
+        JSONObject result = new JSONObject();
+        JSONArray table = new JSONArray();
+        JSONObject element;
+
+        //Таблица измерений
+        Cursor cursor = db.query(TABLE_MES_NAME,
+                new String[]{FIELD_MES_ID, FIELD_MES_NAME, FIELD_MES_COMMENT, FIELD_MES_DATE},
+                null, null, null, null, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            element = new JSONObject();
+            try {
+                element.put(FIELD_MES_ID, cursor.getInt(0));
+                element.put(FIELD_MES_NAME, cursor.getString(1));
+                element.put(FIELD_MES_COMMENT, cursor.getString(2));
+                element.put(FIELD_MES_DATE, cursor.getString(3));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            table.put(element);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        try {
+            result.put(TABLE_MES_NAME, table);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //Таблица величин
+        table = new JSONArray();
+        cursor = db.query(TABLE_VALUES_NAME,
+                new String[]{FIELD_VALUES_ID, FIELD_VALUES_VALUE, FIELD_VALUES_SCALEID, FIELD_VALUES_MESID},
+                null, null, null, null, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            element = new JSONObject();
+            try {
+                element.put(FIELD_VALUES_ID, cursor.getInt(0));
+                element.put(FIELD_VALUES_VALUE, cursor.getString(1));
+                element.put(FIELD_VALUES_SCALEID, cursor.getInt(2));
+                element.put(FIELD_VALUES_MESID, cursor.getInt(3));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            table.put(element);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        try {
+            result.put(TABLE_VALUES_NAME, table);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //Таблица приборов
+        table = new JSONArray();
+        cursor = db.query(TABLE_DEVICES_NAME,
+                new String[]{FIELD_DEVICES_ID, FIELD_DEVICES_NAME, FIELD_DEVICES_COMMENT, FIELD_DEVICES_TYPE},
+                null, null, null, null, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            element = new JSONObject();
+            try {
+                element.put(FIELD_DEVICES_ID, cursor.getInt(0));
+                element.put(FIELD_DEVICES_NAME, cursor.getString(1));
+                element.put(FIELD_DEVICES_COMMENT, cursor.getString(2));
+                element.put(FIELD_DEVICES_TYPE, cursor.getString(3));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            table.put(element);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        try {
+            result.put(TABLE_DEVICES_NAME, table);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //Таблица шкал
+        table = new JSONArray();
+        cursor = db.query(TABLE_SCALES_NAME,
+                new String[]{FIELD_SCALES_ID, FIELD_SCALES_DEVICEID, FIELD_SCALES_ERROR, FIELD_SCALES_NAME,
+                        FIELD_SCALES_VALUETYPEID, FIELD_SCALES_MAXVALUE, FIELD_SCALES_MINVALUE, FIELD_SCALES_UNIT},
+                null, null, null, null, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            element = new JSONObject();
+            try {
+                element.put(FIELD_SCALES_ID, cursor.getInt(0));
+                element.put(FIELD_SCALES_DEVICEID, cursor.getInt(1));
+                element.put(FIELD_SCALES_ERROR, cursor.getString(2));
+                element.put(FIELD_SCALES_NAME, cursor.getString(3));
+                element.put(FIELD_SCALES_VALUETYPEID, cursor.getInt(4));
+                element.put(FIELD_SCALES_MAXVALUE, cursor.getString(5));
+                element.put(FIELD_SCALES_MINVALUE, cursor.getString(6));
+                element.put(FIELD_SCALES_UNIT, cursor.getString(7));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            table.put(element);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        try {
+            result.put(TABLE_SCALES_NAME, table);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //Таблица шаблонов
+        table = new JSONArray();
+        cursor = db.query(TABLE_TEMPLATES_NAME,
+                new String[]{FIELD_TEMPLATES_ID, FIELD_TEMPLATES_NAME, FIELD_TEMPLATES_COMMENT},
+                null, null, null, null, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            element = new JSONObject();
+            try {
+                element.put(FIELD_TEMPLATES_ID, cursor.getInt(0));
+                element.put(FIELD_TEMPLATES_NAME, cursor.getString(1));
+                element.put(FIELD_TEMPLATES_COMMENT, cursor.getString(2));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            table.put(element);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        try {
+            result.put(TABLE_TEMPLATES_NAME, table);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //Таблица шаблонов-шкал
+        table = new JSONArray();
+        cursor = db.query(TABLE_TEMPSCALES_NAME,
+                new String[]{FIELD_TEMPSCALES_ID, FIELD_TEMPSCALES_TEMPID, FIELD_TEMPSCALES_SCALEID},
+                null, null, null, null, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            element = new JSONObject();
+            try {
+                element.put(FIELD_TEMPSCALES_ID, cursor.getInt(0));
+                element.put(FIELD_TEMPSCALES_TEMPID, cursor.getInt(1));
+                element.put(FIELD_TEMPSCALES_SCALEID, cursor.getInt(2));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            table.put(element);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        try {
+            result.put(TABLE_TEMPSCALES_NAME, table);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //Таблица типов данных
+        table = new JSONArray();
+        cursor = db.query(TABLE_VALUETYPES_NAME,
+                new String[]{FIELD_VALUETYPES_ID, FIELD_VALUETYPES_NAME},
+                null, null, null, null, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            element = new JSONObject();
+            try {
+                element.put(FIELD_VALUETYPES_ID, cursor.getInt(0));
+                element.put(FIELD_VALUETYPES_NAME, cursor.getString(1));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            table.put(element);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        try {
+            result.put(TABLE_VALUETYPES_NAME, table);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        db.close();
+        return result;
+    }
+
+    public void importDbFromJson(JSONObject jsonObject){
+        SQLiteDatabase db = getReadableDatabase();
+        JSONArray table;
+        JSONObject element;
+        ContentValues tableString;
+
+        eraseAllData();
+        db.delete(TABLE_VALUETYPES_NAME, null, null);
+
+        try {
+            table = jsonObject.getJSONArray(TABLE_MES_NAME);
+            for(int i = 0; i<table.length();i++){
+                element = table.getJSONObject(i);
+                tableString = new ContentValues();
+                tableString.put(FIELD_MES_ID, element.getInt(FIELD_MES_ID));
+                tableString.put(FIELD_MES_NAME,element.getString(FIELD_MES_NAME));
+                tableString.put(FIELD_MES_COMMENT,element.getString(FIELD_MES_COMMENT));
+                tableString.put(FIELD_MES_DATE,element.getString(FIELD_MES_DATE));
+                db.insert(TABLE_MES_NAME, null, tableString);
+            }
+
+            table = jsonObject.getJSONArray(TABLE_VALUETYPES_NAME);
+            for(int i = 0; i<table.length();i++){
+                element = table.getJSONObject(i);
+                tableString = new ContentValues();
+                tableString.put(FIELD_VALUETYPES_ID, element.getInt(FIELD_VALUETYPES_ID));
+                tableString.put(FIELD_VALUETYPES_NAME,element.getString(FIELD_VALUETYPES_NAME));
+                db.insert(TABLE_VALUETYPES_NAME, null, tableString);
+            }
+
+            table = jsonObject.getJSONArray(TABLE_DEVICES_NAME);
+            for(int i = 0; i<table.length();i++){
+                element = table.getJSONObject(i);
+                tableString = new ContentValues();
+                tableString.put(FIELD_DEVICES_ID, element.getInt(FIELD_DEVICES_ID));
+                tableString.put(FIELD_DEVICES_NAME,element.getString(FIELD_DEVICES_NAME));
+                tableString.put(FIELD_DEVICES_COMMENT,element.getString(FIELD_DEVICES_COMMENT));
+                tableString.put(FIELD_DEVICES_TYPE,element.getString(FIELD_DEVICES_TYPE));
+                db.insert(TABLE_DEVICES_NAME, null, tableString);
+            }
+
+            table = jsonObject.getJSONArray(TABLE_SCALES_NAME);
+            for(int i = 0; i<table.length();i++){
+                element = table.getJSONObject(i);
+                tableString = new ContentValues();
+                tableString.put(FIELD_SCALES_ID, element.getInt(FIELD_SCALES_ID));
+                tableString.put(FIELD_SCALES_NAME,element.getString(FIELD_SCALES_NAME));
+                tableString.put(FIELD_SCALES_UNIT,element.getString(FIELD_SCALES_UNIT));
+                tableString.put(FIELD_SCALES_ERROR,element.getString(FIELD_SCALES_ERROR));
+                tableString.put(FIELD_SCALES_VALUETYPEID,element.getInt(FIELD_SCALES_VALUETYPEID));
+                tableString.put(FIELD_SCALES_MAXVALUE,element.getString(FIELD_SCALES_MAXVALUE));
+                tableString.put(FIELD_SCALES_MINVALUE,element.getString(FIELD_SCALES_MINVALUE));
+                tableString.put(FIELD_SCALES_DEVICEID,element.getInt(FIELD_SCALES_DEVICEID));
+                db.insert(TABLE_SCALES_NAME, null, tableString);
+            }
+
+            table = jsonObject.getJSONArray(TABLE_MES_NAME);
+            for(int i = 0; i<table.length();i++){
+                element = table.getJSONObject(i);
+                tableString = new ContentValues();
+                tableString.put(FIELD_MES_ID, element.getInt(FIELD_MES_ID));
+                tableString.put(FIELD_MES_NAME,element.getString(FIELD_MES_NAME));
+                tableString.put(FIELD_MES_COMMENT,element.getString(FIELD_MES_COMMENT));
+                tableString.put(FIELD_MES_DATE,element.getString(FIELD_MES_DATE));
+                db.insert(TABLE_MES_NAME, null, tableString);
+            }
+
+            table = jsonObject.getJSONArray(TABLE_VALUES_NAME);
+            for(int i = 0; i<table.length();i++){
+                element = new JSONObject();
+                element = table.getJSONObject(i);
+                tableString = new ContentValues();
+                tableString.put(FIELD_VALUES_ID, element.getInt(FIELD_VALUES_ID));
+                tableString.put(FIELD_VALUES_VALUE,element.getString(FIELD_VALUES_VALUE));
+                tableString.put(FIELD_VALUES_SCALEID,element.getInt(FIELD_VALUES_SCALEID));
+                tableString.put(FIELD_VALUES_MESID,element.getInt(FIELD_VALUES_MESID));
+                db.insert(TABLE_VALUES_NAME, null, tableString);
+            }
+
+            table = jsonObject.getJSONArray(TABLE_TEMPLATES_NAME);
+            for(int i = 0; i<table.length();i++){
+                element = new JSONObject();
+                element = table.getJSONObject(i);
+                tableString = new ContentValues();
+                tableString.put(FIELD_TEMPLATES_ID, element.getInt(FIELD_TEMPLATES_ID));
+                tableString.put(FIELD_TEMPLATES_NAME,element.getString(FIELD_TEMPLATES_NAME));
+                tableString.put(FIELD_TEMPLATES_COMMENT,element.getString(FIELD_TEMPLATES_COMMENT));
+                db.insert(TABLE_TEMPLATES_NAME, null, tableString);
+            }
+
+            table = jsonObject.getJSONArray(TABLE_TEMPSCALES_NAME);
+            for(int i = 0; i<table.length();i++){
+                element = new JSONObject();
+                element = table.getJSONObject(i);
+                tableString = new ContentValues();
+                tableString.put(FIELD_TEMPSCALES_ID, element.getInt(FIELD_TEMPSCALES_ID));
+                tableString.put(FIELD_TEMPSCALES_SCALEID,element.getInt(FIELD_TEMPSCALES_SCALEID));
+                tableString.put(FIELD_TEMPSCALES_TEMPID,element.getInt(FIELD_TEMPSCALES_TEMPID));
+                db.insert(TABLE_TEMPSCALES_NAME, null, tableString);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        db.close();
+    }
+
+    public int countDevices(){
+        int result = 0;
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.query(TABLE_DEVICES_NAME,new String[]{FIELD_DEVICES_ID},
+                null, null, null, null, null);
+        result = cursor.getCount();
+        cursor.close();
+        db.close();
+        return result;
+    }
 }

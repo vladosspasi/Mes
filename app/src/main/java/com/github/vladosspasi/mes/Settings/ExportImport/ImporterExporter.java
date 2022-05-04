@@ -1,5 +1,7 @@
 package com.github.vladosspasi.mes.Settings.ExportImport;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -54,41 +56,37 @@ public class ImporterExporter {
         return result;
     }
 
-    public static int importFile(Uri srsUri){
+    public static boolean importFile(Intent data, Context context){
+        boolean result = false;
+
+        InputStream dataStream = null;
+        try {
+            dataStream = context.getContentResolver().openInputStream(data.getData());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
         //TODO сделать обработку для JSON
-        File file = new File(srsUri.getPath());//create path from uri
-        final String[] split = file.getPath().split(":");//split the path.
-        String srsPath = split[1];//assign it to a string(your choice).
 
-        File src = new File(srsPath);
         File dst = new File(PATH);
-
-        try (InputStream in = new FileInputStream(src)) {
+        try {
             dst.delete();
             dst.createNewFile();
             try (OutputStream out = new FileOutputStream(dst)) {
                 byte[] buf = new byte[1024];
                 int len;
-                while ((len = in.read(buf)) > 0) {
+                while ((len = dataStream.read(buf)) > 0) {
                     out.write(buf, 0, len);
                 }
+                result = true;
             } catch (IOException e) {
                 Log.e("ОШИБКА ЗАПИСИ ФАЙЛА:", e.toString());
             }
         } catch (IOException e) {
             Log.e("ОШИБКА ЧТЕНИЯ ФАЙЛА:", e.toString());
         }
-        return 0;
+        return result;
     }
-
-    public void convertToJSON() {
-
-    }
-
-    public void convertFromJSON() {
-
-    }
-
 
 }

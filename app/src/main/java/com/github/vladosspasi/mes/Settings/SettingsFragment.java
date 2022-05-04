@@ -31,9 +31,7 @@ import java.util.Objects;
 public class SettingsFragment extends Fragment {
 
     private FragmentScreenSettingsBinding binding;
-
     private static final int PICKFILE_RESULT_CODE = 1;
-
 
     @Override
     public View onCreateView(
@@ -122,10 +120,13 @@ public class SettingsFragment extends Fragment {
         alert.setPositiveButton(".JSON", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                //if (ImporterExporter.exportFile(true, getContext())) {
                 if (ImporterExporter.exportFile(true)) {
                     Toast.makeText(getContext(),
                             "Файл сохранен в папке \"Загрузки\" с именем " + ImporterExporter.savedFileName,
                             Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "Ошибка!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -133,12 +134,13 @@ public class SettingsFragment extends Fragment {
         alert.setNegativeButton(".DB", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                //if (ImporterExporter.exportFile(false, getContext())) {
                 if (ImporterExporter.exportFile(false)) {
                     Toast.makeText(getContext(),
                             "Файл сохранен в папке \"Загрузки\" с именем " + ImporterExporter.savedFileName,
                             Toast.LENGTH_LONG).show();
                 } else {
-                    //Toast.makeText(getContext(),"Ошибка!", Toast.LENGTH_LONG);
+                    Toast.makeText(getContext(), "Ошибка!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -165,25 +167,15 @@ public class SettingsFragment extends Fragment {
         if (requestCode == PICKFILE_RESULT_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
-                    Uri fileUri = data.getData();
+                    if (ImporterExporter.importFile(data, getContext())) {
+                        Toast.makeText(getContext(), "База данных импортирована.", Toast.LENGTH_LONG).show();
 
-                    Log.i("ПОЛУЧЕННЫЙ URI", fileUri.toString());
-                    String filePath = fileUri.getPath();
-                    Log.i("ПОЛУЧЕННЫЙ ПУТЬ", filePath);
-
-
-                    switch (ImporterExporter.importFile(fileUri)) {
-                        case 0:
-                            Toast.makeText(getContext(), "База данных импортирована.", Toast.LENGTH_LONG).show();
-                            break;
+                    } else {
+                        Toast.makeText(getContext(), "Произошла ошибка!", Toast.LENGTH_LONG).show();
                     }
-
-                } else {
-                    Toast.makeText(getContext(), "Произошла ошибка!", Toast.LENGTH_LONG).show();
                 }
             }
+            super.onActivityResult(requestCode, resultCode, data);
         }
-        super.onActivityResult(requestCode, resultCode, data);
     }
-
 }

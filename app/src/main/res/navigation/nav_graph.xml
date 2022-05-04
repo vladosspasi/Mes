@@ -9,7 +9,7 @@
     <fragment
             android:id="@+id/MainmenuFragment"
             android:name="com.github.vladosspasi.mes.MainMenuFragment"
-            android:label="MainMenu"
+            android:label="MES"
             tools:layout="@layout/fragment_mainmenu">
 
         <action
@@ -36,7 +36,7 @@
     <fragment
             android:id="@+id/AddNewMesInfoFragment"
             android:name="com.github.vladosspasi.mes.AddingNewMeasurement.AddNewMesInfoFragment"
-            android:label="Add Mes Info Fragment"
+            android:label="Новое измерение"
     >
         <action
                 android:id="@+id/action_AddNewMesInfoFragment_to_AddNewMesValuesFragment"
@@ -48,7 +48,7 @@
     <fragment
             android:id="@+id/AddNewMesValuesFragment"
             android:name="com.github.vladosspasi.mes.AddingNewMeasurement.AddNewMesValuesFragment"
-            android:label="Add Mes Values Fragment"
+            android:label="Новое измерение"
     >
 
         <action
@@ -73,12 +73,12 @@
     <fragment
             android:id="@+id/AddNewMesSelectDeviceFragment"
             android:name="com.github.vladosspasi.mes.AddingNewMeasurement.SelectDeviceForAddingFragment"
-            android:label="Select Device for adding"
+            android:label="Выбор прибора"
     >
 
-    <action
-            android:id="@+id/action_AddNewMesSelectDeviceFragment_to_AddNewMesSelectScaleFragment"
-            app:destination="@id/AddNewMesSelectScaleFragment"/>
+        <action
+                android:id="@+id/action_AddNewMesSelectDeviceFragment_to_AddNewMesSelectScaleFragment"
+                app:destination="@id/AddNewMesSelectScaleFragment"/>
 
         <argument android:name="ScalesIds" app:argType="java.util.ArrayList"/>
 
@@ -90,15 +90,13 @@
     <fragment
             android:id="@+id/AddNewMesSelectScaleFragment"
             android:name="com.github.vladosspasi.mes.AddingNewMeasurement.SelectScaleForAddingFragment"
-            android:label="Select Device for adding"
+            android:label="Шкалы"
     >
-
         <action
                 android:id="@+id/action_AddNewMesSelectScaleFragment_to_AddNewValuesFragment"
                 app:destination="@id/AddNewMesValuesFragment"
                 app:popUpTo="@+id/AddNewMesValuesFragment"
                 app:popUpToInclusive="true"
-
         />
         <argument android:name="DeviceId" app:argType="integer"/>
         <argument android:name="ScalesIds" app:argType="java.util.ArrayList"/>
@@ -109,7 +107,7 @@
     <fragment
             android:id="@+id/AddNewDeviceInfoFragment"
             android:name="com.github.vladosspasi.mes.Settings.Devices.AddNewDeviceInfoFragment"
-            android:label="Add Device Info Fragment"
+            android:label="Новый прибор"
     >
         <action
                 android:id="@+id/action_AddNewDeviceInfoFragment_to_AddNewDeviceScalesFragment"
@@ -122,7 +120,7 @@
     <fragment
             android:id="@+id/AddNewDeviceScalesFragment"
             android:name="com.github.vladosspasi.mes.Settings.Devices.AddNewDeviceScalesFragment"
-            android:label="Add Device Scales Fragment"
+            android:label="Новый прибор"
     >
         <action
                 android:id="@+id/action_AddNewDeviceScalesFragment_to_DevicesFragment"
@@ -137,7 +135,7 @@
     <fragment
             android:id="@+id/ListFragment"
             android:name="com.github.vladosspasi.mes.ViewingMesList.ListFragment"
-            android:label="List Fragment"
+            android:label="Измерения"
     >
 
         <action
@@ -154,7 +152,7 @@
     <fragment
             android:id="@+id/SettingsFragment"
             android:name="com.github.vladosspasi.mes.Settings.SettingsFragment"
-            android:label="Settings Fragment"
+            android:label="Настройки"
             tools:layout="@layout/fragment_screen_settings">
 
         <action
@@ -172,7 +170,7 @@
     <fragment
             android:id="@+id/DevicesFragment"
             android:name="com.github.vladosspasi.mes.Settings.Devices.DevicesListFragment"
-            android:label="Devices Fragment"
+            android:label="Приборы"
             tools:layout="@layout/fragment_devices">
 
         <action
@@ -192,7 +190,7 @@
     <fragment
             android:id="@+id/EditDeviceFragment"
             android:name="com.github.vladosspasi.mes.Settings.Devices.EditDeviceFragment"
-            android:label="Edit Device Fragment"
+            android:label="Изменить прибор"
             tools:layout="@layout/fragment_editdevice">
         <argument android:name="DeviceId" app:argType="integer"/>
         <action android:id="@+id/action_EditDeviceFragment_to_editScaleFragment"
@@ -202,7 +200,7 @@
     <!--Экран редактирования шкалы-->
     <fragment android:id="@+id/editScaleFragment"
               android:name="com.github.vladosspasi.mes.Settings.Devices.EditScaleFragment"
-              android:label="EditScaleFragment">
+              android:label="Изменить шкалу">
         <argument android:name="ScalePos" app:argType="integer"/>
         <action
                 android:id="@+id/action_EditScalesFragment_to_EditDeviceFragment"
@@ -217,14 +215,14 @@
     <fragment
             android:id="@+id/InfoFragment"
             android:name="com.github.vladosspasi.mes.InfoFragment"
-            android:label="Info Fragment"
+            android:label="Помощь"
             tools:layout="@layout/fragment_screen_info"/>
 
     <!--Экран просмотра измерения-->
     <fragment
             android:id="@+id/ViewMesFragment"
             android:name="com.github.vladosspasi.mes.ViewingMesList.ViewMesFragment"
-            android:label="View Mes Fragment"
+            android:label="Просмотр измерения"
             tools:layout="@layout/fragment_screen_viewmes">
 
         <action
@@ -241,7 +239,7 @@
     <fragment
             android:id="@+id/ViewDeviceFragment"
             android:name="com.github.vladosspasi.mes.ViewDeviceFragment"
-            android:label="View Device Fragment"
+            android:label="Просмотр прибора"
             tools:layout="@layout/fragment_screen_viewdevice">
 
         <action
@@ -252,43 +250,48 @@
     </fragment>
     <fragment android:id="@+id/templatesListFragment"
               android:name="com.github.vladosspasi.mes.Settings.Templates.TemplatesListFragment"
-              android:label="TemplatesListFragment">
+              android:label="Шаблоны">
         <action android:id="@+id/action_templatesListFragment_to_addNewTemplateInfo"
                 app:destination="@id/addNewTemplateInfo"/>
         <action android:id="@+id/action_templatesListFragment_to_viewTemplateFragment"
                 app:destination="@id/viewTemplateFragment"/>
     </fragment>
+
     <fragment android:id="@+id/addNewTemplateInfo"
               android:name="com.github.vladosspasi.mes.Settings.Templates.AddNewTemplateInfo"
-              android:label="AddNewTemplateInfo">
+              android:label="Новый шаблон">
         <action android:id="@+id/action_addNewTemplateInfo_to_addNewTemplateScales"
                 app:destination="@id/addNewTemplateScales"/>
     </fragment>
+
     <fragment android:id="@+id/addNewTemplateScales"
               android:name="com.github.vladosspasi.mes.Settings.Templates.AddNewTemplateScales"
-              android:label="AddNewTemplateScales">
+              android:label="Новый шаблон">
         <action android:id="@+id/action_addNewTemplateScales_to_selectDeviceForTemplate"
                 app:destination="@id/selectDeviceForTemplate"/>
         <action android:id="@+id/action_addNewTemplateScales_to_templatesListFragment"
                 app:destination="@id/templatesListFragment" app:popUpToInclusive="true"
                 app:popUpTo="@id/templatesListFragment"/>
     </fragment>
+
     <fragment android:id="@+id/selectDeviceForTemplate"
               android:name="com.github.vladosspasi.mes.Settings.Templates.SelectDeviceForTemplate"
-              android:label="SelectDeviceForTemplate">
+              android:label="Выбор прибора">
         <action android:id="@+id/action_selectDeviceForTemplate_to_selectScaleForTemplate"
                 app:destination="@id/selectScaleForTemplate"/>
     </fragment>
+
     <fragment android:id="@+id/selectScaleForTemplate"
               android:name="com.github.vladosspasi.mes.Settings.Templates.SelectScaleForTemplate"
-              android:label="SelectScaleForTemplate">
+              android:label="Выбор шкалы">
         <action android:id="@+id/action_selectScaleForTemplate_to_addNewTemplateScales"
                 app:destination="@id/addNewTemplateScales" app:popUpToInclusive="true"
                 app:popUpTo="@id/addNewTemplateScales"/>
         <argument android:name="DeviceId" app:argType="integer"/>
     </fragment>
+
     <fragment android:id="@+id/viewTemplateFragment" android:name="com.github.vladosspasi.mes.ViewTemplateFragment"
-              android:label="ViewTemplateFragment">
+              android:label="Просмотр прибора">
         <argument android:name="TemplateId" app:argType="integer"/>
     </fragment>
     <fragment android:id="@+id/selectTemplateFragment"
