@@ -23,6 +23,8 @@ import com.github.vladosspasi.mes.databinding.FragmentAddingnewmesScalesanddevic
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.github.vladosspasi.mes.DataBaseHelper.*;
 
@@ -95,7 +97,7 @@ public class AddNewMesValuesFragment extends Fragment {
 
         //Установка действия на кнопку "Сохранить"
         binding.buttonAddNewMesDeviceSaveMes.setOnClickListener(view12 -> {
-            if (validate()) {
+            if (validateForm()) {
                 saveMesToDataBase();
                 Toast.makeText(getContext(), "Измерение успешно добавлено в базу данных!", Toast.LENGTH_SHORT).show();
                 MeasurementGlobalInfo.clearAll();
@@ -112,6 +114,7 @@ public class AddNewMesValuesFragment extends Fragment {
                 new RecyclerItemClickListener(getContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
+
                     }
 
                     //Долгое нажатие - удаление шкалы из списка
@@ -177,12 +180,6 @@ public class AddNewMesValuesFragment extends Fragment {
                 .navigate(R.id.action_AddNewMesValuesFragment_to_selectTemplateFragment);
     }
 
-    //Процедура валидации данных
-    private boolean validate() {
-        //TODO
-        return true;
-    }
-
     //Процедура сохранения данных в базу данных
     private void saveMesToDataBase() {
         ArrayList<String> valuesList = new ArrayList<>();
@@ -190,10 +187,109 @@ public class AddNewMesValuesFragment extends Fragment {
         for (int i = 0; i < scalesList.size(); i++) {
             View view = recyclerView.getChildAt(i);
             EditText editValue = view.findViewById(R.id.editText_AddingValueListElementView_valueEnter);
-            valuesList.add(editValue.getText().toString());
+            valuesList.add(editValue.getText().toString().trim());
         }
         DataBaseHelper dataBaseHelper = getInstance(getContext()); //инициализация класса для работы с бд
         dataBaseHelper.addMeasurement(mesInfo, scalesList, valuesList); //передача данных
         dataBaseHelper.close();
+    }
+
+    //Процедура валидации данных
+    private boolean validateForm() {
+
+        String dreg = "[^\\d(?:.)]";
+        String binreg = "[^10]";
+        String diareg = "^([0-9]{1,16}(.){0,1}[0-9]{0,16}-[0-9]{1,16}(.){0,1}[0-9]{0,16})$";
+
+        Pattern dptrn = Pattern.compile(dreg);
+        Pattern binptrn = Pattern.compile(binreg);
+        Pattern diaptrn = Pattern.compile(diareg);
+
+        Matcher mtchr;
+
+        String title = "Неверно заполненные значения!";
+        String message = "";
+        boolean result = true;
+
+        //Получение введенных данных
+        for (int i = 0; i < scalesList.size(); i++) {
+            View view = recyclerView.getChildAt(i);
+            EditText editValue = null;
+
+            try {
+                editValue = view.findViewById(R.id.editText_AddingValueListElementView_valueEnter);
+            } catch (NullPointerException e) {
+                result = false;
+                message = message.concat("Все добавленные значения должны быть заполнены.\n");
+            }
+            if (result) {
+
+                String value = editValue.getText().toString().trim();
+                String type = scalesList.get(i).getAsString("valuetypeName");
+
+                //Введено ли значение
+                if (value.length() == 0) {
+                    result = false;
+                    message = message.concat("Все добавленные значения должны быть заполнены.\n");
+                } else if (value.length() > 50) {
+                    result = false;
+                    message = message.concat("Слишком длинное введенное значение - не может длиной до 50 символов.\n");
+                } else {
+
+                    //Проверки для каждого типа данных отдельно
+                    if (type.equals("Численный")) {
+                        mtchr = dptrn.matcher(value);
+                        if (mtchr.lookingAt()) {
+                            result = false;
+                            message = message.concat("Значение шкалы \""+ scalesList.get(i).getAsString("scaleName") +"\" может содержать только цифры и \".\".\n");
+                        }else{
+                            if(Float.parseFloat(value)>scalesList.get(i).getAsFloat("scaleMax")){
+                                result = false;
+                                message = message.concat("Значение шкалы \""+ scalesList.get(i).getAsString("scaleName") +"\" " +
+                                        "не может быть больше максимального значения ("+ scalesList.get(i).getAsString("scaleMax") +").\n");
+                            }else if (Float.parseFloat(value)<scalesList.get(i).getAsFloat("scaleMin")){
+                                result = false;
+                                message = message.concat("Значение шкалы \""+ scalesList.get(i).getAsString("scaleName") +"\" " +
+                                        "не может быть меньше минимального значения ("+ scalesList.get(i).getAsString("scaleMin") +").\n");
+                            }
+                        }
+
+                    } else if (type.equals("Диапазон")) {
+                        mtchr = diaptrn.matcher(value);
+                        if (mtchr.lookingAt()) {
+                            result = false;
+                            message = message.concat(
+                                    "Значение \""+ scalesList.get(i).getAsString("scaleName") +"\" может содержать только цифры, \".\" и обязано иметь \"-\" в середине.\n");
+                        }
+
+                    } else if (type.equals("Бинарный")) {
+                        mtchr = binptrn.matcher(value);
+                        if (mtchr.lookingAt()) {
+                            result = false;
+                            message = message.concat(
+                                    "Значение \""+ scalesList.get(i).getAsString("scaleName") +"\" может содержать только 1 и 0.\n");
+                            //TODO поменять текст на экране - булевый на бинарный при создании прибора
+                            //TODO На экране бинарный и диапазон не на тех местах при создании прибора!!
+                            //TODO Клавиатура не сразу выпадает при нажатии????
+                        }
+
+                    } else if (!type.equals("Строковый")){
+                        result = false;
+                        message = message.concat(
+                                "ОШИБКА! "+ scalesList.get(i).getAsString("scaleName")+".\n");
+                    }
+
+                }
+            }
+        }
+
+        if (!result) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+            alert.setTitle(title);
+            alert.setMessage(message);
+            alert.setPositiveButton("Ок", (dialogInterface, i) -> dialogInterface.cancel());
+            alert.show();
+        }
+        return result;
     }
 }
