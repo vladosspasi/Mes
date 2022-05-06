@@ -20,6 +20,8 @@ import com.github.vladosspasi.mes.databinding.FragmentEditdeviceBinding;
 import static com.github.vladosspasi.mes.DataBaseHelper.*;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Фрагмент изменения данных прибора
@@ -104,27 +106,31 @@ public class EditDeviceFragment extends Fragment {
         binding.buttonEditdeviceCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                GlobalDeviceInfo.clear();
                 NavHostFragment.findNavController(EditDeviceFragment.this).
                         navigateUp(); //Вернуться назад
             }
-            //TODO убрать за ненадобностью, если работает <-
+
         });
 
         //Действие на нажатие кнопки "Сохранить"
         binding.buttonEditdeviceSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveChangesToDataBase(deviceId);
-                AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-                alert.setMessage("Изменения были сохранены.");
-                alert.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-                NavHostFragment.findNavController(EditDeviceFragment.this).
-                       navigateUp();
+
+                if(validateForm()){
+                    saveChangesToDataBase(deviceId);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+                    alert.setMessage("Изменения были сохранены.");
+                    alert.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+                    NavHostFragment.findNavController(EditDeviceFragment.this).
+                            navigateUp();
+                }
             }
         });
 
@@ -195,4 +201,53 @@ public class EditDeviceFragment extends Fragment {
         adapter.setItems(scalesList);
         recyclerView.setAdapter(adapter);
     }
+
+    //Процедура валидации введенных данных
+    private boolean validateForm() {
+
+        //получение данных из полей ввода
+        String name = binding.editTextEditdeviceName.getText().toString();
+        String comment = binding.editTextEditdeviceComment.getText().toString();
+        String type = binding.editTextEditdeviceType.getText().toString();
+        name = name.trim();
+        comment = comment.trim();
+
+        String title = "Неверно заполнены поля!";
+        String message = ""; //Сообщение для вывода
+        boolean result = true; //заполнена ли форма правильно
+        String namerg = "[^А-Яа-яA-Za-z\\d\\s(?:_)]"; //регулярное выражение для проверки
+        Pattern nameptrn = Pattern.compile(namerg); //шаблон проверки
+        Matcher namemtchr = nameptrn.matcher(name); //объект-сравниватель
+
+        //Проверка полей название и комментарий
+        if(namemtchr.lookingAt()){
+            message = message.concat("Название может содержать только цифры, буквы, символы \" \" и \"_\".\n");
+            result = false;
+        }
+        if(name.length()<3 || name.length()>30){
+            message = message.concat("Название должно быть от 3 до 30 символов в длину.\n");
+            result = false;
+        }
+        if(comment.length()>300){
+            message = message.concat("Комментарий должен быть не более 300 символов в длину.\n");
+            result = false;
+        }
+        if(type.length()>300){
+            message = message.concat("Тип прибора должен быть не более 100 символов в длину.\n");
+            result = false;
+        }
+
+        //Если была обнаружена ошибка ввода
+        if(!result){
+            AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+            alert.setMessage(message);
+            alert.setTitle(title);
+            alert.setPositiveButton("Ок", (dialogInterface, i) -> dialogInterface.cancel());
+            alert.show();
+        }
+        return result;
+    }
+
+
+
 }

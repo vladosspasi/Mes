@@ -3,7 +3,7 @@
     <string-array name="types_array">
         <item>Численный</item>
         <item>Строковый</item>
-        <item>Булевый</item>
         <item>Диапазон</item>
+        <item>Бинарный</item>
     </string-array>
 </resources>

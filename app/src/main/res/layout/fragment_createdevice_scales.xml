@@ -87,6 +87,25 @@
                         style="@style/Widget.AppCompat.EditText"
                         android:layout_marginBottom="8dp"/>
                 <TextView
+                        android:text="Тип данных:"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_typeTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/editbox_addNewDeviceScales_unit"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginBottom="8dp"
+                />
+                <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/spinner_addNewDeviceScales_type"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/textbox_addNewDeviceScales_typeTitle"
+                        app:layout_constraintTop_toTopOf="@+id/textbox_addNewDeviceScales_typeTitle"
+                        android:minHeight="48dp"
+                        app:layout_constraintStart_toEndOf="@+id/textbox_addNewDeviceScales_typeTitle"
+                        android:layout_marginBottom="8dp"
+
+                        tools:ignore="SpeakableTextPresentCheck"/>
+                <TextView
                         android:text="Единица измерения:"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_unitTitle"
@@ -106,25 +125,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/textbox_addNewDeviceScales_unitTitle"
                         app:layout_constraintHorizontal_bias="0.0" android:minHeight="48dp" android:hint="В"
                         android:layout_marginBottom="8dp"/>
-                <TextView
-                        android:text="Тип данных:"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:id="@+id/textbox_addNewDeviceScales_typeTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/editbox_addNewDeviceScales_unit"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginBottom="8dp"
-                />
-                <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:id="@+id/spinner_addNewDeviceScales_type"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@+id/textbox_addNewDeviceScales_typeTitle"
-                        app:layout_constraintTop_toTopOf="@+id/textbox_addNewDeviceScales_typeTitle"
-                        android:minHeight="48dp"
-                        app:layout_constraintStart_toEndOf="@+id/textbox_addNewDeviceScales_typeTitle"
-                        android:layout_marginBottom="8dp"
-
-                />
                 <TextView
                         android:text="Введите погрешность (без +-) в тех же единицах:"
                         android:layout_width="match_parent"

@@ -32,10 +32,13 @@
             android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@+id/textbox_addNewMesDevice_scalesTitle"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
             app:layout_constraintBottom_toTopOf="@+id/button_addNewMesDevice_addvalue"
-            android:layout_marginBottom="16dp" android:id="@+id/res_addNewMesDevice_values"/>
+            android:layout_marginBottom="16dp"
+            android:id="@+id/res_addNewMesDevice_values"/>
     <Button
             android:text="@string/newMesValues_button_template"
             android:layout_width="0dp"

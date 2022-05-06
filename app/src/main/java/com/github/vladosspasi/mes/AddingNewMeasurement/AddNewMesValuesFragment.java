@@ -268,9 +268,7 @@ public class AddNewMesValuesFragment extends Fragment {
                             result = false;
                             message = message.concat(
                                     "Значение \""+ scalesList.get(i).getAsString("scaleName") +"\" может содержать только 1 и 0.\n");
-                            //TODO поменять текст на экране - булевый на бинарный при создании прибора
-                            //TODO На экране бинарный и диапазон не на тех местах при создании прибора!!
-                            //TODO Клавиатура не сразу выпадает при нажатии????
+                            //TODO Выбор edittext происходит только после двойного нажатия, а не одинарного
                         }
 
                     } else if (!type.equals("Строковый")){

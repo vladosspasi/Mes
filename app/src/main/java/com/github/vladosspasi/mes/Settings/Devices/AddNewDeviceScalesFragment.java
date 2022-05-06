@@ -8,11 +8,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 import androidx.navigation.fragment.NavHostFragment;
 import com.github.vladosspasi.mes.DataBaseHelper;
 import com.github.vladosspasi.mes.R;
@@ -85,6 +88,55 @@ public class AddNewDeviceScalesFragment extends Fragment {
                 R.array.types_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        //Действие при нажатии на элемент выпадающего списка
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i){
+                    case 0:
+                        binding.editboxAddNewDeviceScalesUnit.setEnabled(true);
+                        binding.editboxAddNewDeviceScalesError.setEnabled(true);
+                        binding.editboxAddNewDeviceScalesFromvalue.setEnabled(true);
+                        binding.editboxAddNewDeviceScalesTovalue.setEnabled(true);
+                        binding.editboxAddNewDeviceScalesUnit.setText("");
+                        binding.editboxAddNewDeviceScalesError.setText("");
+                        binding.editboxAddNewDeviceScalesFromvalue.setText("");
+                        binding.editboxAddNewDeviceScalesTovalue.setText("");
+                        break;
+                    case 1:
+                    case 3:
+                        binding.editboxAddNewDeviceScalesUnit.setEnabled(false);
+                        binding.editboxAddNewDeviceScalesError.setEnabled(false);
+                        binding.editboxAddNewDeviceScalesFromvalue.setEnabled(false);
+                        binding.editboxAddNewDeviceScalesTovalue.setEnabled(false);
+                        binding.editboxAddNewDeviceScalesUnit.setText("-");
+                        binding.editboxAddNewDeviceScalesError.setText("-");
+                        binding.editboxAddNewDeviceScalesFromvalue.setText("-");
+                        binding.editboxAddNewDeviceScalesTovalue.setText("-");
+                        break;
+                    case 2:
+                        binding.editboxAddNewDeviceScalesUnit.setEnabled(true);
+                        binding.editboxAddNewDeviceScalesError.setEnabled(true);
+                        binding.editboxAddNewDeviceScalesFromvalue.setEnabled(false);
+                        binding.editboxAddNewDeviceScalesTovalue.setEnabled(false);
+                        binding.editboxAddNewDeviceScalesUnit.setText("");
+                        binding.editboxAddNewDeviceScalesError.setText("");
+                        binding.editboxAddNewDeviceScalesFromvalue.setText("-");
+                        binding.editboxAddNewDeviceScalesTovalue.setText("-");
+                        break;
+                    default:
+                        Toast.makeText(getContext(),"Ошибка типа данных!", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
     }
 
     //Процедура уничтожения фрагмента при закрытии
@@ -149,7 +201,86 @@ public class AddNewDeviceScalesFragment extends Fragment {
 
     //Процедура проверки введенных значений
     public boolean validateForm(){
-        return true;
+
+        boolean result = true;
+        String title = "Неверно заполнены поля!";
+        String message = ""; //Сообщение для вывода
+
+        if(binding.editboxAddNewDeviceScalesName.getText().toString().trim().equals("") ||
+                binding.editboxAddNewDeviceScalesTovalue.getText().toString().trim().equals("")||
+                binding.editboxAddNewDeviceScalesFromvalue.getText().toString().trim().equals("")||
+                binding.editboxAddNewDeviceScalesError.getText().toString().trim().equals("")||
+                binding.editboxAddNewDeviceScalesUnit.getText().toString().trim().equals("")
+        ){
+            result = false;
+            message = message.concat("Все поля должны быть заполнены.\n");
+        }else{
+
+            if(binding.editboxAddNewDeviceScalesName.getText().toString().length()<3||
+                    binding.editboxAddNewDeviceScalesName.getText().toString().length()>30){
+                result = false;
+                message = message.concat("Название должно быть от 3 до 30 символов в длину.\n");
+            }
+
+            int typeN = binding.spinnerAddNewDeviceScalesType.getSelectedItemPosition();
+            switch (typeN){
+                case 0:
+
+                    try{
+                        float max = Float.parseFloat(binding.editboxAddNewDeviceScalesTovalue.getText().toString().trim());
+                        float min = Float.parseFloat(binding.editboxAddNewDeviceScalesFromvalue.getText().toString().trim());
+                        float error = Float.parseFloat(binding.editboxAddNewDeviceScalesError.getText().toString().trim());
+
+                        if(max<min){
+                            result = false;
+                            message = message.concat("Максимальное значение не может быть меньше чем минимальное.\n");
+                        }
+                        if(max==min){
+                            result = false;
+                            message = message.concat("Максимальное значение не может быть равно минимальному.\n");
+                        }
+                        if(error>=max){
+                            result = false;
+                            message = message.concat("Погрешность не может равняться максимальному значению шкалы.\n");
+                        }
+                    }catch (Exception exception){
+                        result = false;
+                        message = message.concat("В числовые поля нельзя вводить строковые значения.\n");
+                    }
+
+                    if(binding.editboxAddNewDeviceScalesUnit.getText().toString().trim().length()==0||
+                            binding.editboxAddNewDeviceScalesUnit.getText().toString().trim().length()>10){
+                        result = false;
+                        message = message.concat("Длина названия единицы измерения должна быть от 1 до 10 сиволов.\n");
+                    }
+
+                    break;
+                case 2:
+                    try{
+                        float error = Float.parseFloat(binding.editboxAddNewDeviceScalesError.getText().toString().trim());
+                    }catch (Exception exception){
+                        result = false;
+                        message = message.concat("В числовые поля нельзя вводить строковые значения.\n");
+                    }
+
+                    if(binding.editboxAddNewDeviceScalesUnit.getText().toString().trim().length()==0||
+                            binding.editboxAddNewDeviceScalesUnit.getText().toString().trim().length()>10){
+                        result = false;
+                        message = message.concat("Длина названия единицы измерения должна быть от 1 до 10 сиволов.\n");
+                    }
+                    break;
+            }
+        }
+
+        //Если была обнаружена ошибка ввода
+        if(!result){
+            AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+            alert.setMessage(message);
+            alert.setTitle(title);
+            alert.setPositiveButton("Ок", (dialogInterface, i) -> dialogInterface.cancel());
+            alert.show();
+        }
+        return result;
     }
 
 }
