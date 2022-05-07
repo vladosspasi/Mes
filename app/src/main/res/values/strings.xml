@@ -4,7 +4,7 @@
     <!--Названия экранов и приложения-->
     <!--==============================================================-->
 
-    <string name="app_name">Mes</string>
+    <string name="app_name">Measurements</string>
     <string name="action_settings">Настройки</string>
 
     <!--==============================================================-->
@@ -20,7 +20,7 @@
     <!--Меню-->
     <!--==============================================================-->
 
-    <string name="mainmenu_title">MES</string>
+    <string name="mainmenu_title">Система учета измерений</string>
     <string name="mainmenu_autor">Алябьев В.О., Кафедра ВМСС, НИУ "МЭИ", 2022 г.</string>
 
     <string name="mainmenu_toAddScreen">Добавить данные</string>

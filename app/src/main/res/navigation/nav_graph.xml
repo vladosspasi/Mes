@@ -9,7 +9,7 @@
     <fragment
             android:id="@+id/MainmenuFragment"
             android:name="com.github.vladosspasi.mes.MainMenuFragment"
-            android:label="MES"
+            android:label="Меню"
             tools:layout="@layout/fragment_mainmenu">
 
         <action

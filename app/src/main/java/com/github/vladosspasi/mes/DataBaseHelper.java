@@ -254,8 +254,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<ContentValues> getMeasurementsList() {
         SQLiteDatabase db = getReadableDatabase();
-        ContentValues mes = new ContentValues();
-        ArrayList<ContentValues> mesList = new ArrayList<ContentValues>();
+        ContentValues mes;
+        ArrayList<ContentValues> mesList = new ArrayList<>();
 
         //считывание базовой информации
         Cursor mesCursor = db.query(TABLE_MES_NAME,
@@ -468,8 +468,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         ContentValues scale;
 
-        for (int i = 0; i < scales.size(); i++) {
-            scale = scales.get(i);
+        for (ContentValues contentValues : scales) {
+            scale = contentValues;
             scale.remove("valuetypeName");
 
             ContentValues scaleFormated = new ContentValues();
@@ -578,7 +578,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         measurementInfo.put(FIELD_MES_COMMENT, mesInfo.getAsString(FIELD_MES_COMMENT));
 
         int mesId = (int) db.insert(TABLE_MES_NAME, null, measurementInfo);
-        ContentValues record = new ContentValues();
+        ContentValues record;
 
         for (int i = 0; i < valuesInfo.size(); i++) {
             int scaleId = scalesInfo.get(i).getAsInteger("scaleId");
@@ -1010,17 +1010,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 db.insert(TABLE_MES_NAME, null, tableString);
             }
 
-            /*
-            table = jsonObject.getJSONArray(TABLE_VALUETYPES_NAME);
-            for(int i = 0; i<table.length();i++){
-                element = table.getJSONObject(i);
-                tableString = new ContentValues();
-                tableString.put(FIELD_VALUETYPES_ID, element.getInt(FIELD_VALUETYPES_ID));
-                tableString.put(FIELD_VALUETYPES_NAME,element.getString(FIELD_VALUETYPES_NAME));
-                db.insert(TABLE_VALUETYPES_NAME, null, tableString);
-            }
-             */
-
             table = jsonObject.getJSONArray(TABLE_DEVICES_NAME);
             for(int i = 0; i<table.length();i++){
                 element = table.getJSONObject(i);
@@ -1060,7 +1049,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
             table = jsonObject.getJSONArray(TABLE_VALUES_NAME);
             for(int i = 0; i<table.length();i++){
-                element = new JSONObject();
                 element = table.getJSONObject(i);
                 tableString = new ContentValues();
                 tableString.put(FIELD_VALUES_ID, element.getInt(FIELD_VALUES_ID));
@@ -1072,7 +1060,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
             table = jsonObject.getJSONArray(TABLE_TEMPLATES_NAME);
             for(int i = 0; i<table.length();i++){
-                element = new JSONObject();
                 element = table.getJSONObject(i);
                 tableString = new ContentValues();
                 tableString.put(FIELD_TEMPLATES_ID, element.getInt(FIELD_TEMPLATES_ID));
@@ -1083,7 +1070,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
             table = jsonObject.getJSONArray(TABLE_TEMPSCALES_NAME);
             for(int i = 0; i<table.length();i++){
-                element = new JSONObject();
                 element = table.getJSONObject(i);
                 tableString = new ContentValues();
                 tableString.put(FIELD_TEMPSCALES_ID, element.getInt(FIELD_TEMPSCALES_ID));
@@ -1099,7 +1085,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public int countDevices(){
-        int result = 0;
+        int result;
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.query(TABLE_DEVICES_NAME,new String[]{FIELD_DEVICES_ID},
                 null, null, null, null, null);
